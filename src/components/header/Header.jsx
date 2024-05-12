@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Header, ImgMedicina, UlHeader } from "../styles/headerstyle";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
 import LogoInicial from "../../assets/pagina-inicial.png";
@@ -35,7 +36,7 @@ export const HeaderMenu = () => {
                     <img src={LogoAgenda} alt="Icone agenda" />
                     <span>Consulta</span>
                 </li>
-                <li title="Retorno Doutor">
+                <li title="Retorno Doutor" className="active">
                     <img src={LogoConfirmar} alt="Icone confirmar" />
                     <span>Retorno</span>
                 </li>

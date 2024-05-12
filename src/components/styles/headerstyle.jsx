@@ -11,6 +11,9 @@ const Header = styled.header`
     background-color: #90EE90;
     padding: 10px 0 10px 10px;
     transition: .3s ease-in-out;
+    @media (max-width: 768px) {
+        width: 75px;
+    }
 `;
 
 const ImgMedicina = styled.img`
@@ -20,7 +23,7 @@ const ImgMedicina = styled.img`
     @media screen and (max-width: 768px),
     screen and (max-height: 620px) {
         width: 60px;
-}
+    }
 `;
 
 const UlHeader = styled.ul`
@@ -60,6 +63,21 @@ const UlHeader = styled.ul`
     }
     img {
         width: 40px;
+    }
+    .active {
+        background-color: #FFF;
+    }
+    span {
+        transition: .3s ease-in-out;
+    }
+    @media (max-width: 768px) {
+    span {
+        display: none;
+        }
+        li:nth-child(2),
+        li:nth-child(5) {
+            padding-left: 20px;
+        }
     }
 `;
 
