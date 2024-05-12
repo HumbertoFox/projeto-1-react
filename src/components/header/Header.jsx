@@ -1,36 +1,42 @@
 import { Header, ImgMedicina, UlHeader } from "../styles/headerstyle";
+import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
+import LogoInicial from "../../assets/pagina-inicial.png";
+import LogoDoutora from "../../assets/doutorax.png";
+import LogoDoutor from "../../assets/doutor.png";
+import LogoAgenda from "../../assets/agenda.png";
+import LogoConfirmar from "../../assets/confirmar.png";
 
 export const HeaderMenu = () => {
     return (
         <Header>
-            <ImgMedicina src="./src/assets/images/simbolo-de-medicina.png" alt="Icon Medicina" />
+            <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
             <UlHeader>
                 <li title="Relatório">
-                    <img src="./src/assets/images/pagina-inicial.png" alt="Icone Home" />
+                    <img src={LogoInicial} alt="Icone Home" />
                     <span class="li-text">Página Relatório</span>
                 </li>
                 <li>
-                    <img src="./src/assets/images/doutorax.png" alt="Icone doutora" />
+                    <img src={LogoDoutora} alt="Icone doutora" />
                     <span class="div-text">Doutora teste</span>
                 </li>
                 <li  title="Consulta Doutora">
-                    <img src="./src/assets/images/agenda.png" alt="Icone agenda" />
+                    <img src={LogoAgenda} alt="Icone agenda" />
                     <span class="li-text">Consulta</span>
                 </li>
                 <li title="Retorno Doutora">
-                    <img src="./src/assets/images/confirmar.png" alt="Icone confirmar" />
+                    <img src={LogoConfirmar} alt="Icone confirmar" />
                     <span class="li-text">Retorno</span>
                 </li>
                 <li>
-                    <img src="./src/assets/images/doutor.png" alt="Icone doutor" />
+                    <img src={LogoDoutor} alt="Icone doutor" />
                     <span class="div-text">Doutor teste</span>
                 </li>
                 <li title="Consulta Doutor">
-                    <img src="./src/assets/images/agenda.png" alt="Icone agenda" />
+                    <img src={LogoAgenda} alt="Icone agenda" />
                     <span class="li-text">Consulta</span>
                 </li>
                 <li title="Retorno Doutor">
-                    <img src="./src/assets/images/confirmar.png" alt="Icone confirmar" />
+                    <img src={LogoConfirmar} alt="Icone confirmar" />
                     <span class="li-text">Retorno</span>
                 </li>
             </UlHeader>
