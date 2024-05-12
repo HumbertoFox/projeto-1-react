@@ -13,31 +13,31 @@ export const HeaderMenu = () => {
             <UlHeader>
                 <li title="Relatório">
                     <img src={LogoInicial} alt="Icone Home" />
-                    <span class="li-text">Página Relatório</span>
+                    <span>Página Relatório</span>
                 </li>
                 <li>
                     <img src={LogoDoutora} alt="Icone doutora" />
-                    <span class="div-text">Doutora teste</span>
+                    <span>Doutora teste</span>
                 </li>
                 <li  title="Consulta Doutora">
                     <img src={LogoAgenda} alt="Icone agenda" />
-                    <span class="li-text">Consulta</span>
+                    <span>Consulta</span>
                 </li>
                 <li title="Retorno Doutora">
                     <img src={LogoConfirmar} alt="Icone confirmar" />
-                    <span class="li-text">Retorno</span>
+                    <span>Retorno</span>
                 </li>
                 <li>
                     <img src={LogoDoutor} alt="Icone doutor" />
-                    <span class="div-text">Doutor teste</span>
+                    <span>Doutor teste</span>
                 </li>
                 <li title="Consulta Doutor">
                     <img src={LogoAgenda} alt="Icone agenda" />
-                    <span class="li-text">Consulta</span>
+                    <span>Consulta</span>
                 </li>
                 <li title="Retorno Doutor">
                     <img src={LogoConfirmar} alt="Icone confirmar" />
-                    <span class="li-text">Retorno</span>
+                    <span>Retorno</span>
                 </li>
             </UlHeader>
         </Header>
