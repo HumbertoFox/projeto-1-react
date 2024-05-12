@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Header, ImgMedicina, UlHeader } from "../styles/headerstyle";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
 import LogoInicial from "../../assets/pagina-inicial.png";
@@ -8,6 +8,8 @@ import LogoAgenda from "../../assets/agenda.png";
 import LogoConfirmar from "../../assets/confirmar.png";
 
 export const HeaderMenu = () => {
+
+
     return (
         <Header>
             <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
@@ -20,7 +22,7 @@ export const HeaderMenu = () => {
                     <img src={LogoDoutora} alt="Icone doutora" />
                     <span>Doutora teste</span>
                 </li>
-                <li  title="Consulta Doutora">
+                <li title="Consulta Doutora">
                     <img src={LogoAgenda} alt="Icone agenda" />
                     <span>Consulta</span>
                 </li>
