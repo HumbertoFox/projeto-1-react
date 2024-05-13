@@ -13,7 +13,6 @@ export const HeaderMenu = () => {
 
     const handleMenuLiClick = (element) => {
         setSelectMenuLi(element);
-        console.log(element);
     };
 
     return (
