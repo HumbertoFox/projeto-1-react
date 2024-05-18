@@ -7,10 +7,10 @@ import LogoDoutor from "../../assets/doutor.png";
 import LogoAgenda from "../../assets/agenda.png";
 import LogoConfirmar from "../../assets/confirmar.png";
 import { Link } from "react-router-dom";
+var MenuSelection;
 
 export const HeaderMenu = () => {
 
-    var MenuSelection;
     const [selectMenuLi, setSelectMenuLi] = useState(MenuSelection);
 
     const handleMenuLiClick = (element) => {
