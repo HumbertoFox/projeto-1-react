@@ -17,6 +17,7 @@ const MainSecondary = styled.main`
     padding: 10px 0;
     transition: .3s ease-in-out;
     @media (max-width: 768px) {
+        width: calc(100% - 75px);
         left: 75px;
     }
     @media (max-width: 480px) {
