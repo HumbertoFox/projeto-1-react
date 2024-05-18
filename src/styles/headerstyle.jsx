@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const Header = styled.header`
     width: 200px;
@@ -32,19 +32,24 @@ const UlHeader = styled.ul`
     flex-direction: column;
     gap: 5px;
     margin-top: 10px;
+    transition: .3s ease-in-out;
     
-    a {
-        display: flex;
-        align-items: center;
-        padding: 10px;
+    li {
+        position: relative;
         transition: .3s ease-in-out;
     }
-    li:nth-child(1) a,
-    li:nth-child(3) a,
-    li:nth-child(4) a,
-    li:nth-child(6) a,
-    li:nth-child(7) a {
-        gap: 10px;
+    li:hover a {
+        color: #3C91E6;
+    }
+    li.active:hover a {
+        color: #000;
+    }
+    li:nth-child(1),
+    li:nth-child(3),
+    li:nth-child(4),
+    li:nth-child(6),
+    li:nth-child(7) {
+        padding: 5px;
     }
     li:nth-child(2),
     li:nth-child(5) {
@@ -54,27 +59,61 @@ const UlHeader = styled.ul`
         padding-left: 25px;
         cursor: default;
     }
-    li:nth-child(1):hover a,
-    li:nth-child(3):hover a,
-    li:nth-child(4):hover a,
-    li:nth-child(6):hover a,
-    li:nth-child(7):hover a {
-        background-color: #FFF;
-        border-radius: 20px 0 0 20px;
+    svg {
+        font-size: 30px;
+        transition: .3s ease-in-out;
+    }
+    a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #90EE90;
+        padding: 10px;
+        transition: .3s ease-in-out;
     }
     img {
         width: 40px;
     }
     .active {
         background-color: #FFF;
+        border-radius: 30px 0 0 30px;
     }
-    li,
+    .active a {
+        color: #3C91E6;
+        border-radius: 25px;
+    }
+    .active a::before {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: -40px;
+        right: 0;
+        border-radius: 50%;
+        box-shadow: 20px 20px 0 #FFF;
+        z-index: -1;
+    }
+    .active a::after {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        bottom: -40px;
+        right: 0;
+        border-radius: 50%;
+        box-shadow: 20px -20px 0 #FFF;
+        z-index: -1;
+    }
     span {
+        font-size: 14px;
         transition: .3s ease-in-out;
     }
     @media (max-width: 768px) {
-    span {
-        display: none;
+        span {
+            display: none;
+        }
+        a {
+            justify-content: center;
         }
         li:nth-child(2),
         li:nth-child(5) {

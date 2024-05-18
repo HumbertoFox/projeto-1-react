@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Header, ImgMedicina, UlHeader } from "../../styles/headerstyle";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
-import LogoInicial from "../../assets/pagina-inicial.png";
-import LogoDoutora from "../../assets/doutorax.png";
+import LogoDoutora from "../../assets/doutora.png";
 import LogoDoutor from "../../assets/doutor.png";
-import LogoAgenda from "../../assets/agenda.png";
-import LogoConfirmar from "../../assets/confirmar.png";
 import { Link } from "react-router-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+library.add(fas, far);
 var MenuSelection;
 
 export const HeaderMenu = () => {
@@ -27,7 +29,7 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("relatorio")}
                 >
                     <Link to={"/"}>
-                        <img src={LogoInicial} alt="Icone Home" />
+                        <FontAwesomeIcon icon="fa-solid fa-book-open-reader" />
                         <span>Página Relatório</span>
                     </Link>
                 </li>
@@ -40,7 +42,7 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("Consulta Doutora")}
                 >
                     <Link to={"/ConsultationDRA"}>
-                        <img src={LogoAgenda} alt="Icone agenda" />
+                        <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
                 </li>
@@ -49,7 +51,7 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("Retorno Doutora")}
                 >
                     <Link>
-                        <img src={LogoConfirmar} alt="Icone confirmar" />
+                        <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
                         <span>Retorno</span>
                     </Link>
                 </li>
@@ -62,7 +64,7 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("Consulta Doutor")}
                 >
                     <Link to={"/ConsultationDR"}>
-                        <img src={LogoAgenda} alt="Icone agenda" />
+                        <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
                 </li>
@@ -71,7 +73,7 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("Retorno Doutor")}
                 >
                     <Link>
-                        <img src={LogoConfirmar} alt="Icone confirmar" />
+                        <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
                         <span>Retorno</span>
                     </Link>
                 </li>

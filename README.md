@@ -13,7 +13,14 @@ npm install styled-components
 
 npm install @hookform/resolvers
 
-npm i -D react-router-dom
+npm install -D react-router-dom
+
+npm install --save @fortawesome/fontawesome-svg-core
+
+npm install --save @fortawesome/free-solid-svg-icons
+
+npm install --save @fortawesome/react-fontawesome@latest
+
 
 ##
 
