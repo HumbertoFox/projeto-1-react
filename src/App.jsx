@@ -5,10 +5,7 @@ import { AppRouters } from './pages/routes'
 function App() {
 
   return (
-    <>
-      <HeaderMenu />
-      <AppRouters />
-    </>
+    <AppRouters />
   )
 }
 

@@ -18,7 +18,7 @@ const Header = styled.header`
 
 const ImgMedicina = styled.img`
     width: 150px;
-    margin: 15px;
+    margin: 15px 15px 15px 5px;
     transition: .3s ease-in-out;
     @media screen and (max-width: 768px),
     screen and (max-height: 620px) {
@@ -33,31 +33,32 @@ const UlHeader = styled.ul`
     gap: 5px;
     margin-top: 10px;
     
-    li {
+    a {
         display: flex;
         align-items: center;
         padding: 10px;
         transition: .3s ease-in-out;
     }
-    li:nth-child(1),
-    li:nth-child(3),
-    li:nth-child(4),
-    li:nth-child(6),
-    li:nth-child(7) {
-        cursor: pointer;
+    li:nth-child(1) a,
+    li:nth-child(3) a,
+    li:nth-child(4) a,
+    li:nth-child(6) a,
+    li:nth-child(7) a {
         gap: 10px;
     }
     li:nth-child(2),
     li:nth-child(5) {
-        cursor: default;
+        display: flex;
+        align-items: center;
         gap: 15px;
         padding-left: 25px;
+        cursor: default;
     }
-    li:nth-child(1):hover,
-    li:nth-child(3):hover,
-    li:nth-child(4):hover,
-    li:nth-child(6):hover,
-    li:nth-child(7):hover {
+    li:nth-child(1):hover a,
+    li:nth-child(3):hover a,
+    li:nth-child(4):hover a,
+    li:nth-child(6):hover a,
+    li:nth-child(7):hover a {
         background-color: #FFF;
         border-radius: 20px 0 0 20px;
     }
@@ -67,6 +68,7 @@ const UlHeader = styled.ul`
     .active {
         background-color: #FFF;
     }
+    li,
     span {
         transition: .3s ease-in-out;
     }

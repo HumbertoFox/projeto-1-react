@@ -1,7 +1,14 @@
+import React from "react";
+import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
+import { HeaderMenu } from "../components/header/Header";
+
 export const Relatory = () => {
     return (
-        <section>
-            <h1>Relatório</h1>
-        </section>
+        <MainPrimary>
+            <HeaderMenu />
+            <MainSecondary>
+                <h1>Relatório</h1>
+            </MainSecondary>
+        </MainPrimary>
     )
 }

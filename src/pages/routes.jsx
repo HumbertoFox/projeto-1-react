@@ -1,3 +1,4 @@
+import React from "react";
 import {
     BrowserRouter,
     Route,
@@ -16,8 +17,9 @@ export const AppRouters = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Relatory />} />
-                <Route path="/" element={<ConsultaDRA />} />
-                <Route path="/" element={<ConsultaDR />} />
+                <Route path="/ConsultationDRA" element={<ConsultaDRA />} />
+                <Route path="/ConsultationDR" element={<ConsultaDR />} />
+                <Route path="*" element={<Relatory />} />
             </Routes>
         </BrowserRouter>
     )

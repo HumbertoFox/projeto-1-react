@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { Header, ImgMedicina, UlHeader } from "../styles/headerstyle";
+import { Header, ImgMedicina, UlHeader } from "../../styles/headerstyle";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
 import LogoInicial from "../../assets/pagina-inicial.png";
 import LogoDoutora from "../../assets/doutorax.png";
 import LogoDoutor from "../../assets/doutor.png";
 import LogoAgenda from "../../assets/agenda.png";
 import LogoConfirmar from "../../assets/confirmar.png";
+import { Link } from "react-router-dom";
 
 export const HeaderMenu = () => {
 
-    const [selectMenuLi, setSelectMenuLi] = useState("relatorio");
+    var MenuSelection;
+    const [selectMenuLi, setSelectMenuLi] = useState(MenuSelection);
 
     const handleMenuLiClick = (element) => {
         setSelectMenuLi(element);
+        MenuSelection = element;
     };
 
     return (
@@ -23,8 +26,10 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "relatorio" ? "active" : ""}
                     onClick={() => handleMenuLiClick("relatorio")}
                 >
-                    <img src={LogoInicial} alt="Icone Home" />
-                    <span>Página Relatório</span>
+                    <Link to={"/"}>
+                        <img src={LogoInicial} alt="Icone Home" />
+                        <span>Página Relatório</span>
+                    </Link>
                 </li>
                 <li>
                     <img src={LogoDoutora} alt="Icone doutora" />
@@ -34,15 +39,19 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "Consulta Doutora" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Consulta Doutora")}
                 >
-                    <img src={LogoAgenda} alt="Icone agenda" />
-                    <span>Consulta</span>
+                    <Link to={"/ConsultationDRA"}>
+                        <img src={LogoAgenda} alt="Icone agenda" />
+                        <span>Consulta</span>
+                    </Link>
                 </li>
                 <li title="Retorno Doutora"
                     className={selectMenuLi === "Retorno Doutora" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Retorno Doutora")}
                 >
-                    <img src={LogoConfirmar} alt="Icone confirmar" />
-                    <span>Retorno</span>
+                    <Link>
+                        <img src={LogoConfirmar} alt="Icone confirmar" />
+                        <span>Retorno</span>
+                    </Link>
                 </li>
                 <li>
                     <img src={LogoDoutor} alt="Icone doutor" />
@@ -52,15 +61,19 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "Consulta Doutor" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Consulta Doutor")}
                 >
-                    <img src={LogoAgenda} alt="Icone agenda" />
-                    <span>Consulta</span>
+                    <Link to={"/ConsultationDR"}>
+                        <img src={LogoAgenda} alt="Icone agenda" />
+                        <span>Consulta</span>
+                    </Link>
                 </li>
                 <li title="Retorno Doutor"
                     className={selectMenuLi === "Retorno Doutor" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Retorno Doutor")}
                 >
-                    <img src={LogoConfirmar} alt="Icone confirmar" />
-                    <span>Retorno</span>
+                    <Link>
+                        <img src={LogoConfirmar} alt="Icone confirmar" />
+                        <span>Retorno</span>
+                    </Link>
                 </li>
             </UlHeader>
         </Header>
