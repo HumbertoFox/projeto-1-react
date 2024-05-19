@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivPlan, DivRadio, FormDoctor, Input } from "../../styles/formdrstyle";
 
 export const FormPatientDr = () => {
 
@@ -62,7 +62,7 @@ export const FormPatientDr = () => {
             <input type="date" name="consultationdate" id="consultationdate" />
             <label htmlFor="observation">Observações:</label>
             <textarea name="observation" id="observation"></textarea>
-            <input type="submit" value="Agendar" />
+            <Input type="submit" value="Agendar" />
         </FormDoctor>
     )
 }

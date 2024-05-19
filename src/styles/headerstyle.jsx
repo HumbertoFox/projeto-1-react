@@ -41,6 +41,7 @@ const UlHeader = styled.ul`
     }
     li.active:hover a {
         color: #FFF;
+        text-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     }
     li:nth-child(1),
     li:nth-child(3),
