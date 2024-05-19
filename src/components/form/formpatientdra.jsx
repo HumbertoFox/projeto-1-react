@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import {  FormDoctor } from "../../styles/formdrstyle";
+import { FormDoctorx } from "../../styles/formdrxstyle";
 
 export const FormPatientDra = () => {
 
@@ -11,7 +11,7 @@ export const FormPatientDra = () => {
     } = useForm();
 
     return (
-        <FormDoctor action="" method="POST">
+        <FormDoctorx action="" method="POST">
             <label htmlFor="nome">Nome:</label>
             <input type="text" name="nome" id="nome" />
             <label htmlFor="cpf">CPF:</label>
@@ -27,6 +27,6 @@ export const FormPatientDra = () => {
             <label htmlFor="observation">Observações:</label>
             <textarea name="observation" id="observation"></textarea>
             <input type="submit" value="Agendar" />
-        </FormDoctor>
+        </FormDoctorx>
     )
 }
