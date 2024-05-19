@@ -10,7 +10,9 @@ import {
 import {
     ConsultaDRA
 } from "./consultationdra";
-import { ConsultaDR } from "./consultationdr";
+import {
+    ConsultaDR
+} from "./consultationdr";
 
 export const AppRouters = () => {
     return (

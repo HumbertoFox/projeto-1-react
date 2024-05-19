@@ -14,9 +14,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.1",
-    "@hookform/resolvers": "^3.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.4",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {

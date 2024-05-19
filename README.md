@@ -11,16 +11,15 @@ Currently, two official plugins are available:
 
 npm install styled-components
 
-npm install @hookform/resolvers
-
 npm install -D react-router-dom
+
+npm install react-hook-form
 
 npm install --save @fortawesome/fontawesome-svg-core
 
 npm install --save @fortawesome/free-solid-svg-icons
 
 npm install --save @fortawesome/react-fontawesome@latest
-
 
 ##
 

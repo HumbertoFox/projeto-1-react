@@ -11,7 +11,7 @@ const Header = styled.header`
     background-color: #90EE90;
     padding: 10px 0 10px 10px;
     transition: .3s ease-in-out;
-    @media (max-width: 768px) {
+    @media (max-width: 820px) {
         width: 75px;
     }
 `;
@@ -20,7 +20,7 @@ const ImgMedicina = styled.img`
     width: 150px;
     margin: 15px 15px 15px 5px;
     transition: .3s ease-in-out;
-    @media screen and (max-width: 768px),
+    @media screen and (max-width: 820px),
     screen and (max-height: 620px) {
         width: 60px;
     }
@@ -32,17 +32,15 @@ const UlHeader = styled.ul`
     flex-direction: column;
     gap: 5px;
     margin-top: 10px;
-    transition: .3s ease-in-out;
     
     li {
         position: relative;
-        transition: .3s ease-in-out;
     }
     li:hover a {
         color: #3C91E6;
     }
     li.active:hover a {
-        color: #000;
+        color: #FFF;
     }
     li:nth-child(1),
     li:nth-child(3),
@@ -61,7 +59,6 @@ const UlHeader = styled.ul`
     }
     svg {
         font-size: 30px;
-        transition: .3s ease-in-out;
     }
     a {
         display: flex;
@@ -106,9 +103,8 @@ const UlHeader = styled.ul`
     }
     span {
         font-size: 14px;
-        transition: .3s ease-in-out;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 820px) {
         span {
             display: none;
         }

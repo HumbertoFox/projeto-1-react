@@ -1,14 +1,18 @@
 import React from "react";
-import { HeaderMenu } from "../components/header/Header";
-import { Search } from "../components/search/search";
-import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
+import { HeaderMenu } from "../components/header/header";
+import { Search } from "../components/form/search";
+import { DivForms, MainPrimary, MainSecondary } from "../styles/mainpagestyle";
+import { FormPatientDra } from "../components/form/formpatientdra";
 
 export const ConsultaDRA = () => {
     return (
         <MainPrimary>
             <HeaderMenu />
             <MainSecondary>
-                <Search />
+                <DivForms>
+                    <Search />
+                    <FormPatientDra />
+                </DivForms>
             </MainSecondary>
         </MainPrimary>
     )
