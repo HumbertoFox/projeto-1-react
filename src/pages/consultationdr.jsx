@@ -1,7 +1,7 @@
 import React from "react";
 import { Search } from "../components/form/search";
 import { DivForms, MainPrimary, MainSecondary } from "../styles/mainpagestyle";
-import { HeaderMenu } from "../components/header/header";
+import { HeaderMenu } from "../components/header/menuheader";
 import { FormPatientDr } from "../components/form/formpatientdr";
 
 export const ConsultaDR = () => {

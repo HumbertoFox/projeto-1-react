@@ -1,6 +1,6 @@
 import React from "react";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
-import { HeaderMenu } from "../components/header/header";
+import { HeaderMenu } from "../components/header/menuheader";
 
 export const Relatory = () => {
     return (
