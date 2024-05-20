@@ -4,6 +4,9 @@ const MainPrimary = styled.main`
     width: 100%;
     min-height: 100vh;
     display: flex;
+    @media (max-width: 480px) {
+        width: 375px;
+    }
 `;
 
 const MainSecondary = styled.div`
@@ -17,9 +20,6 @@ const MainSecondary = styled.div`
     @media (max-width: 820px) {
         width: calc(100% - 75px);
         left: 75px;
-    }
-    @media (max-width: 480px) {
-        width: 375px;
     }
 `;
 
