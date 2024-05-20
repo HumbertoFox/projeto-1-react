@@ -52,7 +52,6 @@ const FormDoctor = styled.form`
         outline: none;
         margin-bottom: 5px;
     }
-
 `;
 
 const DivRadio = styled.div`

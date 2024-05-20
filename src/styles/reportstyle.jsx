@@ -9,6 +9,7 @@ const DivReportMain = styled.div`
     h1 {
         font-size: 18px;
         margin-bottom: 5px;
+        text-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     }
 `;
 
@@ -24,7 +25,7 @@ const TableFormInfo = styled.table`
 const Thead = styled.thead`
     th {
         font-size: 14px;
-        font-weight: bold;
+        text-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
     }
 `;
 
