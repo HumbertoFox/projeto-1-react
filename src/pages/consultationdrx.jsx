@@ -2,16 +2,16 @@ import React from "react";
 import { HeaderMenu } from "../components/header/menuheader";
 import { Search } from "../components/form/search";
 import { DivForms, MainPrimary, MainSecondary } from "../styles/mainpagestyle";
-import { FormPatientDra } from "../components/form/formpatientdra";
+import { FormPatientDrX } from "../components/form/formpatientdrx";
 
-export const ConsultaDRA = () => {
+export const ConsultationDrX = () => {
     return (
         <MainPrimary>
             <HeaderMenu />
             <MainSecondary>
                 <DivForms>
                     <Search />
-                    <FormPatientDra />
+                    <FormPatientDrX />
                 </DivForms>
             </MainSecondary>
         </MainPrimary>

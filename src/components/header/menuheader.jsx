@@ -24,9 +24,9 @@ export const HeaderMenu = () => {
         <Header>
             <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
             <UlHeader>
-                <li title="Relatório"
-                    className={selectMenuLi === "relatorio" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("relatorio")}
+                <li title="Calendario"
+                    className={selectMenuLi === "calendario" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("calendario")}
                 >
                     <Link to={"/"}>
                         <FontAwesomeIcon icon="fa-solid fa-book-open-reader" />
@@ -41,18 +41,18 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "Consulta Doutora" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Consulta Doutora")}
                 >
-                    <Link to={"/ConsultationDRA"}>
+                    <Link to={"/ConsultationDRX"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
                 </li>
-                <li title="Retorno Doutora"
-                    className={selectMenuLi === "Retorno Doutora" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("Retorno Doutora")}
+                <li title="Pacientes Doutora"
+                    className={selectMenuLi === "Patients Doctorx" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("Patients Doctorx")}
                 >
-                    <Link>
+                    <Link to={"/ReportDoctorX"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
-                        <span>Retorno</span>
+                        <span>Lista Pacientes</span>
                     </Link>
                 </li>
                 <li>
@@ -63,18 +63,18 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "Consulta Doutor" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Consulta Doutor")}
                 >
-                    <Link to={"/ConsultationDR"}>
+                    <Link to={"/ConsultationDRY"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
                 </li>
-                <li title="Retorno Doutor"
-                    className={selectMenuLi === "Retorno Doutor" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("Retorno Doutor")}
+                <li title="Pacientes Doutor"
+                    className={selectMenuLi === "Patients doctor" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("Patients doctor")}
                 >
-                    <Link>
+                    <Link to={"/ReportDoctorY"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
-                        <span>Retorno</span>
+                        <span>Lista Pacientes</span>
                     </Link>
                 </li>
             </UlHeader>

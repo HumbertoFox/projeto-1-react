@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DivPlan, DivRadio, FormDoctor, Input } from "../../styles/formdrstyle";
+import { DivParticular, DivPlan, DivRadio, FormDoctor, Input } from "../../styles/formdrstyle";
 
-export const FormPatientDr = () => {
+export const FormPatientDrX = () => {
 
-    const [selectRadio, setSelectRadio] = useState("");
+    const [selectRadio, setSelectRadio] = useState("plan");
     const swapSelectedRadio = e => {
         setSelectRadio(e.target.value);
     }
@@ -44,20 +44,15 @@ export const FormPatientDr = () => {
                     />
                     Particular
                 </label>
-                <label htmlFor="courtesy">
-                    <input type="radio"
-                        value="courtesy"
-                        id="courtesy"
-                        checked={selectRadio === "courtesy" ? true : false}
-                        onChange={swapSelectedRadio}
-                    />
-                    Cortesia
-                </label>
             </DivRadio>
-            <DivPlan>
+            <DivPlan className={selectRadio}>
                 <label htmlFor="plan">Plano:</label>
                 <input type="text" name="plan" id="plan" />
             </DivPlan>
+            <DivParticular className={selectRadio}>
+                <label htmlFor="particular">Valor:</label>
+                <input type="number" name="particular" id="particular" />
+            </DivParticular>
             <label htmlFor="consultationdate">Data da Consulta</label>
             <input type="date" name="consultationdate" id="consultationdate" />
             <label htmlFor="observation">Observações:</label>

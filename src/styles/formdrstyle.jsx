@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const FormDoctor = styled.form`
     display: flex;
     flex-direction: column;
 
     label {
+        font-size: 14px;
         padding-left: 5px;
     }
     input[type=text],
@@ -74,7 +75,30 @@ const DivRadio = styled.div`
 `;
 
 const DivPlan = styled.div`
-    display: flex;
+    display: none;
+
+${({ className }) => {
+        if (className === "plan") {
+            return css`
+            display: flex;
+        `;
+        }
+
+    }};
+    flex-direction: column;
+`;
+
+const DivParticular = styled.div`
+    display: none;
+
+${({ className }) => {
+        if (className === "particular") {
+            return css`
+                display: flex;
+            `;
+        }
+
+    }}
     flex-direction: column;
 `;
 
@@ -101,4 +125,4 @@ const Input = styled.input.attrs({ type: 'submit' })`
     }
 `;
 
-export { FormDoctor, DivRadio, DivPlan, Input };
+export { FormDoctor, DivRadio, DivPlan, DivParticular, Input };

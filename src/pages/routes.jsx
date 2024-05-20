@@ -5,23 +5,31 @@ import {
     Routes
 } from "react-router-dom";
 import {
-    Relatory
-} from "./relarory";
+    HomePage
+} from "./home";
 import {
-    ConsultaDRA
-} from "./consultationdra";
+    ConsultationDrX
+} from "./consultationdrx";
 import {
-    ConsultaDR
-} from "./consultationdr";
+    ConsultationDrY
+} from "./consultationdry";
+import {
+    ReportDoctorxPage
+} from "./reportdoctorx";
+import {
+    ReportDoctoryPage
+} from "./reportdoctory";
 
 export const AppRouters = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Relatory />} />
-                <Route path="/ConsultationDRA" element={<ConsultaDRA />} />
-                <Route path="/ConsultationDR" element={<ConsultaDR />} />
-                <Route path="*" element={<Relatory />} />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/ConsultationDRX" element={<ConsultationDrX />} />
+                <Route path="/ConsultationDRY" element={<ConsultationDrY />} />
+                <Route path="/ReportDoctorX" element={<ReportDoctorxPage />} />
+                <Route path="/ReportDoctorY" element={<ReportDoctoryPage />} />
+                <Route path="*" element={<HomePage />} />
             </Routes>
         </BrowserRouter>
     )

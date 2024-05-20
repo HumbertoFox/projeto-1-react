@@ -5,6 +5,7 @@ const FormSerach = styled.form`
     flex-direction: column;
 
     label {
+        font-size: 15px;
         padding-left: 5px;
     }
     input[type=search] {
