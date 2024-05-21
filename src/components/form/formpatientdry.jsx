@@ -9,6 +9,10 @@ export const FormPatientDrY = () => {
         setSelectRadio(e.target.value);
     }
 
+    const onSubmit = e => {
+        console.log(e);
+    }
+
     const {
         register,
         handleSubmit,
@@ -16,15 +20,15 @@ export const FormPatientDrY = () => {
     } = useForm();
 
     return (
-        <FormDoctor action="" method="POST">
-            <label htmlFor="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" />
+        <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="name">Nome:</label>
+            <input type="text" id="name" {...register("name")} />
             <label htmlFor="cpf">CPF:</label>
-            <input type="number" name="cpf" id="cpf" />
-            <label htmlFor="">Telefone:</label>
-            <input type="tel" name="contatotel" id="contatotel" />
+            <input type="number" id="cpf" {...register("cpf")} />
+            <label htmlFor="contacttel">Telefone:</label>
+            <input type="tel" id="contacttel" {...register("contacttel")} />
             <label htmlFor="email">Email:</label>
-            <input type="email" name="email" id="email" />
+            <input type="email" id="email" {...register("email")} />
             <DivRadio>
                 <label htmlFor="plan">
                     <input type="radio"
@@ -56,16 +60,16 @@ export const FormPatientDrY = () => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <label htmlFor="plan">Plano:</label>
-                <input type="text" name="plan" id="plan" />
+                <input type="text" id="plan" {...register("plan")} />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <label htmlFor="particular">Valor:</label>
-                <input type="number" name="particular" id="particular" />
+                <input type="number" id="particular" {...register("particular")} />
             </DivParticular>
             <label htmlFor="consultationdate">Data da Consulta</label>
-            <input type="date" name="consultationdate" id="consultationdate" />
+            <input type="date" id="consultationdate" {...register("consultationdate")} />
             <label htmlFor="observation">Observações:</label>
-            <textarea name="observation" id="observation"></textarea>
+            <textarea id="observation" {...register("observation")}></textarea>
             <Input type="submit" value="Agendar" />
         </FormDoctor>
     )

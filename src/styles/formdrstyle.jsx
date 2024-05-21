@@ -73,8 +73,22 @@ const DivRadio = styled.div`
     }
 `;
 
+const DivNomeEd = styled.div`
+    display: none;
+    flex-direction: column;
+
+${({ className }) => {
+        if (className === "edificio") {
+            return css`
+            display: flex;
+        `;
+        }
+    }};
+`;
+
 const DivPlan = styled.div`
     display: none;
+    flex-direction: column;
 
 ${({ className }) => {
         if (className === "plan") {
@@ -82,9 +96,7 @@ ${({ className }) => {
             display: flex;
         `;
         }
-
     }};
-    flex-direction: column;
 `;
 
 const DivParticular = styled.div`
@@ -124,4 +136,4 @@ const Input = styled.input.attrs({ type: 'submit' })`
     }
 `;
 
-export { FormDoctor, DivRadio, DivPlan, DivParticular, Input };
+export { FormDoctor, DivRadio, DivNomeEd, DivPlan, DivParticular, Input };
