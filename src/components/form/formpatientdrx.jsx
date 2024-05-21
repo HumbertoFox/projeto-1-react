@@ -128,7 +128,7 @@ export const FormPatientDrX = () => {
             <label htmlFor="consultationdate">Data da Consulta</label>
             <input type="date" id="consultationdate" {...register("consultationdate")} />
             <label htmlFor="observation">Observações:</label>
-            <textarea name="observation" id="observation"{...register("observation")} ></textarea>
+            <textarea name="observation" id="observation" {...register("observation")}></textarea>
             <Input type="submit" value="Agendar" />
         </FormDoctor>
     )
