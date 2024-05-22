@@ -1,7 +1,7 @@
 import React from "react";
-import { FormSerach } from "../../styles/formsearch";
-import { Input } from "../../styles/formdrstyle";
 import { useForm } from "react-hook-form";
+import { FormSerach } from "../../styles/formsearch";
+import { SubmitButton } from "../button/buttonsubmit";
 
 export const Search = () => {
 
@@ -19,7 +19,7 @@ export const Search = () => {
         <FormSerach action="/" method="POST" onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="search_patient">Pesquisar Paciente</label>
             <input type="search" id="search_patient" {...register("search_patient")} />
-            <Input type="submit" value="Pesquisar" />
+            <SubmitButton value="Pesquisar" />
         </FormSerach>
     )
 }

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor, Input } from "../../styles/formdrstyle";
+import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { viaCepApi } from "../../services/viacep";
+import { SubmitButton } from "../button/buttonsubmit";
 
 export const FormPatientDrX = () => {
 
@@ -42,7 +43,7 @@ export const FormPatientDrX = () => {
                     setValue('street', data.logradouro);
                     setValue('neighborhood', data.bairro);
                     setValue('city', data.localidade);
-                    setFocus('nunresidence');
+                    setFocus('residencenumber');
                 } else {
                     clearZipCode();
                     setFocus('contacttel');
@@ -154,7 +155,7 @@ export const FormPatientDrX = () => {
             <input type="date" id="consultationdate" {...register("consultationdate")} />
             <label htmlFor="observation">Observações:</label>
             <textarea name="observation" id="observation" {...register("observation")}></textarea>
-            <Input type="submit" value="Agendar" />
+            <SubmitButton value="Agendar" />
         </FormDoctor>
     )
 };

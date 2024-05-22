@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DivParticular, DivPlan, DivRadio, FormDoctor, Input } from "../../styles/formdrstyle";
+import { DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { SubmitButton } from "../button/buttonsubmit";
 
 export const FormPatientDrY = () => {
 
@@ -70,7 +71,7 @@ export const FormPatientDrY = () => {
             <input type="date" id="consultationdate" {...register("consultationdate")} />
             <label htmlFor="observation">Observações:</label>
             <textarea id="observation" {...register("observation")}></textarea>
-            <Input type="submit" value="Agendar" />
+            <SubmitButton value="Agendar" />
         </FormDoctor>
     )
 }
