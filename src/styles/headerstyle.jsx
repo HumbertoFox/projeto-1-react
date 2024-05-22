@@ -11,6 +11,7 @@ const Header = styled.header`
     background-color: #90EE90;
     padding: 10px 0 10px 10px;
     transition: .3s ease-in-out;
+    overflow-x: hidden;
     @media (max-width: 820px) {
         width: 75px;
     }
