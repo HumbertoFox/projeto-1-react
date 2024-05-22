@@ -15,24 +15,49 @@ export const FormPatientDrX = () => {
         setSelectRadio(e.target.value);
     };
 
-    const checkedCep = async (e) => {
+    const checkedZipCode = async (e) => {
+
+        const clearZipCode = () => {
+            setValue('zipcode', "");
+            setValue('street', "");
+            setValue('neighborhood', "");
+            setValue('city', "");
+        };
+
         if (!e.target.value) {
+            clearZipCode();
             setFocus('contacttel');
-            alert("O campo CEP está vazio!");
+            alert("Formato de CEP inválido.");
             return;
         };
-        const cep = e.target.value;
+
+        const zipcode = e.target.value.replace(/\D/g, '');
+        var validazipcode = /^[0-9]{8}$/;
+
         try {
-            const response = await viaCepApi.get(`${cep}/json/`)
-            const data = await response.data;
-            setValue('street', data.logradouro);
-            setValue('neighborhood', data.bairro);
-            setValue('city', data.localidade);
-            setFocus('residencenumber');
+            if (validazipcode.test(zipcode)) {
+                const data = await viaCepApi.get(`${zipcode}/json/`)
+                    .then(res => res.data);
+                if (data && !data.erro) {
+                    setValue('street', data.logradouro);
+                    setValue('neighborhood', data.bairro);
+                    setValue('city', data.localidade);
+                    setFocus('nunresidence');
+                } else {
+                    clearZipCode();
+                    setFocus('contacttel');
+                    alert("CEP não encontrado.");
+                }
+            } else {
+                clearZipCode();
+                setFocus('contacttel');
+                alert("Formato de CEP inválido.");
+            }
         } catch (error) {
-            console.log("ERROR" + error);
-            alert("CEP não encontrado! Verifique os números digitado");
+            console.error(error);
+            clearZipCode();
             setFocus('contacttel');
+            alert(`Formato de CEP inválido ou não encontrado.`);
             return;
         }
     };
@@ -57,8 +82,8 @@ export const FormPatientDrX = () => {
             <input type="number" id="cpf" {...register("cpf")} />
             <label htmlFor="contacttel">Telefone:</label>
             <input type="tel" id="contacttel" {...register("contacttel")} />
-            <label htmlFor="cep">CEP</label>
-            <input type="number" id="cep" {...register("cep")} onBlur={checkedCep} />
+            <label htmlFor="zipcode">CEP</label>
+            <input type="number" id="zipcode" {...register("zipcode")} onBlur={checkedZipCode} />
             <label htmlFor="street">Logradouro: Av/Travessa/Rua</label>
             <input type="text" id="street" {...register("street")} />
             <label htmlFor="residencenumber">Número da Casa/Edifício</label>
