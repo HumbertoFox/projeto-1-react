@@ -4,10 +4,6 @@ const FormDoctor = styled.form`
     display: flex;
     flex-direction: column;
 
-    label {
-        font-size: 14px;
-        padding-left: 5px;
-    }
     input[type=text],
     input[type=number],
     input[type=tel],

@@ -4,10 +4,6 @@ const FormSerach = styled.form`
     display: flex;
     flex-direction: column;
 
-    label {
-        font-size: 15px;
-        padding-left: 5px;
-    }
     input[type=search] {
         width: 300px;
         height: 30px;

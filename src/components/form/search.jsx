@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { FormSerach } from "../../styles/formsearch";
 import { SubmitButton } from "../button/buttonsubmit";
+import { LabelText } from "../../styles/labelstyle";
 
 export const Search = () => {
 
@@ -17,7 +18,7 @@ export const Search = () => {
 
     return (
         <FormSerach action="/" method="POST" onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="search_patient">Pesquisar Paciente</label>
+            <LabelText htmlFor="search_patient">Pesquisar Paciente</LabelText>
             <input type="search" id="search_patient" {...register("search_patient")} />
             <SubmitButton value="Pesquisar" />
         </FormSerach>

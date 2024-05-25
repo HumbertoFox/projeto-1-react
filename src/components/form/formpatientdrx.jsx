@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
+import { LabelText } from "../../styles/labelstyle";
 
 export const FormPatientDrX = () => {
 
@@ -77,20 +78,20 @@ export const FormPatientDrX = () => {
 
     return (
         <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="name">Nome:</label>
+            <LabelText htmlFor="name">Nome:</LabelText>
             <input type="text" id="name" {...register("name")} />
-            <label htmlFor="cpf">CPF:</label>
+            <LabelText htmlFor="cpf">CPF:</LabelText>
             <input type="number" id="cpf" {...register("cpf")} />
-            <label htmlFor="contacttel">Telefone:</label>
+            <LabelText htmlFor="contacttel">Telefone:</LabelText>
             <input type="tel" id="contacttel" {...register("contacttel")} />
-            <label htmlFor="zipcode">CEP</label>
+            <LabelText htmlFor="zipcode">CEP</LabelText>
             <input type="number" id="zipcode" {...register("zipcode")} onBlur={checkedZipCode} />
-            <label htmlFor="street">Logradouro: Av/Travessa/Rua</label>
+            <LabelText htmlFor="street">Logradouro: Av/Travessa/Rua</LabelText>
             <input type="text" id="street" {...register("street")} />
-            <label htmlFor="residencenumber">Número da Casa/Edifício</label>
+            <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
             <input type="text" id="residencenumber" {...register("residencenumber")} />
             <DivRadio>
-                <label htmlFor="casa">
+                <LabelText htmlFor="casa">
                     <input type="radio"
                         id="casa"
                         value="casa"
@@ -98,8 +99,8 @@ export const FormPatientDrX = () => {
                         onChange={swapRadioSelect}
                     />
                     Casa
-                </label>
-                <label htmlFor="edificio">
+                </LabelText>
+                <LabelText htmlFor="edificio">
                     <input type="radio"
                         id="edificio"
                         value="edificio"
@@ -107,24 +108,24 @@ export const FormPatientDrX = () => {
                         onChange={swapRadioSelect}
                     />
                     Edifício
-                </label>
+                </LabelText>
             </DivRadio>
             <DivNomeEd className={radioSelect}>
-                <label htmlFor="building">Nome do Edifício</label>
+                <LabelText htmlFor="building">Nome do Edifício</LabelText>
                 <input type="text" id="building" {...register("building")} />
-                <label htmlFor="block">Bloco</label>
+                <LabelText htmlFor="block">Bloco</LabelText>
                 <input type="text" id="block" {...register("block")} />
-                <label htmlFor="apartment">Apartamento</label>
+                <LabelText htmlFor="apartment">Apartamento</LabelText>
                 <input type="text" id="apartment" {...register("apartment")} />
             </DivNomeEd>
-            <label htmlFor="neighborhood">Bairro/Distrito</label>
+            <LabelText htmlFor="neighborhood">Bairro/Distrito</LabelText>
             <input type="text" id="neighborhood" {...register("neighborhood")} />
-            <label htmlFor="city">Cidade</label>
+            <LabelText htmlFor="city">Cidade</LabelText>
             <input type="text" id="city" {...register("city")} />
-            <label htmlFor="email">Email:</label>
+            <LabelText htmlFor="email">Email:</LabelText>
             <input type="email" id="email" {...register("email")} />
             <DivRadio>
-                <label htmlFor="plan">
+                <LabelText htmlFor="plan">
                     <input type="radio"
                         id="plan"
                         value="plan"
@@ -132,8 +133,8 @@ export const FormPatientDrX = () => {
                         onChange={swapSelectedRadio}
                     />
                     Plano
-                </label>
-                <label htmlFor="particular">
+                </LabelText>
+                <LabelText htmlFor="particular">
                     <input type="radio"
                         value="particular"
                         id="particular"
@@ -141,19 +142,19 @@ export const FormPatientDrX = () => {
                         onChange={swapSelectedRadio}
                     />
                     Particular
-                </label>
+                </LabelText>
             </DivRadio>
             <DivPlan className={selectRadio}>
-                <label htmlFor="plan">Plano:</label>
+                <LabelText htmlFor="plan">Plano:</LabelText>
                 <input type="text" id="plan" {...register("plan")} />
             </DivPlan>
             <DivParticular className={selectRadio}>
-                <label htmlFor="particular">Valor:</label>
+                <LabelText htmlFor="particular">Valor:</LabelText>
                 <input type="number" id="particular" {...register("particular")} />
             </DivParticular>
-            <label htmlFor="consultationdate">Data da Consulta</label>
+            <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input type="date" id="consultationdate" {...register("consultationdate")} />
-            <label htmlFor="observation">Observações:</label>
+            <LabelText htmlFor="observation">Observações:</LabelText>
             <textarea name="observation" id="observation" {...register("observation")}></textarea>
             <SubmitButton value="Agendar" />
         </FormDoctor>
