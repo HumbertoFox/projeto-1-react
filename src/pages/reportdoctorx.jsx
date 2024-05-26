@@ -9,7 +9,7 @@ export const ReportDoctorxPage = () => {
             <HeaderMenu />
             <MainSecondary>
                 <DivReportMain>
-                    <h1>Lista de Pacientes do Doutora ???</h1>
+                    <h1>Lista de Pacientes da Doutora CRM</h1>
                     <DivInforReport>
                         <TableFormInfo>
                             <Thead>

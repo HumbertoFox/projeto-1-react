@@ -30,7 +30,7 @@ export const HeaderMenu = () => {
                 >
                     <Link to={"/"}>
                         <FontAwesomeIcon icon="fa-solid fa-book-open-reader" />
-                        <span>Página Relatório</span>
+                        <span>Calendario</span>
                     </Link>
                 </li>
                 <li>

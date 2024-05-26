@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 const Input = styled.input.attrs({ type: 'submit' })`
     font-size: 15px;
+    color: grey;
     background-color: #90EE90;
     padding: 5px 10px;
     border: 1px solid #D2D4DE;
     border-radius: 5px;
     cursor: pointer;
-    margin: 10px auto;
+    margin: 0 auto;
     transition: .2s ease-in-out;
     &:hover {
         border: 1px solid hsla(205.46, 86.5%, 46.47%, .5);

@@ -46,6 +46,7 @@ const FormDoctor = styled.form`
         border: 1px solid #D2D4DE;
         border-radius: 5px;
         outline: none;
+        padding: 5px;
         margin-bottom: 5px;
     }
 `;

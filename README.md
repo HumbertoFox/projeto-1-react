@@ -23,6 +23,10 @@ npm install --save @fortawesome/free-solid-svg-icons
 
 npm install --save @fortawesome/react-fontawesome@latest
 
+npm install --save react-big-calendar
+
+npm install --save moment react-moment
+
 ##
 
 ### Construído com
