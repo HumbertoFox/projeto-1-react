@@ -22,7 +22,7 @@ export const FormPatientDrX = () => {
         const clearZipCode = () => {
             setValue('zipcode', "");
             setValue('street', "");
-            setValue('neighborhood', "");
+            setValue('district', "");
             setValue('city', "");
         };
 
@@ -42,7 +42,7 @@ export const FormPatientDrX = () => {
                     .then(res => res.data);
                 if (data && !data.erro) {
                     setValue('street', data.logradouro);
-                    setValue('neighborhood', data.bairro);
+                    setValue('district', data.bairro);
                     setValue('city', data.localidade);
                     setFocus('residencenumber');
                 } else {
@@ -118,8 +118,8 @@ export const FormPatientDrX = () => {
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
                 <input type="text" id="apartment" {...register("apartment")} />
             </DivNomeEd>
-            <LabelText htmlFor="neighborhood">Bairro/Distrito</LabelText>
-            <input type="text" id="neighborhood" {...register("neighborhood")} />
+            <LabelText htmlFor="district">Bairro/Distrito</LabelText>
+            <input type="text" id="district" {...register("district")} />
             <LabelText htmlFor="city">Cidade</LabelText>
             <input type="text" id="city" {...register("city")} />
             <LabelText htmlFor="email">Email:</LabelText>
