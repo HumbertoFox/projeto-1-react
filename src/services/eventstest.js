@@ -4,18 +4,18 @@ const currentDay = new Date().getDate();
 
 const eventsTest = [{
     id: 1,
-    title: 'Paciente Doutora',
+    title: 'Paciente Ciclano',
     start: new Date(currentYear, currentMonth, currentDay, 14, 0),
     end: new Date(currentYear, currentMonth, currentDay, 14, 30),
-    desc: 'Paciente Fulano',
+    desc: 'Paciente Doutora',
     tipo: 'activity'
 },
 {
     id: 2,
-    title: 'Paciente Doutor',
+    title: 'Paciente Fulano',
     start: new Date(currentYear, currentMonth, currentDay, 7, 0),
     end: new Date(currentYear, currentMonth, currentDay, 7, 10),
-    desc: 'Paciente Ciclano',
+    desc: 'Paciente Doutor',
     tipo: 'activity'
 }];
 

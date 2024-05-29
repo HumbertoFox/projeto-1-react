@@ -5,7 +5,7 @@ const MainPrimary = styled.main`
     min-height: 100vh;
     display: flex;
     @media (max-width: 480px) {
-        width: 375px;
+        min-width: 375px;
     }
 `;
 

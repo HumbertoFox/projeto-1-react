@@ -8,6 +8,7 @@ import { HeaderMenu } from "../components/header/menuheader";
 import { DivHomeMain } from "../styles/homestyle";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { eventsTest } from "../services/eventstest";
+import { ActivityActive } from "../components/modal/eventactivity";
 
 const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -15,6 +16,15 @@ const localizer = momentLocalizer(moment);
 export const HomePage = () => {
 
     const [events, setEvents] = useState(eventsTest);
+    const [eventSelected, setEventSelected] = useState(null);
+
+    const handleEventSelectClick = (e) => {
+        setEventSelected(e);
+    };
+
+    const handleEventSelectClose = () => {
+        setEventSelected(null);
+    };
 
     return (
         <MainPrimary>
@@ -27,8 +37,15 @@ export const HomePage = () => {
                         events={events}
                         localizer={localizer}
                         resizable
+                        onSelectEvent={handleEventSelectClick}
                         className='calendar'
                     />
+                    {eventSelected && (
+                        <ActivityActive
+                            event={eventSelected}
+                            onClose={handleEventSelectClose}
+                        />
+                    )}
                 </DivHomeMain>
             </MainSecondary>
         </MainPrimary>
