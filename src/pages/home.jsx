@@ -18,6 +18,12 @@ export const HomePage = () => {
     const [events, setEvents] = useState(eventsTest);
     const [eventSelected, setEventSelected] = useState(null);
 
+    const styleColor = (e) => ({
+        style: {
+            backgroundColor: e.color
+        }
+    });
+
     const handleEventSelectClick = (e) => {
         setEventSelected(e);
     };
@@ -37,6 +43,7 @@ export const HomePage = () => {
                         events={events}
                         localizer={localizer}
                         resizable
+                        eventPropGetter={styleColor}
                         onSelectEvent={handleEventSelectClick}
                         className='calendar'
                     />

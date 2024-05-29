@@ -8,6 +8,7 @@ const eventsTest = [{
     start: new Date(currentYear, currentMonth, currentDay, 14, 0),
     end: new Date(currentYear, currentMonth, currentDay, 14, 30),
     desc: 'Paciente Doutora',
+    color: '#90EE90',
     tipo: 'activity'
 },
 {
@@ -16,6 +17,7 @@ const eventsTest = [{
     start: new Date(currentYear, currentMonth, currentDay, 7, 0),
     end: new Date(currentYear, currentMonth, currentDay, 7, 10),
     desc: 'Paciente Doutor',
+    color: '#3C91E6',
     tipo: 'activity'
 }];
 
