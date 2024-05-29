@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import {
+    DivNomeEd,
+    DivParticular,
+    DivPlan,
+    DivRadio,
+    FormDoctor
+} from "../../styles/formdrstyle";
 import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
