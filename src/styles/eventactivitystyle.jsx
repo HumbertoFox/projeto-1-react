@@ -1,5 +1,16 @@
 import styled, { keyframes } from "styled-components";
 
+const FaceIn = keyframes`
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+
+    100% {
+        opacity: 1;
+    }
+`;
+
 const DivMaimEvents = styled.div`
     position: fixed;
     width: 100%;
@@ -39,17 +50,6 @@ const DivEvents = styled.div`
     }
     p:nth-child(2) {
         margin: 0 auto;
-    }
-`;
-
-const FaceIn = keyframes`
-    0% {
-        opacity: 0;
-        transform: translate3d(0, -100%, 0);
-    }
-
-    100% {
-        opacity: 1;
     }
 `;
 
