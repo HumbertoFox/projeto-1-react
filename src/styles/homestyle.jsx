@@ -4,4 +4,10 @@ const DivHomeMain = styled.div`
     width: 100%;
 `;
 
-export { DivHomeMain };
+const DivToolbarCalendar = styled.div`
+    button {
+        cursor: pointer;
+    }
+`;
+
+export { DivHomeMain, DivToolbarCalendar };

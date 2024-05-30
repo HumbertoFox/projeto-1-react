@@ -6,7 +6,7 @@ import widthDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import { HeaderMenu } from "../components/header/menuheader";
-import { DivHomeMain } from "../styles/homestyle";
+import { DivHomeMain, DivToolbarCalendar } from "../styles/homestyle";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { eventsTest } from "../services/eventstest";
 import { ActivityActive } from "../components/modal/eventactivity";
@@ -33,6 +33,29 @@ export const HomePage = () => {
         setEventSelected(null);
     };
 
+    const CustomToolbar = ({
+        onView = ['month', 'week', 'day', 'agenda'],
+        label = ['date', 'label'],
+        onNavigate = ['TODAY', 'PREV', 'NEXT']
+    }) => (
+        <DivToolbarCalendar className="rbc-toolbar">
+            <div className="rbc-btn-group">
+                <button type="button" onClick={() => onNavigate('PREV')}>Voltar</button>
+                <button type="button" onClick={() => onNavigate('TODAY')}>Hoje</button>
+                <button type="button" onClick={() => onNavigate('NEXT')}>Avançar</button>
+            </div>
+            <div className="rbc-toolbar-label">
+                <h2>{label}</h2>
+            </div>
+            <div className="rbc-btn-group">
+                <button type="button" onClick={() => onView('day')}>Dia</button>
+                <button type="button" onClick={() => onView('week')}>Semana</button>
+                <button type="button" onClick={() => onView('month')}>Mês</button>
+                <button type="button" onClick={() => onView('agenda')}>Agenda</button>
+            </div>
+        </DivToolbarCalendar>
+    );
+
     return (
         <MainPrimary>
             <HeaderMenu />
@@ -47,6 +70,9 @@ export const HomePage = () => {
                         eventPropGetter={styleColor}
                         onSelectEvent={handleEventSelectClick}
                         className='calendar'
+                        components={{
+                            toolbar: CustomToolbar,
+                        }}
                     />
                     {eventSelected && (
                         <ActivityActive
