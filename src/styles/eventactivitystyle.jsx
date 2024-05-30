@@ -5,7 +5,6 @@ const FaceIn = keyframes`
         opacity: 0;
         transform: translate3d(0, -100%, 0);
     }
-
     100% {
         opacity: 1;
     }
