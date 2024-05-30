@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const DivMaimEvents = styled.div`
     position: fixed;
@@ -25,7 +25,7 @@ const DivEvents = styled.div`
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
-    transition: .3s ease-in-out;
+    animation: ${FaceIn} .4s ease-in-out;
 
     h2 {
         font-size: 18px;
@@ -39,6 +39,17 @@ const DivEvents = styled.div`
     }
     p:nth-child(2) {
         margin: 0 auto;
+    }
+`;
+
+const FaceIn = keyframes`
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -100%, 0);
+    }
+
+    100% {
+        opacity: 1;
     }
 `;
 
