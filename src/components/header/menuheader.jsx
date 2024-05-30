@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header, ImgMedicina, UlHeader } from "../../styles/headerstyle";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
 import LogoDoutora from "../../assets/doutora.png";
@@ -9,16 +9,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 library.add(fas, far);
-var MenuSelection;
 
 export const HeaderMenu = () => {
 
-    const [selectMenuLi, setSelectMenuLi] = useState(MenuSelection);
+    const [selectMenuLi, setSelectMenuLi] = useState("");
 
     const handleMenuLiClick = (element) => {
         setSelectMenuLi(element);
-        MenuSelection = element;
+        localStorage.setItem("activeMenuSelection", element)
     };
+
+    useEffect(() => {
+        const activeMenuSelection = localStorage.getItem("activeMenuSelection");
+        if (activeMenuSelection) {
+            setSelectMenuLi(activeMenuSelection);
+        }
+    }, []);
 
     return (
         <Header>
