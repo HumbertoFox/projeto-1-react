@@ -30,7 +30,8 @@ export const HeaderMenu = () => {
         <Header>
             <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
             <UlHeader>
-                <li title="Calendario"
+                <li key={"Calendario"}
+                    title="Calendario"
                     className={selectMenuLi === "calendario" ? "active" : ""}
                     onClick={() => handleMenuLiClick("calendario")}
                 >
@@ -43,7 +44,8 @@ export const HeaderMenu = () => {
                     <img src={LogoDoutora} alt="Icone doutora" />
                     <span>Doutora teste</span>
                 </li>
-                <li title="Consulta Doutora"
+                <li key={"Consulta Doutora"}
+                    title="Consulta Doutora"
                     className={selectMenuLi === "Consulta Doutora" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Consulta Doutora")}
                 >
@@ -52,7 +54,8 @@ export const HeaderMenu = () => {
                         <span>Consulta</span>
                     </Link>
                 </li>
-                <li title="Pacientes Doutora"
+                <li key={"Pacientes Doutora"}
+                    title="Pacientes Doutora"
                     className={selectMenuLi === "Patients Doctorx" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Patients Doctorx")}
                 >
@@ -65,7 +68,8 @@ export const HeaderMenu = () => {
                     <img src={LogoDoutor} alt="Icone doutor" />
                     <span>Doutor teste</span>
                 </li>
-                <li title="Consulta Doutor"
+                <li key={"Consulta Doutor"}
+                    title="Consulta Doutor"
                     className={selectMenuLi === "Consulta Doutor" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Consulta Doutor")}
                 >
@@ -74,7 +78,8 @@ export const HeaderMenu = () => {
                         <span>Consulta</span>
                     </Link>
                 </li>
-                <li title="Pacientes Doutor"
+                <li key={"Pacientes Doutor"}
+                    title="Pacientes Doutor"
                     className={selectMenuLi === "Patients doctor" ? "active" : ""}
                     onClick={() => handleMenuLiClick("Patients doctor")}
                 >
