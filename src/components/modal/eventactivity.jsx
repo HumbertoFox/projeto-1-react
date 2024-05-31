@@ -17,4 +17,4 @@ export const ActivityActive = ({ event, onClose }) => {
             </DivEvents>
         </DivMaimEvents>
     )
-}
+};

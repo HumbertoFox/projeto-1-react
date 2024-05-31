@@ -28,4 +28,4 @@ export const ReportDoctorxPage = () => {
             </MainSecondary>
         </MainPrimary>
     )
-}
+};

@@ -16,4 +16,4 @@ export const ConsultationDrX = () => {
             </MainSecondary>
         </MainPrimary>
     )
-}
+};

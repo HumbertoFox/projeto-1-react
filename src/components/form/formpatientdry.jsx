@@ -75,4 +75,4 @@ export const FormPatientDrY = () => {
             <SubmitButton value="Agendar" />
         </FormDoctor>
     )
-}
+};
