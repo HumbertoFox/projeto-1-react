@@ -30,10 +30,10 @@ export const HeaderMenu = () => {
         <Header>
             <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
             <UlHeader>
-                <li key={"Calendario"}
+                <li key={"Calendar"}
                     title="Calendario"
-                    className={selectMenuLi === "calendario" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("calendario")}
+                    className={selectMenuLi === "calendar" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("calendar")}
                 >
                     <Link to={"/"}>
                         <FontAwesomeIcon icon="fa-solid fa-book-open-reader" />
@@ -44,20 +44,20 @@ export const HeaderMenu = () => {
                     <img src={LogoDoutora} alt="Icone doutora" />
                     <span>Doutora teste</span>
                 </li>
-                <li key={"Consulta Doutora"}
+                <li key={"Consultation DoctorX"}
                     title="Consulta Doutora"
-                    className={selectMenuLi === "Consulta Doutora" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("Consulta Doutora")}
+                    className={selectMenuLi === "doctorxconsultation" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("doctorxconsultation")}
                 >
                     <Link to={"/ConsultationDRX"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
                 </li>
-                <li key={"Pacientes Doutora"}
+                <li key={"Patients DoctorX"}
                     title="Pacientes Doutora"
-                    className={selectMenuLi === "Patients Doctorx" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("Patients Doctorx")}
+                    className={selectMenuLi === "patientsdoctorx" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("patientsdoctorx")}
                 >
                     <Link to={"/ReportDoctorX"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
@@ -68,20 +68,20 @@ export const HeaderMenu = () => {
                     <img src={LogoDoutor} alt="Icone doutor" />
                     <span>Doutor teste</span>
                 </li>
-                <li key={"Consulta Doutor"}
+                <li key={"Consultation DoctorY"}
                     title="Consulta Doutor"
-                    className={selectMenuLi === "Consulta Doutor" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("Consulta Doutor")}
+                    className={selectMenuLi === "doctoryconsultation" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("doctoryconsultation")}
                 >
                     <Link to={"/ConsultationDRY"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
                 </li>
-                <li key={"Pacientes Doutor"}
+                <li key={"Patients DoctorY"}
                     title="Pacientes Doutor"
-                    className={selectMenuLi === "Patients doctor" ? "active" : ""}
-                    onClick={() => handleMenuLiClick("Patients doctor")}
+                    className={selectMenuLi === "patientsdoctory" ? "active" : ""}
+                    onClick={() => handleMenuLiClick("patientsdoctory")}
                 >
                     <Link to={"/ReportDoctorY"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
