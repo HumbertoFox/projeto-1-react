@@ -20,10 +20,11 @@ export const HeaderMenu = () => {
     };
 
     useEffect(() => {
+        setSelectMenuLi("calendar");
         const activeMenuSelection = localStorage.getItem("activeMenuSelection");
         if (activeMenuSelection) {
             setSelectMenuLi(activeMenuSelection);
-        }
+        };
     }, []);
 
     return (
