@@ -2,11 +2,11 @@ import styled from "styled-components";
 import IconError from "../assets/icon-error.svg";
 
 const FormSerach = styled.form`
+    width: 280px;
     display: flex;
     flex-direction: column;
 
     input[type=search] {
-        width: 300px;
         height: 30px;
         font-size: 15px;
         border: 1px solid #D2D4DE;

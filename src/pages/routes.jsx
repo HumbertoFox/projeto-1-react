@@ -1,24 +1,10 @@
 import React from "react";
-import {
-    BrowserRouter,
-    Route,
-    Routes
-} from "react-router-dom";
-import {
-    HomePage
-} from "./home";
-import {
-    ConsultationDrX
-} from "./consultationdrx";
-import {
-    ConsultationDrY
-} from "./consultationdry";
-import {
-    ReportDoctorxPage
-} from "./reportdoctorx";
-import {
-    ReportDoctoryPage
-} from "./reportdoctory";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HomePage } from "./home";
+import { ConsultationDrX } from "./consultationdrx";
+import { ConsultationDrY } from "./consultationdry";
+import { ReportDoctorxPage } from "./reportdoctorx";
+import { ReportDoctoryPage } from "./reportdoctory";
 
 export const AppRouters = () => {
     return (

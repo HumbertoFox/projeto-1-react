@@ -1,9 +1,6 @@
 import React from "react";
 import { ButtonButton } from "../button/buttonbutton";
-import {
-    DivEvents,
-    DivMaimEvents
-} from "../../styles/eventactivitystyle";
+import { DivEvents, DivMaimEvents } from "../../styles/eventactivitystyle";
 
 export const ActivityActive = ({ event, onClose }) => {
     return (

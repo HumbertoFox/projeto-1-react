@@ -2,14 +2,16 @@ import styled, { css } from "styled-components";
 import IconError from "../assets/icon-error.svg";
 
 const FormDoctor = styled.form`
+    width: 280px;
     display: flex;
     flex-direction: column;
 
     input[type=text],
     input[type=number],
     input[type=tel],
-    input[type=email] {
-        width: 300px;
+    input[type=email],
+    input[type=date],
+    textarea {
         height: 30px;
         font-size: 15px;
         border: 1px solid #D2D4DE;
@@ -29,26 +31,13 @@ const FormDoctor = styled.form`
         box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     }
     textarea {
-        width: 300px;
         height: 70px;
-        font-size: 15px;
-        border: 1px solid #D2D4DE;
-        border-radius: 5px;
         padding: 5px;
-        outline: none;
         resize: none;
-        margin-bottom: 5px;
-        transition: .3s ease-in-out;
     }
     input[type=date] {
         width: 220px;
-        height: 30px;
-        font-size: 15px;
-        border: 1px solid #D2D4DE;
-        border-radius: 5px;
-        outline: none;
         padding: 5px;
-        margin-bottom: 5px;
     }
     input.required:focus,
     input.requireddate:focus {
