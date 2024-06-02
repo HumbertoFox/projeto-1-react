@@ -47,6 +47,7 @@ const FormDoctor = styled.form`
     input.required {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
         background: url(${IconError}) no-repeat right 2% bottom 50%;
+        background-size: 20px;
     }
     input.requireddate {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
