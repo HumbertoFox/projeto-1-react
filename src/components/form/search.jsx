@@ -18,8 +18,17 @@ export const Search = () => {
 
     return (
         <FormSerach action="/" method="POST" onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="search_patient">Pesquisar Paciente</LabelText>
-            <input type="search" id="search_patient" {...register("search_patient")} />
+            <LabelText htmlFor="searchpatient">Pesquisar Paciente</LabelText>
+            <input
+                type="search"
+                id="searchpatient"
+                placeholder={`${errors.searchpatient ? "Campo Obrigatório" : ""}`}
+                className={`${errors.searchpatient ? "required" : ""}`}
+                {
+                ...register("searchpatient", {
+                    required: "Required field"
+                })}
+            />
             <SubmitButton value="Pesquisar" />
         </FormSerach>
     )

@@ -15,15 +15,15 @@ export const HeaderMenu = () => {
     const [selectMenuLi, setSelectMenuLi] = useState("");
 
     const handleMenuLiClick = (element) => {
-        setSelectMenuLi(element);
-        localStorage.setItem("activeMenuSelection", element)
+        localStorage.setItem("activeMenuSelection", element);
     };
 
     useEffect(() => {
-        setSelectMenuLi("calendar");
         const activeMenuSelection = localStorage.getItem("activeMenuSelection");
-        if (activeMenuSelection) {
+        if (activeMenuSelection != null) {
             setSelectMenuLi(activeMenuSelection);
+        } else {
+            setSelectMenuLi("calendar");
         };
     }, []);
 

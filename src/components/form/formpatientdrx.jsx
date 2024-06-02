@@ -85,17 +85,67 @@ export const FormPatientDrX = () => {
     return (
         <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="name">Nome:</LabelText>
-            <input type="text" id="name" {...register("name")} />
+            <input
+                type="text"
+                id="name"
+                placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
+                className={`${errors.name ? "required" : ""}`}
+                {
+                ...register("name", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="cpf">CPF:</LabelText>
-            <input type="number" id="cpf" {...register("cpf")} />
+            <input
+                type="number"
+                id="cpf"
+                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                className={`${errors.cpf ? "required" : ""}`}
+                {
+                ...register("cpf", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="contacttel">Telefone:</LabelText>
-            <input type="tel" id="contacttel" {...register("contacttel")} />
+            <input
+                type="tel"
+                id="contacttel"
+                placeholder={`${errors.contacttel ? "Campo Obrigatório" : ""}`}
+                className={`${errors.contacttel ? "required" : ""}`}
+                {
+                ...register("contacttel", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="zipcode">CEP</LabelText>
-            <input type="number" id="zipcode" {...register("zipcode")} onBlur={checkedZipCode} />
+            <input
+                type="number"
+                id="zipcode"
+                {...register("zipcode")}
+                onBlur={checkedZipCode}
+            />
             <LabelText htmlFor="street">Logradouro: Av/Travessa/Rua</LabelText>
-            <input type="text" id="street" {...register("street")} />
+            <input
+                type="text"
+                id="street"
+                placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
+                className={`${errors.street ? "required" : ""}`}
+                {
+                ...register("street", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
-            <input type="text" id="residencenumber" {...register("residencenumber")} />
+            <input
+                type="text"
+                id="residencenumber"
+                placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
+                className={`${errors.residencenumber ? "required" : ""}`}
+                {
+                ...register("residencenumber", {
+                    required: "Required field"
+                })}
+            />
             <DivRadio>
                 <LabelText htmlFor="casa">
                     <input type="radio"
@@ -125,9 +175,27 @@ export const FormPatientDrX = () => {
                 <input type="text" id="apartment" {...register("apartment")} />
             </DivNomeEd>
             <LabelText htmlFor="district">Bairro/Distrito</LabelText>
-            <input type="text" id="district" {...register("district")} />
+            <input
+                type="text"
+                id="district"
+                placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
+                className={`${errors.district ? "required" : ""}`}
+                {
+                ...register("district", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="city">Cidade</LabelText>
-            <input type="text" id="city" {...register("city")} />
+            <input
+                type="text"
+                id="city"
+                placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
+                className={`${errors.city ? "required" : ""}`}
+                {
+                ...register("city", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="email">Email:</LabelText>
             <input type="email" id="email" {...register("email")} />
             <DivRadio>
@@ -152,14 +220,40 @@ export const FormPatientDrX = () => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano:</LabelText>
-                <input type="text" id="plan" {...register("plan")} />
+                <input
+                    type="text"
+                    id="plan"
+                    placeholder={`${errors.plan ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.plan ? "required" : ""}`}
+                    {
+                    ...register("plan", {
+                        required: "Required field"
+                    })}
+                />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor:</LabelText>
-                <input type="number" id="particular" {...register("particular")} />
+                <input
+                    type="number"
+                    id="particular"
+                    placeholder={`${errors.particular ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.particular ? "required" : ""}`}
+                    {
+                    ...register("particular", {
+                        required: "Required field"
+                    })}
+                />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
-            <input type="date" id="consultationdate" {...register("consultationdate")} />
+            <input
+                type="date"
+                id="consultationdate"
+                className={`${errors.consultationdate ? "requireddate" : ""}`}
+                {
+                ...register("consultationdate", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="observation">Observações:</LabelText>
             <textarea name="observation" id="observation" {...register("observation")}></textarea>
             <SubmitButton value="Agendar" />

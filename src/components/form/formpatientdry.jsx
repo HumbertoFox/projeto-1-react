@@ -24,13 +24,44 @@ export const FormPatientDrY = () => {
     return (
         <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="name">Nome:</LabelText>
-            <input type="text" id="name" {...register("name")} />
+            <input
+                type="text"
+                id="name"
+                placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
+                className={`${errors.name ? "required" : ""}`}
+                {
+                ...register("name", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="cpf">CPF:</LabelText>
-            <input type="number" id="cpf" {...register("cpf")} />
+            <input
+                type="number"
+                id="cpf"
+                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                className={`${errors.cpf ? "required" : ""}`}
+                {
+                ...register("cpf", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="contacttel">Telefone:</LabelText>
-            <input type="tel" id="contacttel" {...register("contacttel")} />
+            <input
+                type="tel"
+                id="contacttel"
+                placeholder={`${errors.contacttel ? "Campo Obrigatório" : ""}`}
+                className={`${errors.contacttel ? "required" : ""}`}
+                {
+                ...register("contacttel", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="email">Email:</LabelText>
-            <input type="email" id="email" {...register("email")} />
+            <input
+                type="email"
+                id="email"
+                {...register("email")}
+            />
             <DivRadio>
                 <LabelText htmlFor="plan">
                     <input type="radio"
@@ -62,14 +93,40 @@ export const FormPatientDrY = () => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano:</LabelText>
-                <input type="text" id="plan" {...register("plan")} />
+                <input
+                    type="text"
+                    id="plan"
+                    placeholder={`${errors.plan ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.plan ? "required" : ""}`}
+                    {
+                    ...register("plan", {
+                        required: "Required field"
+                    })}
+                />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor:</LabelText>
-                <input type="number" id="particular" {...register("particular")} />
+                <input
+                    type="number"
+                    id="particular"
+                    placeholder={`${errors.particular ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.particular ? "required" : ""}`}
+                    {
+                    ...register("particular", {
+                        required: "Required field"
+                    })}
+                />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
-            <input type="date" id="consultationdate" {...register("consultationdate")} />
+            <input
+                type="date"
+                id="consultationdate"
+                className={`${errors.consultationdate ? "requireddate" : ""}`}
+                {
+                ...register("consultationdate", {
+                    required: "Required field"
+                })}
+            />
             <LabelText htmlFor="observation">Observações:</LabelText>
             <textarea id="observation" {...register("observation")}></textarea>
             <SubmitButton value="Agendar" />

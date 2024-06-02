@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import IconError from "../assets/icon-error.svg";
 
 const FormDoctor = styled.form`
     display: flex;
@@ -48,6 +49,22 @@ const FormDoctor = styled.form`
         outline: none;
         padding: 5px;
         margin-bottom: 5px;
+    }
+    input.required:focus,
+    input.requireddate:focus {
+        border: 1px solid hsla(332.47, 100%, 50%, .5);
+        box-shadow: 0 0 5px hsla(332.47, 100%, 50%, .5);
+    }
+    input.required {
+        border: 1px solid hsla(332.47, 100%, 50%, .5);
+        background: url(${IconError}) no-repeat right 2% bottom 50%;
+    }
+    input.requireddate {
+        border: 1px solid hsla(332.47, 100%, 50%, .5);
+    }
+    .required::placeholder {
+        font-style: italic;
+        color: hsla(332.47, 100%, 50%, .5);
     }
 `;
 
