@@ -15,6 +15,7 @@ export const HeaderMenu = () => {
     const [selectMenuLi, setSelectMenuLi] = useState("");
 
     const handleMenuLiClick = (element) => {
+        setSelectMenuLi(element);
         localStorage.setItem("activeMenuSelection", element);
     };
 
