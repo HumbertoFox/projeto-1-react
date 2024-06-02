@@ -214,29 +214,11 @@ export const FormPatientDrX = () => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano:</LabelText>
-                <input
-                    type="text"
-                    id="plan"
-                    placeholder={`${errors.plan ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.plan ? "required" : ""}`}
-                    {
-                    ...register("plan", {
-                        required: "Required field"
-                    })}
-                />
+                <input type="text" id="plan" {...register("plan")} />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor:</LabelText>
-                <input
-                    type="number"
-                    id="particular"
-                    placeholder={`${errors.particular ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.particular ? "required" : ""}`}
-                    {
-                    ...register("particular", {
-                        required: "Required field"
-                    })}
-                />
+                <input type="number" id="particular" {...register("particular")} />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
