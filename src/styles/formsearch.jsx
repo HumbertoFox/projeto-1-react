@@ -1,6 +1,5 @@
 import styled from "styled-components";
-// import IconError from "../assets/icon-error.svg";
-import ImgError from "../assets/aviso.png";
+import IconError from "../assets/ponto-de-exclamacao.png";
 
 const FormSerach = styled.form`
     width: 280px;
@@ -27,7 +26,7 @@ const FormSerach = styled.form`
     }
     input.required {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
-        background: url(${ImgError}) right 2% bottom 50% no-repeat;
+        background: url(${IconError}) right 2% bottom 50% no-repeat;
         background-size: 20px;
     }
     .required::placeholder {

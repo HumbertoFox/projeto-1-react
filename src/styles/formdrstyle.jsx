@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import IconError from "../assets/icon-error.svg";
+import IconError from "../assets/aviso.png";
 
 const FormDoctor = styled.form`
     width: 280px;
