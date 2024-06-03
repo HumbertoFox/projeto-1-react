@@ -38,14 +38,14 @@ const DivEvents = styled.div`
     animation: ${FaceIn} .4s ease-in-out;
 
     h2 {
-        font-size: 18px;
+        font-size: 1.1rem;
         margin: 0 auto;
     }
     button {
         margin-top: 15px;
     }
     p {
-        font-size: 15px;
+        font-size: .9rem;
     }
     p:nth-child(2) {
         margin: 0 auto;

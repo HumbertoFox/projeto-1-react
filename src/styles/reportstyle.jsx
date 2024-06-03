@@ -7,7 +7,7 @@ const DivReportMain = styled.div`
     text-align: center;
 
     h1 {
-        font-size: 18px;
+        font-size: 1.1rem;
         margin-bottom: 5px;
         text-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     }
@@ -24,14 +24,14 @@ const TableFormInfo = styled.table`
 
 const Thead = styled.thead`
     th {
-        font-size: 14px;
+        font-size: .9rem;
         text-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
     }
 `;
 
 const Tbody = styled.tbody`
     th {
-        font-size: 14px;
+        font-size: .9rem;
     }
 `;
 

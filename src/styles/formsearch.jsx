@@ -8,7 +8,7 @@ const FormSerach = styled.form`
 
     input[type=search] {
         height: 30px;
-        font-size: 15px;
+        font-size: .9rem;
         border: 1px solid #D2D4DE;
         border-radius: 5px;
         padding: 0 5px;

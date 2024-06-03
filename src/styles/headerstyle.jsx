@@ -60,7 +60,7 @@ const UlHeader = styled.ul`
         cursor: default;
     }
     svg {
-        font-size: 30px;
+        font-size: 1.9rem;
     }
     a {
         display: flex;
@@ -104,7 +104,7 @@ const UlHeader = styled.ul`
         z-index: -1;
     }
     span {
-        font-size: 14px;
+        font-size: .9rem;
     }
     @media (max-width: 820px) {
         span {

@@ -5,6 +5,7 @@ import { ConsultationDrX } from "./consultationdrx";
 import { ConsultationDrY } from "./consultationdry";
 import { ReportDoctorxPage } from "./reportdoctorx";
 import { ReportDoctoryPage } from "./reportdoctory";
+import { LoginPage } from "./login";
 
 export const AppRouters = () => {
     return (
@@ -15,7 +16,8 @@ export const AppRouters = () => {
                 <Route path="/ConsultationDRY" element={<ConsultationDrY />} />
                 <Route path="/ReportDoctorX" element={<ReportDoctorxPage />} />
                 <Route path="/ReportDoctorY" element={<ReportDoctoryPage />} />
-                <Route path="*" element={<HomePage />} />
+                <Route path="/Login" element={<LoginPage />} />
+                <Route path="*" element={<LoginPage />} />
             </Routes>
         </BrowserRouter>
     )

@@ -1,4 +1,4 @@
-import { Input } from "../../styles/inputsubmitstyle"
+import { Input } from "../../styles/buttonstyle";
 
 export const SubmitButton = (props) => {
     return <Input type="submit" {...props} />
