@@ -121,6 +121,8 @@ const UlHeader = styled.ul`
 `;
 
 const LiLogout = styled.li`
+    margin-top: 15px;
+
     svg {
         rotate: 180deg;
     }
