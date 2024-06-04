@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
-import { DivButtons } from "../../styles/mainpagestyle";
+import { DivButtons, DivFormMsgs } from "../../styles/mainpagestyle";
 
 export const FormLogin = () => {
     const navigate = useNavigate();
@@ -58,7 +58,7 @@ export const FormLogin = () => {
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
-            <p>{error !== "" ? <span>{error}</span> : <span>{msg}</span>}</p>
+            <DivFormMsgs>{error !== "" ? <span className="msgphperror">{error}</span> : <span className="msgphpsuccess">{msg}</span>}</DivFormMsgs>
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="number"
