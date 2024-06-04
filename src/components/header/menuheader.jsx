@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Header, ImgMedicina, UlHeader } from "../../styles/headerstyle";
+import { Header, ImgMedicina, LiLogout, UlHeader } from "../../styles/headerstyle";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
 import LogoDoutora from "../../assets/doutora.png";
 import LogoDoutor from "../../assets/doutor.png";
@@ -11,23 +11,19 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 library.add(fas, far);
 
 export const HeaderMenu = () => {
-
     const [selectMenuLi, setSelectMenuLi] = useState("");
-
     const handleMenuLiClick = (element) => {
         setSelectMenuLi(element);
         localStorage.setItem("activeMenuSelection", element);
     };
-
     useEffect(() => {
         const activeMenuSelection = localStorage.getItem("activeMenuSelection");
-        if (activeMenuSelection != null) {
+        if (activeMenuSelection !== null) {
             setSelectMenuLi(activeMenuSelection);
         } else {
             setSelectMenuLi("calendar");
         };
     }, []);
-
     return (
         <Header>
             <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
@@ -90,6 +86,14 @@ export const HeaderMenu = () => {
                         <span>Lista Pacientes</span>
                     </Link>
                 </li>
+                <LiLogout
+                    title="Sair do Sistema"
+                >
+                    <Link to={"/Login"}>
+                        <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
+                        <span>Sair do Sistema</span>
+                    </Link>
+                </LiLogout>
             </UlHeader>
         </Header>
     )

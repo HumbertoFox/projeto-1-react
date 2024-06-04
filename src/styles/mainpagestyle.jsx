@@ -4,9 +4,6 @@ const MainPrimary = styled.main`
     width: 100%;
     min-height: 100vh;
     display: flex;
-    @media (max-width: 480px) {
-        width: 375px;
-    }
 `;
 
 const MainSecondary = styled.div`
@@ -34,15 +31,9 @@ const DivButtons = styled.div`
     padding-top: 5px;
 `;
 
-const MainLogin = styled.main`
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
+const MainLogin = styled(MainPrimary)`
     justify-content: center;
     align-items: center;
-    @media (max-width: 480px) {
-        width: 375px;
-    }
 `;
 
 const SectionLogin = styled(DivForms)`

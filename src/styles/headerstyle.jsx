@@ -22,7 +22,7 @@ const ImgMedicina = styled.img`
     margin: 15px 15px 15px 5px;
     transition: .3s ease-in-out;
     @media screen and (max-width: 820px),
-    screen and (max-height: 620px) {
+    screen and (max-height: 700px) {
         width: 60px;
     }
 `;
@@ -120,4 +120,10 @@ const UlHeader = styled.ul`
     }
 `;
 
-export { Header, ImgMedicina, UlHeader };
+const LiLogout = styled.li`
+    svg {
+        rotate: 180deg;
+    }
+`;
+
+export { Header, ImgMedicina, UlHeader, LiLogout };
