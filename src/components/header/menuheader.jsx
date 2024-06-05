@@ -14,7 +14,7 @@ library.add(fas, far);
 
 export const HeaderMenu = () => {
     const navigate = useNavigate();
-    const { logout, isLoggedIn } = useAuth();
+    const { logout } = useAuth();
     const [selectMenuLi, setSelectMenuLi] = useState("");
     const handleMenuLiClick = (element) => {
         setSelectMenuLi(element);

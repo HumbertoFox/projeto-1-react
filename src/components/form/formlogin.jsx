@@ -12,6 +12,7 @@ export const FormLogin = () => {
     const { login } = useAuth();
     const [error, setError] = useState("");
     const [msg, setMsg] = useState("");
+    const [buttonType, setButtonType] = useState("");
     useEffect(() => {
         setTimeout(function () {
             setMsg("");
@@ -48,7 +49,11 @@ export const FormLogin = () => {
                     setMsg(result[0].result);
                     login(result[0].user);
                     setTimeout(function () {
-                        navigate("/");
+                        if (buttonType === "enter") {
+                            navigate("/");
+                        } else if (buttonType === "register") {
+                            navigate("/registerUser");
+                        };
                     }, 3000);
                 };
             } catch (err) {
@@ -58,6 +63,9 @@ export const FormLogin = () => {
         } else {
             setError("All field are required!");
         };
+    };
+    const handleButtonClicked = (type) => {
+        setButtonType(type);
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
@@ -102,8 +110,8 @@ export const FormLogin = () => {
                 })}
             />
             <DivButtons>
-                <SubmitButton value="Entrar" />
-                <SubmitButton value="Cadastrar Usuário" />
+                <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
+                <SubmitButton title="Cadastrar Usuário" value="Cadastrar Usuário" onClick={() => handleButtonClicked("register")} />
             </DivButtons>
         </FormDoctor>
     )
