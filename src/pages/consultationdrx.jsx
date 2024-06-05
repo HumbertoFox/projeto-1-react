@@ -15,5 +15,5 @@ export const ConsultationDrX = () => {
                 </DivForms>
             </MainSecondary>
         </MainPrimary>
-    )
+    );
 };

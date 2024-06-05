@@ -234,5 +234,5 @@ export const FormPatientDrX = () => {
             <textarea name="observation" id="observation" {...register("observation")}></textarea>
             <SubmitButton value="Agendar" />
         </FormDoctor>
-    )
+    );
 };

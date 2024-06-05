@@ -27,5 +27,5 @@ export const ReportDoctoryPage = () => {
                 </DivReportMain>
             </MainSecondary>
         </MainPrimary>
-    )
+    );
 };

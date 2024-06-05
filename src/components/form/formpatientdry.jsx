@@ -113,5 +113,5 @@ export const FormPatientDrY = () => {
             <textarea id="observation" {...register("observation")}></textarea>
             <SubmitButton value="Agendar" />
         </FormDoctor>
-    )
+    );
 };

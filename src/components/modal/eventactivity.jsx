@@ -13,5 +13,5 @@ export const ActivityActive = ({ event, onClose }) => {
                 <ButtonButton onClick={onClose}>Fechar</ButtonButton>
             </DivEvents>
         </DivMaimEvents>
-    )
+    );
 };

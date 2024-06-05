@@ -19,5 +19,5 @@ export const LoginPage = () => {
                 </DivLogin>
             </SectionLogin>
         </MainLogin>
-    )
+    );
 };

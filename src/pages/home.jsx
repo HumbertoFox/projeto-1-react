@@ -83,5 +83,5 @@ export const HomePage = () => {
                 </DivHomeMain>
             </MainSecondary>
         </MainPrimary>
-    )
+    );
 };

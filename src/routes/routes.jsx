@@ -8,6 +8,7 @@ import { ConsultationDrX } from "../pages/consultationdrx";
 import { ConsultationDrY } from "../pages/consultationdry";
 import { ReportDoctorxPage } from "../pages/reportdoctorx";
 import { ReportDoctoryPage } from "../pages/reportdoctory";
+import { RegisterUserPage } from "../pages/registeruser";
 
 export const AppRouters = () => {
     return (
@@ -15,14 +16,15 @@ export const AppRouters = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/registerUser" element={<PrivateRoute element={<RegisterUserPage />} />} />
                     <Route path="/" element={<PrivateRoute element={<HomePage />} />} />
                     <Route path="/consultationDRX" element={<PrivateRoute element={<ConsultationDrX />} />} />
                     <Route path="/consultationDRY" element={<PrivateRoute element={<ConsultationDrY />} />} />
                     <Route path="/reportDoctorX" element={<PrivateRoute element={<ReportDoctorxPage />} />} />
                     <Route path="/reportDoctorY" element={<PrivateRoute element={<ReportDoctoryPage />} />} />
-                    <Route path="*" element={<HomePage />} />
+                    <Route path="*" element={<LoginPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
-    )
+    );
 };

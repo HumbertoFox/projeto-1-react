@@ -15,5 +15,5 @@ export const ConsultationDrY = () => {
                 </DivForms>
             </MainSecondary>
         </MainPrimary>
-    )
+    );
 };

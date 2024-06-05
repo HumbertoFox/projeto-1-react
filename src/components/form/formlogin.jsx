@@ -61,7 +61,15 @@ export const FormLogin = () => {
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
-            <DivFormMsgs>{error !== "" ? <span className="msgphperror">{error}</span> : <span className="msgphpsuccess">{msg}</span>}</DivFormMsgs>
+            <DivFormMsgs>
+                {
+                    error !== ""
+                        ?
+                        <span className="msgphperror">{error}</span>
+                        :
+                        <span className="msgphpsuccess">{msg}</span>
+                }
+            </DivFormMsgs>
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="number"
