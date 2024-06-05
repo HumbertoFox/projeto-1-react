@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header, ImgMedicina, LiLogout, UlHeader } from "../../styles/headerstyle";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/authcontext";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
 import LogoDoutora from "../../assets/doutora.png";
 import LogoDoutor from "../../assets/doutor.png";
@@ -11,6 +13,8 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 library.add(fas, far);
 
 export const HeaderMenu = () => {
+    const navigate = useNavigate();
+    const { logout, isLoggedIn } = useAuth();
     const [selectMenuLi, setSelectMenuLi] = useState("");
     const handleMenuLiClick = (element) => {
         setSelectMenuLi(element);
@@ -20,6 +24,15 @@ export const HeaderMenu = () => {
         const activeMenuSelection = localStorage.getItem("activeMenuSelection");
         if (activeMenuSelection !== null) {
             setSelectMenuLi(activeMenuSelection);
+            if (activeMenuSelection === "doctorxconsultation") {
+                navigate("/consultationDRX");
+            } else if (activeMenuSelection === "patientsdoctorx") {
+                navigate("/reportDoctorX");
+            } else if (activeMenuSelection === "doctoryconsultation") {
+                navigate("/consultationDRY");
+            } else if (activeMenuSelection === "patientsdoctory") {
+                navigate("/reportDoctorY");
+            };
         } else {
             setSelectMenuLi("calendar");
         };
@@ -47,7 +60,7 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "doctorxconsultation" ? "active" : ""}
                     onClick={() => handleMenuLiClick("doctorxconsultation")}
                 >
-                    <Link to={"/ConsultationDRX"}>
+                    <Link to={"/consultationDRX"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
@@ -57,7 +70,7 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "patientsdoctorx" ? "active" : ""}
                     onClick={() => handleMenuLiClick("patientsdoctorx")}
                 >
-                    <Link to={"/ReportDoctorX"}>
+                    <Link to={"/reportDoctorX"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
                         <span>Lista Pacientes</span>
                     </Link>
@@ -71,7 +84,7 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "doctoryconsultation" ? "active" : ""}
                     onClick={() => handleMenuLiClick("doctoryconsultation")}
                 >
-                    <Link to={"/ConsultationDRY"}>
+                    <Link to={"/consultationDRY"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
                         <span>Consulta</span>
                     </Link>
@@ -81,7 +94,7 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "patientsdoctory" ? "active" : ""}
                     onClick={() => handleMenuLiClick("patientsdoctory")}
                 >
-                    <Link to={"/ReportDoctorY"}>
+                    <Link to={"/reportDoctorY"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
                         <span>Lista Pacientes</span>
                     </Link>
@@ -89,7 +102,7 @@ export const HeaderMenu = () => {
                 <LiLogout
                     title="Sair do Sistema"
                 >
-                    <Link to={"/Login"}>
+                    <Link to={"/Login"} onClick={logout}>
                         <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
                         <span>Sair do Sistema</span>
                     </Link>

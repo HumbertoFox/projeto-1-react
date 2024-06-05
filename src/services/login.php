@@ -18,7 +18,7 @@ if (mysqli_connect_error()) {
 
     $user = $dData['user'];
     $pass = $dData['pass'];
-    $result = "";
+    $result = [];
 
     if ($user != "" && $pass != "") {
         $sql = "SELECT * FROM user WHERE user=?";
@@ -30,18 +30,25 @@ if (mysqli_connect_error()) {
         if (mysqli_num_rows($res) != 0) {
             $row = mysqli_fetch_array($res);
             if ($pass != $row['pass']) {
-                $result = "Invalid password!";
+                $response[] = array("result" => "Invalid password!");
             } else {
-                $result = "Loggedin successfully! Redirecting ...";
+                $userData = array(
+                    "id" => $row["id"],
+                    "name" => $row["name"],
+                    "email" => $row["email"]
+                );
+                $response[] = array(
+                    "result" => "Loggedin successfully! Redirecting ...",
+                    "user" => $userData
+                );
             }
         } else {
-            $result = "Invalid username!";
+            $response[] = array("result" => "Invalid username!");
         };
     } else {
-        $result = "";
+        $response[] = array("result" => "All fields are required!");
     };
 
     $conn->close();
-    $response[] = array("result" => $result);
     echo json_encode($response);
 };
