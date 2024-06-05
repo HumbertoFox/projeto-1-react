@@ -1,14 +1,9 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST");
 header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json; charset=UTF-8");
 
-$host = "localhost";
-$usuario = "root";
-$senha = "";
-$banco = "test";
-
-$conn = new mysqli($host, $usuario, $senha, $banco);
+include_once 'mysqliconnection.php';
 
 if (mysqli_connect_error()) {
     die("Erro na conexão: " . mysqli_connect_error());
@@ -50,5 +45,6 @@ if (mysqli_connect_error()) {
     };
 
     $conn->close();
+    http_response_code(200);
     echo json_encode($response);
 };

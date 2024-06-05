@@ -88,13 +88,7 @@ export const FormLogin = () => {
                 {...register("cpf", {
                     required: "Required field",
                     pattern: {
-                        value: /\d/g
-                    },
-                    minLength: {
-                        value: 11
-                    },
-                    maxLength: {
-                        value: 11
+                        value: /\d{11}/g
                     }
                 })}
             />
