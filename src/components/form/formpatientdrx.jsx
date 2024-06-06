@@ -84,9 +84,11 @@ export const FormPatientDrX = () => {
                 id="name"
                 placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
                 className={`${errors.name ? "required" : ""}`}
-                {
-                ...register("name", {
-                    required: "Required field"
+                {...register("name", {
+                    required: "Required field",
+                    pattern: {
+                        value: /[A-Za-z]{5}/g
+                    }
                 })}
             />
             <LabelText htmlFor="cpf">CPF:</LabelText>
@@ -95,20 +97,24 @@ export const FormPatientDrX = () => {
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {
-                ...register("cpf", {
-                    required: "Required field"
+                {...register("cpf", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
                 })}
             />
-            <LabelText htmlFor="contacttel">Telefone:</LabelText>
+            <LabelText htmlFor="telephone">Telefone:</LabelText>
             <input
                 type="tel"
-                id="contacttel"
-                placeholder={`${errors.contacttel ? "Campo Obrigatório" : ""}`}
-                className={`${errors.contacttel ? "required" : ""}`}
-                {
-                ...register("contacttel", {
-                    required: "Required field"
+                id="telephone"
+                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                className={`${errors.telephone ? "required" : ""}`}
+                {...register("telephone", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
                 })}
             />
             <LabelText htmlFor="zipcode">CEP</LabelText>
@@ -124,8 +130,7 @@ export const FormPatientDrX = () => {
                 id="street"
                 placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
                 className={`${errors.street ? "required" : ""}`}
-                {
-                ...register("street", {
+                {...register("street", {
                     required: "Required field"
                 })}
             />
@@ -135,8 +140,7 @@ export const FormPatientDrX = () => {
                 id="residencenumber"
                 placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
                 className={`${errors.residencenumber ? "required" : ""}`}
-                {
-                ...register("residencenumber", {
+                {...register("residencenumber", {
                     required: "Required field"
                 })}
             />
@@ -174,8 +178,7 @@ export const FormPatientDrX = () => {
                 id="district"
                 placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
                 className={`${errors.district ? "required" : ""}`}
-                {
-                ...register("district", {
+                {...register("district", {
                     required: "Required field"
                 })}
             />
@@ -185,8 +188,7 @@ export const FormPatientDrX = () => {
                 id="city"
                 placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
                 className={`${errors.city ? "required" : ""}`}
-                {
-                ...register("city", {
+                {...register("city", {
                     required: "Required field"
                 })}
             />
@@ -225,8 +227,7 @@ export const FormPatientDrX = () => {
                 type="date"
                 id="consultationdate"
                 className={`${errors.consultationdate ? "requireddate" : ""}`}
-                {
-                ...register("consultationdate", {
+                {...register("consultationdate", {
                     required: "Required field"
                 })}
             />

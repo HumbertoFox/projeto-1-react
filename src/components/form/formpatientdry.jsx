@@ -29,9 +29,11 @@ export const FormPatientDrY = () => {
                 id="name"
                 placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
                 className={`${errors.name ? "required" : ""}`}
-                {
-                ...register("name", {
-                    required: "Required field"
+                {...register("name", {
+                    required: "Required field",
+                    pattern: {
+                        value: /[A-Za-z]{5}/g
+                    }
                 })}
             />
             <LabelText htmlFor="cpf">CPF:</LabelText>
@@ -40,20 +42,24 @@ export const FormPatientDrY = () => {
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {
-                ...register("cpf", {
-                    required: "Required field"
+                {...register("cpf", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
                 })}
             />
-            <LabelText htmlFor="contacttel">Telefone:</LabelText>
+            <LabelText htmlFor="telephone">Telefone:</LabelText>
             <input
                 type="tel"
-                id="contacttel"
-                placeholder={`${errors.contacttel ? "Campo Obrigatório" : ""}`}
-                className={`${errors.contacttel ? "required" : ""}`}
-                {
-                ...register("contacttel", {
-                    required: "Required field"
+                id="telephone"
+                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                className={`${errors.telephone ? "required" : ""}`}
+                {...register("telephone", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
                 })}
             />
             <LabelText htmlFor="email">Email:</LabelText>
