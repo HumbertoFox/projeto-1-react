@@ -63,11 +63,9 @@ export const FormPatientDrY = () => {
                 })}
             />
             <LabelText htmlFor="email">Email:</LabelText>
-            <input
-                type="email"
-                id="email"
-                {...register("email")}
-            />
+            <input type="email" id="email" {...register("email")} />
+            <LabelText>CRM</LabelText>
+            <input type="number" id="crm" disabled={true} {...register("crm", {value: "5000"})} />
             <DivRadio>
                 <LabelText htmlFor="plan">
                     <input type="radio"
