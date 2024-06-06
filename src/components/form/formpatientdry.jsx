@@ -5,22 +5,18 @@ import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 
 export const FormPatientDrY = () => {
-
     const [selectRadio, setSelectRadio] = useState("plan");
     const swapSelectedRadio = e => {
         setSelectRadio(e.target.value);
     }
-
     const onSubmit = e => {
         console.log(e);
     }
-
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
-
     return (
         <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="name">Nome</LabelText>
