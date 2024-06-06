@@ -138,7 +138,7 @@ export const FormUserRegister = () => {
                 {...register("passwordchecked", {
                     required: "Checked required field",
                     validate: (value) =>
-                        value === password || "The password do not match"
+                        value === password || "A senha não corresponde"
                 })}
             />
             <DivButtons>

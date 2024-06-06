@@ -6,36 +6,36 @@ import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 
 export const FormPatientDrX = () => {
-
     const [radioSelect, setRadioSelect] = useState("casa");
+    const [selectRadio, setSelectRadio] = useState("plan");
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        setFocus,
+        formState: { errors }
+    } = useForm();
     const swapRadioSelect = e => {
         setRadioSelect(e.target.value);
     };
-
-    const [selectRadio, setSelectRadio] = useState("plan");
     const swapSelectedRadio = e => {
         setSelectRadio(e.target.value);
     };
-
     const checkedZipCode = async (e) => {
-
         const clearZipCode = () => {
             setValue('zipcode', "");
             setValue('street', "");
             setValue('district', "");
             setValue('city', "");
         };
-
         if (!e.target.value) {
             clearZipCode();
-            setFocus('contacttel');
+            setFocus('telephone');
             alert("Formato de CEP inválido.");
             return;
         };
-
         const zipcode = e.target.value.replace(/\D/g, '');
         var validazipcode = /^[0-9]{8}$/;
-
         try {
             if (validazipcode.test(zipcode)) {
                 const data = await viaCepApi.get(`${zipcode}/json/`)
@@ -47,38 +47,28 @@ export const FormPatientDrX = () => {
                     setFocus('residencenumber');
                 } else {
                     clearZipCode();
-                    setFocus('contacttel');
+                    setFocus('telephone');
                     alert("CEP não encontrado.");
                 }
             } else {
                 clearZipCode();
-                setFocus('contacttel');
+                setFocus('telephone');
                 alert("Formato de CEP inválido.");
             }
         } catch (error) {
             console.error(error);
             clearZipCode();
-            setFocus('contacttel');
+            setFocus('telephone');
             alert(`Formato de CEP inválido ou não encontrado.`);
             return;
         }
     };
-
     const onSubmit = e => {
         console.log(e);
-    }
-
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        setFocus,
-        formState: { errors }
-    } = useForm();
-
+    };
     return (
         <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="name">Nome:</LabelText>
+            <LabelText htmlFor="name">Nome</LabelText>
             <input
                 type="text"
                 id="name"
@@ -91,7 +81,7 @@ export const FormPatientDrX = () => {
                     }
                 })}
             />
-            <LabelText htmlFor="cpf">CPF:</LabelText>
+            <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="number"
                 id="cpf"
@@ -104,7 +94,7 @@ export const FormPatientDrX = () => {
                     }
                 })}
             />
-            <LabelText htmlFor="telephone">Telefone:</LabelText>
+            <LabelText htmlFor="telephone">Telefone</LabelText>
             <input
                 type="tel"
                 id="telephone"
@@ -124,7 +114,7 @@ export const FormPatientDrX = () => {
                 {...register("zipcode")}
                 onBlur={checkedZipCode}
             />
-            <LabelText htmlFor="street">Logradouro: Av/Travessa/Rua</LabelText>
+            <LabelText htmlFor="street">Logradouro Av/Travessa/Rua</LabelText>
             <input
                 type="text"
                 id="street"
@@ -192,10 +182,10 @@ export const FormPatientDrX = () => {
                     required: "Required field"
                 })}
             />
-            <LabelText htmlFor="email">Email:</LabelText>
+            <LabelText htmlFor="email">Email</LabelText>
             <input type="email" id="email" {...register("email")} />
             <LabelText>CRM</LabelText>
-            <input type="number" id="crm" disabled={true} {...register("crm", {value: "5001"})} />
+            <input type="number" id="crm" disabled={true} {...register("crm", { value: "5001" })} />
             <DivRadio>
                 <LabelText htmlFor="plan">
                     <input type="radio"
@@ -217,12 +207,12 @@ export const FormPatientDrX = () => {
                 </LabelText>
             </DivRadio>
             <DivPlan className={selectRadio}>
-                <LabelText htmlFor="plan">Plano:</LabelText>
+                <LabelText htmlFor="plan">Plano</LabelText>
                 <input type="text" id="plan" {...register("plan")} />
             </DivPlan>
             <DivParticular className={selectRadio}>
-                <LabelText htmlFor="particular">Valor:</LabelText>
-                <input type="number" id="particular" {...register("particular")} />
+                <LabelText htmlFor="particular">Valor</LabelText>
+                <input type="text" id="particular" {...register("particular")} />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
@@ -233,7 +223,7 @@ export const FormPatientDrX = () => {
                     required: "Required field"
                 })}
             />
-            <LabelText htmlFor="observation">Observações:</LabelText>
+            <LabelText htmlFor="observation">Observações</LabelText>
             <textarea name="observation" id="observation" {...register("observation")}></textarea>
             <SubmitButton value="Agendar" />
         </FormDoctor>
