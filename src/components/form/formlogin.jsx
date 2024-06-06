@@ -32,8 +32,8 @@ export const FormLogin = () => {
                 "Content-type": "application/json"
             };
             const requestData = {
-                user: data.cpf,
-                pass: data.password
+                cpf: data.cpf,
+                password: data.password
             };
             try {
                 const response = await fetch(url, {
@@ -42,7 +42,7 @@ export const FormLogin = () => {
                     body: JSON.stringify(requestData)
                 });
                 const result = await response.json();
-                if (result[0].result === "Invalid username!" || result[0].result === "Invalid password!") {
+                if (result[0].result === "CPF não Cadastrado!" || result[0].result === "Senha Invalida!") {
                     setError(result[0].result);
                 } else {
                     setError("");

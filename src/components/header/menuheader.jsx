@@ -102,7 +102,7 @@ export const HeaderMenu = () => {
                 <LiLogout
                     title="Sair do Sistema"
                 >
-                    <Link to={"/Login"} onClick={logout}>
+                    <Link to={"/Login"} onClick={() => logout()}>
                         <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
                         <span>Sair do Sistema</span>
                     </Link>

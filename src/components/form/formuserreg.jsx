@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { SubmitButton } from "../button/buttonsubmit";
@@ -9,17 +9,64 @@ import { DivButtons, DivFormMsgs } from "../../styles/mainpagestyle";
 
 export const FormUserRegister = () => {
     const navigate = useNavigate();
+    const [status, setStatus] = useState({
+        type: "",
+        message: ""
+    });
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors }
     } = useForm();
     const onSubmit = async (data) => {
-        console.log(data);
+        await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.error) {
+                    setStatus({
+                        type: "error",
+                        message: responseJson.message
+                    });
+                } else {
+                    setTimeout(function () {
+                        navigate("/");
+                    }, 3000);
+                    setStatus({
+                        type: "success",
+                        message: responseJson.message
+                    });
+                };
+            }).catch(() => {
+                setStatus({
+                    type: "error",
+                    message: "Usuário não cadastrado, erro com o Bando!"
+                });
+            });
     };
+    const password = watch('password');
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <DivFormMsgs>
+                {status.type == "error"
+                    ?
+                    <span className="msgphperror">{status.message}</span>
+                    :
+                    <span className="msgphpsuccess">{status.message}</span>
+                }
+                {status.type == "sucess"
+                    ?
+                    <span className="msgphperror">{status.message}</span>
+                    :
+                    <span className="msgphpsuccess">{status.message}</span>
+                }
             </DivFormMsgs>
             <LabelText htmlFor="name">Nome</LabelText>
             <input
@@ -47,13 +94,13 @@ export const FormUserRegister = () => {
                     }
                 })}
             />
-            <LabelText htmlFor="tel">Telefone</LabelText>
+            <LabelText htmlFor="telephone">Telefone</LabelText>
             <input
                 type="tel"
-                id="tel"
+                id="telephone"
                 placeholder={`${errors.tel ? "Campo Obrigatório" : ""}`}
                 className={`${errors.tel ? "required" : ""}`}
-                {...register("tel", {
+                {...register("telephone", {
                     required: "Required field",
                     pattern: {
                         value: /\d{11}/g
@@ -89,12 +136,14 @@ export const FormUserRegister = () => {
                 placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
                 className={`${errors.passwordchecked ? "required" : ""}`}
                 {...register("passwordchecked", {
-                    required: "Required field"
+                    required: "Checked required field",
+                    validate: (value) =>
+                        value === password || "The password do not match"
                 })}
             />
             <DivButtons>
-                <SubmitButton value="Cadastrar" />
-                <ButtonButton>Iniciar</ButtonButton>
+                <SubmitButton title="Cadastrar" value="Cadastrar" />
+                <ButtonButton title="Iniciar" onClick={() => navigate("/")}>Iniciar</ButtonButton>
             </DivButtons>
         </FormDoctor>
     );

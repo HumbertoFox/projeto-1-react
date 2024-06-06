@@ -1,7 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json; charset=UTF-8");
 
 include_once 'mysqliconnection.php';
 
@@ -11,21 +10,21 @@ if (mysqli_connect_error()) {
     $eData = file_get_contents("php://input");
     $dData = json_decode($eData, true);
 
-    $user = $dData['user'];
-    $pass = $dData['pass'];
+    $cpf = $dData['cpf'];
+    $password = $dData['password'];
     $result = [];
 
-    if ($user != "" && $pass != "") {
-        $sql = "SELECT * FROM user WHERE user=?";
+    if ($cpf != "" && $password != "") {
+        $sql = "SELECT * FROM user WHERE cpf=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $user);
+        $stmt->bind_param("s", $cpf);
         $stmt->execute();
         $res = $stmt->get_result();
 
         if (mysqli_num_rows($res) != 0) {
             $row = mysqli_fetch_array($res);
-            if ($pass != $row['pass']) {
-                $response[] = array("result" => "Invalid password!");
+            if ($password != $row['password']) {
+                $response[] = array("result" => "Senha Invalida!");
             } else {
                 $userData = array(
                     "id" => $row["id"],
@@ -33,12 +32,12 @@ if (mysqli_connect_error()) {
                     "email" => $row["email"]
                 );
                 $response[] = array(
-                    "result" => "Loggedin successfully! Redirecting ...",
+                    "result" => "Login com Sucesso! Redirecionando ...",
                     "user" => $userData
                 );
             }
         } else {
-            $response[] = array("result" => "Invalid username!");
+            $response[] = array("result" => "CPF não Cadastrado!");
         };
     } else {
         $response[] = array("result" => "All fields are required!");
