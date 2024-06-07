@@ -52,6 +52,10 @@ const SectionLogin = styled(DivForms)`
     img {
         width: 110px;
     }
+    @media screen and (max-width: 480px),
+    screen and (max-height: 700px) {
+        margin: 30px 0;
+    }
 `;
 
 const DivLogin = styled.div`
