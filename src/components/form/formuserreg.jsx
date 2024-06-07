@@ -23,23 +23,23 @@ export const FormUserRegister = () => {
         watch,
         formState: { errors }
     } = useForm();
-    const swapRadioSelect = e => {
-        setRadioSelect(e.target.value);
+    const swapRadioSelect = element => {
+        setRadioSelect(element.target.value);
     };
-    const checkedZipCode = async (e) => {
+    const checkedZipCode = async (element) => {
         const clearZipCode = () => {
             setValue('zipcode', "");
             setValue('street', "");
             setValue('district', "");
             setValue('city', "");
         };
-        if (!e.target.value) {
+        if (!element.target.value) {
             clearZipCode();
             setFocus('email');
             alert("Formato de CEP inválido.");
             return;
         };
-        const zipcode = e.target.value.replace(/\D/g, '');
+        const zipcode = element.target.value.replace(/\D/g, '');
         var validazipcode = /^[0-9]{8}$/;
         try {
             if (validazipcode.test(zipcode)) {
@@ -79,24 +79,24 @@ export const FormUserRegister = () => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson.error) {
+                if (responseJson.erro) {
                     setStatus({
-                        type: "error",
+                        type: "erro",
                         message: responseJson.message
                     });
                 } else {
-                    setTimeout(function () {
-                        navigate("/");
-                    }, 3000);
                     setStatus({
                         type: "success",
                         message: responseJson.message
                     });
+                    setTimeout(function () {
+                        navigate("/");
+                    }, 3000);
                 };
             }).catch(() => {
                 setStatus({
-                    type: "error",
-                    message: "Usuário não cadastrado, erro com o Bando!"
+                    type: "erro",
+                    message: "Usuário não cadastrado, erro com o Banco!"
                 });
             });
     };
@@ -104,19 +104,32 @@ export const FormUserRegister = () => {
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <DivFormMsgs>
-                {status.type == "error"
+                {status.type === "erro"
                     ?
                     <span className="msgphperror">{status.message}</span>
                     :
                     <span className="msgphpsuccess">{status.message}</span>
                 }
-                {status.type == "sucess"
+                {status.type === "success"
                     ?
-                    <span className="msgphperror">{status.message}</span>
-                    :
                     <span className="msgphpsuccess">{status.message}</span>
+                    :
+                    <span className="msgphperror">{status.message}</span>
                 }
             </DivFormMsgs>
+            <LabelText htmlFor="cpf">CPF</LabelText>
+            <input
+                type="text"
+                id="cpf"
+                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                className={`${errors.cpf ? "required" : ""}`}
+                {...register("cpf", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
+                })}
+            />
             <LabelText htmlFor="name">Nome</LabelText>
             <input
                 type="text"
@@ -127,19 +140,6 @@ export const FormUserRegister = () => {
                     required: "Required field",
                     pattern: {
                         value: /[A-Za-z]{5}/g
-                    }
-                })}
-            />
-            <LabelText htmlFor="cpf">CPF</LabelText>
-            <input
-                type="number"
-                id="cpf"
-                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
-                className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", {
-                    required: "Required field",
-                    pattern: {
-                        value: /\d{11}/g
                     }
                 })}
             />
@@ -168,7 +168,7 @@ export const FormUserRegister = () => {
             />
             <LabelText htmlFor="zipcode">CEP</LabelText>
             <input
-                type="number"
+                type="text"
                 id="zipcode"
                 {...register("zipcode")}
                 onBlur={checkedZipCode}
@@ -215,11 +215,11 @@ export const FormUserRegister = () => {
             </DivRadio>
             <DivNomeEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
-                <input type="text" id="building" {...register("building")} />
-                <LabelText htmlFor="block">Bloco</LabelText>
-                <input type="text" id="block" {...register("block")} />
+                <input type="text" id="building" {...register("building", { value: "..." })} />
+                <LabelText htmlFor="buildingblock">Bloco</LabelText>
+                <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
-                <input type="text" id="apartment" {...register("apartment")} />
+                <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
             </DivNomeEd>
             <LabelText htmlFor="district">Bairro/Distrito</LabelText>
             <input
