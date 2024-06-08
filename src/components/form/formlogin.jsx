@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authcontext";
@@ -10,43 +10,38 @@ import { DivButtons, DivFormMsgs } from "../../styles/mainpagestyle";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
-    const [error, setError] = useState("");
-    const [msg, setMsg] = useState("");
+    const [status, setStatus] = useState({
+        type: "",
+        message: ""
+    });
     const [buttonType, setButtonType] = useState("");
-    useEffect(() => {
-        setTimeout(function () {
-            setMsg("");
-        }, 3000);
-    }, [msg, error]);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
     const onSubmit = async (data) => {
-        if (data.cpf && data.password) {
-            const url = "http://localhost/projeto-1-react/src/services/login.php";
-            const headers = {
+        await fetch("http://localhost/projeto-1-react/src/services/login.php", {
+            method: "POST",
+            headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
-            };
-            const requestData = {
-                cpf: data.cpf,
-                password: data.password
-            };
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: headers,
-                    body: JSON.stringify(requestData)
-                });
-                const result = await response.json();
-                if (result[0].result === "CPF não Cadastrado!" || result[0].result === "Senha Invalida!") {
-                    setError(result[0].result);
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.error) {
+                    setStatus({
+                        type: "error",
+                        message: responseJson.message
+                    });
                 } else {
-                    setError("");
-                    setMsg(result[0].result);
-                    login(result[0].user);
+                    setStatus({
+                        type: "success",
+                        message: responseJson[0].message
+                    });
+                    login(responseJson[0].user);
                     setTimeout(function () {
                         if (buttonType === "enter") {
                             navigate("/");
@@ -55,13 +50,12 @@ export const FormLogin = () => {
                         };
                     }, 3000);
                 };
-            } catch (err) {
-                setError("Erro ao fazer login. Tente novamente.");
-                console.log(err);
-            };
-        } else {
-            setError("All field are required!");
-        };
+            }).catch(() => {
+                setStatus({
+                    type: "error",
+                    message: "Erro ao fazer login, Tente novamente!"
+                });
+            });
     };
     const handleButtonClicked = (type) => {
         setButtonType(type);
@@ -69,12 +63,17 @@ export const FormLogin = () => {
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <DivFormMsgs>
-                {
-                    error !== ""
-                        ?
-                        <span className="msgphperror">{error}</span>
-                        :
-                        <span className="msgphpsuccess">{msg}</span>
+                {status.type === "error"
+                    ?
+                    <span className="msgphperror">{status.message}</span>
+                    :
+                    <span className="msgphpsuccess">{status.message}</span>
+                }
+                {status.type === "success"
+                    ?
+                    <span className="msgphpsuccess">{status.message}</span>
+                    :
+                    <span className="msgphperror">{status.message}</span>
                 }
             </DivFormMsgs>
             <LabelText htmlFor="cpf">CPF</LabelText>

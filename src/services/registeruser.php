@@ -5,6 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once 'pdoconnection.php';
 $response_json = file_get_contents("php://input");
 $dados = json_decode($response_json, true);
+$dados['password'] = password_hash($dados['password'], PASSWORD_DEFAULT);
 if ($dados) {
     $query_checked_cpf = "SELECT COUNT(*) FROM cpf WHERE cpf = :cpf";
     $checked_cpf = $conn->prepare($query_checked_cpf);
