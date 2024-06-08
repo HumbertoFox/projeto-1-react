@@ -59,9 +59,9 @@ export const FormPatientDrY = () => {
                 })}
             />
             <LabelText htmlFor="email">Email</LabelText>
-            <input type="email" id="email" {...register("email")} />
+            <input type="email" id="email" {...register("email", { required: "Required field" })} />
             <LabelText>CRM</LabelText>
-            <input type="number" id="crm" disabled={true} {...register("crm", {value: "5000"})} />
+            <input type="number" id="crm" disabled={true} {...register("crm", { value: "5000" })} />
             <DivRadio>
                 <LabelText htmlFor="plan">
                     <input type="radio"
@@ -93,11 +93,11 @@ export const FormPatientDrY = () => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano</LabelText>
-                <input type="text" id="plan" {...register("plan")} />
+                <input type="text" id="plan" {...register("plan", { value: "..." })} />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor</LabelText>
-                <input type="text" id="particular" {...register("particular")} />
+                <input type="text" id="particular" {...register("particular", { value: "..." })} />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
@@ -110,7 +110,7 @@ export const FormPatientDrY = () => {
                 })}
             />
             <LabelText htmlFor="observation">Observações</LabelText>
-            <textarea id="observation" {...register("observation")}></textarea>
+            <textarea id="observation" {...register("observation", { value: "..." })}></textarea>
             <SubmitButton value="Agendar" />
         </FormDoctor>
     );

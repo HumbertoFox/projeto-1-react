@@ -156,11 +156,11 @@ export const FormPatientDrX = () => {
             </DivRadio>
             <DivNomeEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
-                <input type="text" id="building" {...register("building")} />
+                <input type="text" id="building" {...register("building", { value: "..." })} />
                 <LabelText htmlFor="block">Bloco</LabelText>
-                <input type="text" id="block" {...register("block")} />
+                <input type="text" id="block" {...register("block", { value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
-                <input type="text" id="apartment" {...register("apartment")} />
+                <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
             </DivNomeEd>
             <LabelText htmlFor="district">Bairro/Distrito</LabelText>
             <input
@@ -183,7 +183,7 @@ export const FormPatientDrX = () => {
                 })}
             />
             <LabelText htmlFor="email">Email</LabelText>
-            <input type="email" id="email" {...register("email")} />
+            <input type="email" id="email" {...register("email", { required: "Required field" })} />
             <LabelText>CRM</LabelText>
             <input type="number" id="crm" disabled={true} {...register("crm", { value: "5001" })} />
             <DivRadio>
@@ -208,11 +208,11 @@ export const FormPatientDrX = () => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano</LabelText>
-                <input type="text" id="plan" {...register("plan")} />
+                <input type="text" id="plan" {...register("plan", { value: "..." })} />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor</LabelText>
-                <input type="text" id="particular" {...register("particular")} />
+                <input type="text" id="particular" {...register("particular", { value: "..." })} />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
@@ -224,7 +224,7 @@ export const FormPatientDrX = () => {
                 })}
             />
             <LabelText htmlFor="observation">Observações</LabelText>
-            <textarea name="observation" id="observation" {...register("observation")}></textarea>
+            <textarea name="observation" id="observation" {...register("observation", { value: "..." })}></textarea>
             <SubmitButton value="Agendar" />
         </FormDoctor>
     );
