@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { viaCepApi } from "../../services/viacep";
@@ -13,28 +13,42 @@ export const FormPatientDrX = () => {
         handleSubmit,
         setValue,
         setFocus,
+        watch,
         formState: { errors }
     } = useForm();
-    const swapRadioSelect = e => {
-        setRadioSelect(e.target.value);
+    const value = watch("particular");
+    const formatAsCurrency = (value) => {
+        if (!value) return "0";
+        const numericalValue = parseFloat(value.replace(/[^\d]/g, "")) / 100;
+        return numericalValue.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
     };
-    const swapSelectedRadio = e => {
-        setSelectRadio(e.target.value);
+    useEffect(() => {
+        const formatValue = formatAsCurrency(value);
+        setValue("particular", formatValue, { shouldValidate: true });
+    }, [value, setValue]);
+    const swapRadioSelect = element => {
+        setRadioSelect(element.target.value);
     };
-    const checkedZipCode = async (e) => {
+    const swapSelectedRadio = elemen => {
+        setSelectRadio(elemen.target.value);
+    };
+    const checkedZipCode = async (elemen) => {
         const clearZipCode = () => {
             setValue('zipcode', "");
             setValue('street', "");
             setValue('district', "");
             setValue('city', "");
         };
-        if (!e.target.value) {
+        if (!elemen.target.value) {
             clearZipCode();
-            setFocus('telephone');
+            setFocus('email');
             alert("Formato de CEP inválido.");
             return;
         };
-        const zipcode = e.target.value.replace(/\D/g, '');
+        const zipcode = elemen.target.value.replace(/\D/g, '');
         var validazipcode = /^[0-9]{8}$/;
         try {
             if (validazipcode.test(zipcode)) {
@@ -47,27 +61,40 @@ export const FormPatientDrX = () => {
                     setFocus('residencenumber');
                 } else {
                     clearZipCode();
-                    setFocus('telephone');
+                    setFocus('email');
                     alert("CEP não encontrado.");
                 }
             } else {
                 clearZipCode();
-                setFocus('telephone');
+                setFocus('email');
                 alert("Formato de CEP inválido.");
             }
         } catch (error) {
             console.error(error);
             clearZipCode();
-            setFocus('telephone');
+            setFocus('email');
             alert(`Formato de CEP inválido ou não encontrado.`);
             return;
         }
     };
-    const onSubmit = e => {
-        console.log(e);
+    const onSubmit = (data) => {
+        console.log(data);
     };
     return (
         <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
+            <LabelText htmlFor="cpf">CPF</LabelText>
+            <input
+                type="text"
+                id="cpf"
+                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                className={`${errors.cpf ? "required" : ""}`}
+                {...register("cpf", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
+                })}
+            />
             <LabelText htmlFor="name">Nome</LabelText>
             <input
                 type="text"
@@ -78,19 +105,6 @@ export const FormPatientDrX = () => {
                     required: "Required field",
                     pattern: {
                         value: /[A-Za-z]{5}/g
-                    }
-                })}
-            />
-            <LabelText htmlFor="cpf">CPF</LabelText>
-            <input
-                type="number"
-                id="cpf"
-                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
-                className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", {
-                    required: "Required field",
-                    pattern: {
-                        value: /\d{11}/g
                     }
                 })}
             />
@@ -105,6 +119,16 @@ export const FormPatientDrX = () => {
                     pattern: {
                         value: /\d{11}/g
                     }
+                })}
+            />
+            <LabelText htmlFor="email">Email</LabelText>
+            <input
+                type="email"
+                id="email"
+                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                className={`${errors.telephone ? "required" : ""}`}
+                {...register("email", {
+                    required: "Required field"
                 })}
             />
             <LabelText htmlFor="zipcode">CEP</LabelText>
@@ -182,8 +206,6 @@ export const FormPatientDrX = () => {
                     required: "Required field"
                 })}
             />
-            <LabelText htmlFor="email">Email</LabelText>
-            <input type="email" id="email" {...register("email", { required: "Required field" })} />
             <LabelText>CRM</LabelText>
             <input type="number" id="crm" disabled={true} {...register("crm", { value: "5001" })} />
             <DivRadio>
@@ -212,7 +234,7 @@ export const FormPatientDrX = () => {
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor</LabelText>
-                <input type="text" id="particular" {...register("particular", { value: "..." })} />
+                <input type="text" id="particular" {...register("particular")} />
             </DivParticular>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
