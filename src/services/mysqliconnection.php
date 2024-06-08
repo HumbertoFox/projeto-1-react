@@ -3,6 +3,6 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$dbname = "test";
+$dbname = "consult_db";
 
 $conn = new mysqli($host, $user, $pass, $dbname);

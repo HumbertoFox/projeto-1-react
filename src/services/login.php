@@ -1,9 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
-
+header("Content-Type: application/json; charset=UTF-8");
 include_once 'mysqliconnection.php';
-
 if (mysqli_connect_error()) {
     die("Erro na conexão: " . mysqli_connect_error());
 } else {
@@ -27,8 +26,7 @@ if (mysqli_connect_error()) {
                 $response[] = array("result" => "Senha Invalida!");
             } else {
                 $userData = array(
-                    "id" => $row["id"],
-                    "name" => $row["name"],
+                    "id" => $row["user_id"],
                     "email" => $row["email"]
                 );
                 $response[] = array(
