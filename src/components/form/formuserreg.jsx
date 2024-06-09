@@ -6,14 +6,12 @@ import { SubmitButton } from "../button/buttonsubmit";
 import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
 import { DivNomeEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
-import { DivButtons, DivFormMsgs } from "../../styles/mainpagestyle";
+import { DivButtons } from "../../styles/mainpagestyle";
+import { ActivityClicked } from "../modal/eventsclick";
 
 export const FormUserRegister = () => {
     const navigate = useNavigate();
-    const [status, setStatus] = useState({
-        type: "",
-        message: ""
-    });
+    const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("casa");
     const {
         register,
@@ -68,6 +66,9 @@ export const FormUserRegister = () => {
             return;
         }
     };
+    const handleEventAlertClose = () => {
+        setEventAlert(null);
+    };
     const onSubmit = async (data) => {
         await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
             method: "POST",
@@ -81,13 +82,13 @@ export const FormUserRegister = () => {
             .then((responseJson) => {
                 if (responseJson.erro) {
                     setFocus("cpf");
-                    setStatus({
+                    setEventAlert({
                         type: "erro",
                         message: responseJson.message
                     });
                 } else {
                     setFocus("cpf");
-                    setStatus({
+                    setEventAlert({
                         type: "success",
                         message: responseJson.message
                     });
@@ -97,7 +98,7 @@ export const FormUserRegister = () => {
                 };
             }).catch(() => {
                 setFocus("cpf");
-                setStatus({
+                setEventAlert({
                     type: "erro",
                     message: "Usuário não cadastrado, erro com o Banco!"
                 });
@@ -106,20 +107,6 @@ export const FormUserRegister = () => {
     const password = watch('password');
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
-            <DivFormMsgs>
-                {status.type === "erro"
-                    ?
-                    <span className="msgphperror">{status.message}</span>
-                    :
-                    <span className="msgphpsuccess">{status.message}</span>
-                }
-                {status.type === "success"
-                    ?
-                    <span className="msgphpsuccess">{status.message}</span>
-                    :
-                    <span className="msgphperror">{status.message}</span>
-                }
-            </DivFormMsgs>
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="text"
@@ -272,6 +259,10 @@ export const FormUserRegister = () => {
                 <SubmitButton title="Cadastrar" value="Cadastrar" />
                 <ButtonButton title="Iniciar" onClick={() => navigate("/")}>Iniciar</ButtonButton>
             </DivButtons>
+            {eventAlert && <ActivityClicked
+                event={eventAlert}
+                onClose={handleEventAlertClose}
+            />}
         </FormDoctor>
     );
 };

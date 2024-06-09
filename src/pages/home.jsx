@@ -10,29 +10,22 @@ import { DivHomeMain, DivToolbarCalendar } from "../styles/homestyle";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { eventsTest } from "../services/eventstest";
 import { ActivityActive } from "../components/modal/eventactivity";
-
 const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
-
 export const HomePage = () => {
-
     const [events, setEvents] = useState(eventsTest);
     const [eventSelected, setEventSelected] = useState(null);
-
-    const styleColor = (e) => ({
+    const styleColor = (element) => ({
         style: {
-            backgroundColor: e.color
+            backgroundColor: element.color
         }
     });
-
-    const handleEventSelectClick = (e) => {
-        setEventSelected(e);
+    const handleEventSelectClick = (element) => {
+        setEventSelected(element);
     };
-
     const handleEventSelectClose = () => {
         setEventSelected(null);
     };
-
     const CustomToolbar = ({
         onView = ['month', 'week', 'day', 'agenda'],
         label = ['date', 'label'],
@@ -55,7 +48,6 @@ export const HomePage = () => {
             </div>
         </DivToolbarCalendar>
     );
-
     return (
         <MainPrimary>
             <HeaderMenu />

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/authcontext";
 import { useForm } from "react-hook-form";
 import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
-
+import { ActivityClicked } from "../modal/eventsclick";
 export const FormPatientDrX = () => {
+    const userSystem = useAuth().user;
     const [radioSelect, setRadioSelect] = useState("casa");
     const [selectRadio, setSelectRadio] = useState("plan");
+    const [eventAlert, setEventAlert] = useState(null);
     const {
         register,
         handleSubmit,
@@ -77,11 +80,44 @@ export const FormPatientDrX = () => {
             return;
         }
     };
-    const onSubmit = (data) => {
-        console.log(data);
+    const handleEventAlertClose = () => {
+        setEventAlert(null);
+    };
+    const onSubmit = async (data) => {
+        data.user_id = userSystem.id;
+        await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.error) {
+                    setFocus("cpf");
+                    setEventAlert({
+                        type: "error",
+                        message: responseJson.message
+                    });
+                } else {
+                    setFocus("cpf");
+                    setEventAlert({
+                        type: "success",
+                        message: responseJson.message
+                    });
+                };
+            }).catch(() => {
+                setFocus("cpf");
+                setEventAlert({
+                    type: "error",
+                    message: "Consulta não agendada, erro com o Banco!"
+                });
+            });
     };
     return (
-        <FormDoctor action="" method="POST" onSubmit={handleSubmit(onSubmit)}>
+        <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="text"
@@ -248,6 +284,10 @@ export const FormPatientDrX = () => {
             <LabelText htmlFor="observation">Observações</LabelText>
             <textarea name="observation" id="observation" {...register("observation", { value: "..." })}></textarea>
             <SubmitButton value="Agendar" />
+            {eventAlert && <ActivityClicked
+                event={eventAlert}
+                onClose={handleEventAlertClose}
+            />}
         </FormDoctor>
     );
 };

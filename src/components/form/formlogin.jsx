@@ -5,15 +5,13 @@ import { useAuth } from "../../contexts/authcontext";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
-import { DivButtons, DivFormMsgs } from "../../styles/mainpagestyle";
+import { DivButtons } from "../../styles/mainpagestyle";
+import { ActivityClicked } from "../modal/eventsclick";
 
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
-    const [status, setStatus] = useState({
-        type: "",
-        message: ""
-    });
+    const [eventAlert, setEventAlert] = useState(null);
     const [buttonType, setButtonType] = useState("");
     const {
         register,
@@ -32,12 +30,12 @@ export const FormLogin = () => {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.error) {
-                    setStatus({
+                    setEventAlert({
                         type: "error",
                         message: responseJson.message
                     });
                 } else {
-                    setStatus({
+                    setEventAlert({
                         type: "success",
                         message: responseJson[0].message
                     });
@@ -51,7 +49,7 @@ export const FormLogin = () => {
                     }, 3000);
                 };
             }).catch(() => {
-                setStatus({
+                setEventAlert({
                     type: "error",
                     message: "Erro ao fazer login, Tente novamente!"
                 });
@@ -60,22 +58,11 @@ export const FormLogin = () => {
     const handleButtonClicked = (type) => {
         setButtonType(type);
     };
+    const handleEventAlertClose = () => {
+        setEventAlert(null);
+    };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
-            <DivFormMsgs>
-                {status.type === "error"
-                    ?
-                    <span className="msgphperror">{status.message}</span>
-                    :
-                    <span className="msgphpsuccess">{status.message}</span>
-                }
-                {status.type === "success"
-                    ?
-                    <span className="msgphpsuccess">{status.message}</span>
-                    :
-                    <span className="msgphperror">{status.message}</span>
-                }
-            </DivFormMsgs>
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="number"
@@ -105,6 +92,10 @@ export const FormLogin = () => {
                 <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
                 <SubmitButton title="Cadastrar Usuário" value="Cadastrar Usuário" onClick={() => handleButtonClicked("register")} />
             </DivButtons>
+            {eventAlert && <ActivityClicked
+                event={eventAlert}
+                onClose={handleEventAlertClose}
+            />}
         </FormDoctor>
     )
 };
