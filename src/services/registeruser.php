@@ -56,16 +56,14 @@ if ($dados) {
         $cad_addaddress_all->bindParam(':buildingblock', $dados['buildingblock'], PDO::PARAM_STR);
         $cad_addaddress_all->bindParam(':apartment', $dados['apartment'], PDO::PARAM_STR);
         $cad_addaddress_all->execute();
-        if ($cad_addaddress_all->rowCount()) {
-            $_SESSION['address_id'] = $conn->lastInsertId();
-        };
+        $address_id = $conn->lastInsertId();
         $query_adduser = "INSERT INTO user (cpf, telephone, email, password, address_id) VALUES (:cpf, :telephone, :email, :password, :address_id)";
         $cad_user = $conn->prepare($query_adduser);
         $cad_user->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
         $cad_user->bindParam(':email', $dados['email'], PDO::PARAM_STR);
         $cad_user->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
         $cad_user->bindParam(':password', $dados['password'], PDO::PARAM_STR);
-        $cad_user->bindParam(':address_id', $_SESSION['address_id'], PDO::PARAM_INT);
+        $cad_user->bindParam(':address_id', $address_id, PDO::PARAM_INT);
         $cad_user->execute();
         if ($cad_user->rowCount()) {
             $response = [

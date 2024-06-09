@@ -80,11 +80,13 @@ export const FormUserRegister = () => {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.erro) {
+                    setFocus("cpf");
                     setStatus({
                         type: "erro",
                         message: responseJson.message
                     });
                 } else {
+                    setFocus("cpf");
                     setStatus({
                         type: "success",
                         message: responseJson.message
@@ -94,6 +96,7 @@ export const FormUserRegister = () => {
                     }, 3000);
                 };
             }).catch(() => {
+                setFocus("cpf");
                 setStatus({
                     type: "erro",
                     message: "Usuário não cadastrado, erro com o Banco!"
