@@ -72,24 +72,4 @@ const DivLogin = styled.div`
     }
 `;
 
-const DivFormMsgs = styled.div`
-    position: relative;
-    display: flex;
-    justify-content: center;
-
-    .msgphpsuccess,
-    .msgphperror {
-        position: absolute;
-        top: -15px;
-        font-size: .8rem;
-        font-style: italic;
-    }
-    .msgphpsuccess {
-        color: #3C91E6;
-    }
-    .msgphperror {
-        color: #FF0075;
-    }
-`;
-
-export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin, DivFormMsgs };
+export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin };

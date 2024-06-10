@@ -1,5 +1,4 @@
-import styled, { keyframes } from "styled-components";
-
+import styled, { keyframes, css } from "styled-components";
 const FaceIn = keyframes`
     0% {
         opacity: 0;
@@ -9,7 +8,6 @@ const FaceIn = keyframes`
         opacity: 1;
     }
 `;
-
 const DivMaimEvents = styled.div`
     position: fixed;
     width: 100%;
@@ -26,7 +24,6 @@ const DivMaimEvents = styled.div`
         min-width: 375px;
     }
 `;
-
 const DivEvents = styled.div`
     display: flex;
     gap: 5px;
@@ -37,6 +34,21 @@ const DivEvents = styled.div`
     box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     animation: ${FaceIn} .4s ease-in-out;
 
+    ${({ className }) => {
+        if (className == "success") {
+            return css`
+            p {
+                color: #3C91E6;
+            }
+            `;
+        } else {
+            return css`
+            p {
+                color: #FF0075;
+            }
+            `;
+        };
+    }};
     h2 {
         font-size: 1.1rem;
         margin: 0 auto;
@@ -51,5 +63,4 @@ const DivEvents = styled.div`
         margin: 0 auto;
     }
 `;
-
 export { DivMaimEvents, DivEvents };

@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
 import IconError from "../assets/aviso.png";
-
 const FormDoctor = styled.form`
     width: 280px;
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;    
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -64,12 +62,10 @@ const FormDoctor = styled.form`
         color: hsla(332.47, 100%, 50%, .5);
     }
 `;
-
 const DivRadio = styled.div`
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
-
     label {
         padding: 0 10px;
         transition: .3s ease-in-out;
@@ -83,11 +79,9 @@ const DivRadio = styled.div`
         text-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     }
 `;
-
-const DivNomeEd = styled.div`
+const DivNameEd = styled.div`
     display: none;
     flex-direction: column;
-
 ${({ className }) => {
         if (className === "edificio") {
             return css`
@@ -96,11 +90,9 @@ ${({ className }) => {
         }
     }};
 `;
-
 const DivPlan = styled.div`
     display: none;
     flex-direction: column;
-
 ${({ className }) => {
         if (className === "plan") {
             return css`
@@ -109,19 +101,29 @@ ${({ className }) => {
         }
     }};
 `;
-
 const DivParticular = styled.div`
     display: none;
-
 ${({ className }) => {
         if (className === "particular") {
             return css`
                 display: flex;
             `;
-        }
-
-    }}
+        };
+    }};
     flex-direction: column;
 `;
-
-export { FormDoctor, DivRadio, DivNomeEd, DivPlan, DivParticular };
+const DivDate = styled.div`
+    display: flex;
+`;
+const DivDateBirth = styled(DivDate)`
+    flex-direction: column;
+`;
+const DivDateAge = styled(DivDateBirth)`
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    p {
+        color: grey;
+    }
+`;
+export { FormDoctor, DivRadio, DivNameEd, DivPlan, DivParticular, DivDate, DivDateBirth, DivDateAge };

@@ -5,7 +5,7 @@ import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
 import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
-import { DivNomeEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
 
@@ -203,14 +203,14 @@ export const FormUserRegister = () => {
                     Edifício
                 </LabelText>
             </DivRadio>
-            <DivNomeEd className={radioSelect}>
+            <DivNameEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
                 <input type="text" id="building" {...register("building", { value: "..." })} />
                 <LabelText htmlFor="buildingblock">Bloco</LabelText>
                 <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
                 <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
-            </DivNomeEd>
+            </DivNameEd>
             <LabelText htmlFor="district">Bairro/Distrito</LabelText>
             <input
                 type="text"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
 import { useForm } from "react-hook-form";
-import { DivNomeEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
@@ -214,14 +214,14 @@ export const FormPatientDrX = () => {
                     Edifício
                 </LabelText>
             </DivRadio>
-            <DivNomeEd className={radioSelect}>
+            <DivNameEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
                 <input type="text" id="building" {...register("building", { value: "..." })} />
                 <LabelText htmlFor="block">Bloco</LabelText>
                 <input type="text" id="block" {...register("block", { value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
                 <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
-            </DivNomeEd>
+            </DivNameEd>
             <LabelText htmlFor="district">Bairro/Distrito</LabelText>
             <input
                 type="text"
