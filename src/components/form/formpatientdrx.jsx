@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
 import { viaCepApi } from "../../services/viacep";
 import { useForm } from "react-hook-form";
-import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
@@ -38,9 +38,7 @@ export const FormPatientDrX = () => {
     };
     const swapSelectedRadio = element => {
         const selectedValue = element.target.value;
-        const isCourtesy = selectedValue !== "courtesy";
         setSelectRadio(selectedValue);
-        setValue("courtesy", isCourtesy ? "Não" : "Sim");
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -108,6 +106,7 @@ export const FormPatientDrX = () => {
     };
     const onSubmit = async (data) => {
         data.user_id = userSystem.id;
+        data.courtesy = "Não";
         await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
             method: "POST",
             headers: {
@@ -305,15 +304,6 @@ export const FormPatientDrX = () => {
                     />
                     Particular
                 </LabelText>
-                <LabelText htmlFor="courtesy">
-                    <input type="radio"
-                        value="courtesy"
-                        id="courtesy"
-                        checked={selectRadio === "courtesy" ? true : false}
-                        onChange={swapSelectedRadio}
-                    />
-                    Cortesia
-                </LabelText>
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano</LabelText>
@@ -323,10 +313,6 @@ export const FormPatientDrX = () => {
                 <LabelText htmlFor="particular">Valor</LabelText>
                 <input type="text" id="particular" {...register("particular")} />
             </DivParticular>
-            <DivCourtesy className={selectRadio}>
-                <LabelText htmlFor="courtesy">Cortesia</LabelText>
-                <input type="text" id="courtesy" {...register("courtesy")} />
-            </DivCourtesy>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
                 type="date"
