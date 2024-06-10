@@ -3,14 +3,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "../contexts/authcontext";
 import { PrivateRoute } from "../components/privaterouts/privateroute";
 import { LoginPage } from "../pages/login";
+import { MenuRegistersPage } from "../pages/menu";
 import { HomePage } from "../pages/home";
 import { ConsultationDrX } from "../pages/consultationdrx";
 import { ConsultationDrY } from "../pages/consultationdry";
 import { ReportDoctorxPage } from "../pages/reportdoctorx";
 import { ReportDoctoryPage } from "../pages/reportdoctory";
 import { RegisterUserPage } from "../pages/registeruser";
-import { RegisterDoctorsPage } from "../pages/registerdoctor";
-import { MenuRegistersPage } from "../pages/menu";
+import { RegisterDoctorsPage } from "../pages/registerdoctors";
 export const AppRouters = () => {
     return (
         <AuthProvider>

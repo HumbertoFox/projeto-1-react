@@ -2,7 +2,7 @@ import React from "react";
 import { Search } from "../components/form/search";
 import { DivForms, MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { HeaderMenu } from "../components/header/menuheader";
-import { FormPatientDrY } from "../components/form/formpatientdry";
+import { FormPatientDrs } from "../components/form/formpatientdrs";
 
 export const ConsultationDrY = () => {
     return (
@@ -11,7 +11,7 @@ export const ConsultationDrY = () => {
             <MainSecondary>
                 <DivForms>
                     <Search />
-                    <FormPatientDrY />
+                    <FormPatientDrs title={"5000"} />
                 </DivForms>
             </MainSecondary>
         </MainPrimary>

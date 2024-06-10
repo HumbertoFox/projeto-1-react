@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
 import { viaCepApi } from "../../services/viacep";
 import { useForm } from "react-hook-form";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-export const FormPatientDrX = () => {
+export const FormPatientDrs = ({ title }) => {
     const userSystem = useAuth().user;
     const [radioSelect, setRadioSelect] = useState("casa");
     const [selectRadio, setSelectRadio] = useState("plan");
@@ -33,12 +33,18 @@ export const FormPatientDrX = () => {
         const formatValue = formatAsCurrency(value);
         setValue("particular", formatValue, { shouldValidate: true });
     }, [value, setValue]);
+    useEffect(() => {
+        setValue("crm", title);
+    }, [])
     const swapRadioSelect = element => {
-        setRadioSelect(element.target.value);
+        const selectValue = element.target.value;
+        setRadioSelect(selectValue);
     };
     const swapSelectedRadio = element => {
         const selectedValue = element.target.value;
+        const isCourtesy = selectedValue !== "courtesy";
         setSelectRadio(selectedValue);
+        setValue("courtesy", isCourtesy ? "Não" : "Sim");
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -106,7 +112,6 @@ export const FormPatientDrX = () => {
     };
     const onSubmit = async (data) => {
         data.user_id = userSystem.id;
-        data.courtesy = "Não";
         await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
             method: "POST",
             headers: {
@@ -118,23 +123,20 @@ export const FormPatientDrX = () => {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.error) {
-                    setFocus("cpf");
                     setEventAlert({
                         type: "error",
                         message: responseJson.message
                     });
                 } else {
-                    setFocus("cpf");
                     setEventAlert({
                         type: "success",
                         message: responseJson.message
                     });
                 };
             }).catch(() => {
-                setFocus("cpf");
                 setEventAlert({
                     type: "error",
-                    message: "Consulta não agendada, erro com o Banco!"
+                    message: "Consulta não agendada, Erro com o Banco!"
                 });
             });
     };
@@ -284,7 +286,7 @@ export const FormPatientDrX = () => {
                 })}
             />
             <LabelText>CRM</LabelText>
-            <input type="number" id="crm" disabled={true} {...register("crm", { value: "5001" })} />
+            <input type="number" id="crm" disabled={true} {...register("crm")} />
             <DivRadio>
                 <LabelText htmlFor="plan">
                     <input type="radio"
@@ -304,6 +306,15 @@ export const FormPatientDrX = () => {
                     />
                     Particular
                 </LabelText>
+                <LabelText htmlFor="courtesy">
+                    <input type="radio"
+                        value="courtesy"
+                        id="courtesy"
+                        checked={selectRadio === "courtesy" ? true : false}
+                        onChange={swapSelectedRadio}
+                    />
+                    Cortesia
+                </LabelText>
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano</LabelText>
@@ -311,14 +322,19 @@ export const FormPatientDrX = () => {
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor</LabelText>
-                <input type="text" id="particular" {...register("particular")} />
+                <input type="text" id="particular" {...register("particular", { value: "..." })} />
             </DivParticular>
+            <DivCourtesy className={selectRadio}>
+                <LabelText htmlFor="courtesy">Cortesia</LabelText>
+                <input type="text" id="courtesy" {...register("courtesy", { value: "Não" })} />
+            </DivCourtesy>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
                 type="date"
                 id="consultationdate"
                 className={`${errors.consultationdate ? "requireddate" : ""}`}
-                {...register("consultationdate", {
+                {
+                ...register("consultationdate", {
                     required: "Required field"
                 })}
             />
