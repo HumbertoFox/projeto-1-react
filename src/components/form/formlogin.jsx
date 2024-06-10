@@ -90,7 +90,7 @@ export const FormLogin = () => {
             />
             <DivButtons>
                 <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
-                <SubmitButton title="Menu Cadastrar" value="Menu Cadastrar" onClick={() => handleButtonClicked("menu")} />
+                <SubmitButton title="Menu" value="Menu" onClick={() => handleButtonClicked("menu")} />
             </DivButtons>
             {eventAlert && <ActivityClicked
                 event={eventAlert}

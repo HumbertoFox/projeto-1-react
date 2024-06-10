@@ -37,7 +37,8 @@ export const FormPatientDrX = () => {
         setRadioSelect(element.target.value);
     };
     const swapSelectedRadio = element => {
-        setSelectRadio(element.target.value);
+        const selectedValue = element.target.value;
+        setSelectRadio(selectedValue);
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -105,6 +106,7 @@ export const FormPatientDrX = () => {
     };
     const onSubmit = async (data) => {
         data.user_id = userSystem.id;
+        data.courtesy = "Não";
         await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
             method: "POST",
             headers: {
@@ -321,7 +323,7 @@ export const FormPatientDrX = () => {
                 })}
             />
             <LabelText htmlFor="observation">Observações</LabelText>
-            <textarea id="observation" {...register("observation", { value: "..." })}></textarea>
+            <textarea id="observation" {...register("observation", { value: "..." })} />
             <SubmitButton value="Agendar" />
             {eventAlert && <ActivityClicked
                 event={eventAlert}

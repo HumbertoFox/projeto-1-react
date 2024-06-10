@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useAuth } from "../../contexts/authcontext";
 import { viaCepApi } from "../../services/viacep";
+import { useForm } from "react-hook-form";
 import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
+import { ActivityClicked } from "../modal/eventsclick";
 export const FormPatientDrY = () => {
+    const userSystem = useAuth().user;
     const [radioSelect, setRadioSelect] = useState("casa");
     const [selectRadio, setSelectRadio] = useState("plan");
     const [eventAlert, setEventAlert] = useState(null);
@@ -35,7 +38,9 @@ export const FormPatientDrY = () => {
     };
     const swapSelectedRadio = element => {
         const selectedValue = element.target.value;
+        const isCourtesy = selectedValue !== "courtesy";
         setSelectRadio(selectedValue);
+        setValue("courtesy", isCourtesy ? "Não" : "Sim");
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -101,8 +106,38 @@ export const FormPatientDrY = () => {
             setAge(null);
         };
     };
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        data.user_id = userSystem.id;
+        await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.error) {
+                    setFocus("cpf");
+                    setEventAlert({
+                        type: "error",
+                        message: responseJson.message
+                    });
+                } else {
+                    setFocus("cpf");
+                    setEventAlert({
+                        type: "success",
+                        message: responseJson.message
+                    });
+                };
+            }).catch(() => {
+                setFocus("cpf");
+                setEventAlert({
+                    type: "error",
+                    message: "Consulta não agendada, erro com o Banco!"
+                });
+            });
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
@@ -290,7 +325,7 @@ export const FormPatientDrY = () => {
             </DivParticular>
             <DivCourtesy className={selectRadio}>
                 <LabelText htmlFor="courtesy">Cortesia</LabelText>
-                <input type="text" id="courtesy" {...register("courtesy", { value: "Não" })} />
+                <input type="text" id="courtesy" {...register("courtesy")} />
             </DivCourtesy>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
@@ -303,7 +338,7 @@ export const FormPatientDrY = () => {
                 })}
             />
             <LabelText htmlFor="observation">Observações</LabelText>
-            <textarea id="observation" {...register("observation", { value: "..." })}></textarea>
+            <textarea id="observation" {...register("observation", { value: "..." })} />
             <SubmitButton value="Agendar" />
             {eventAlert && <ActivityClicked
                 event={eventAlert}
