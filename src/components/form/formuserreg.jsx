@@ -5,14 +5,14 @@ import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
 import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
-import { DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-
 export const FormUserRegister = () => {
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("casa");
+    const [age, setAge] = useState(null);
     const {
         register,
         handleSubmit,
@@ -105,6 +105,25 @@ export const FormUserRegister = () => {
             });
     };
     const password = watch('password');
+    const calculateAge = (data) => {
+        const birthDate = new Date(data);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        };
+        return age;
+    };
+    const handleDateChange = (element) => {
+        const data = element.target.value;
+        if (data) {
+            const calculatedAge = calculateAge(data);
+            setAge(calculatedAge);
+        } else {
+            setAge(null);
+        };
+    };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF</LabelText>
@@ -133,6 +152,25 @@ export const FormUserRegister = () => {
                     }
                 })}
             />
+            <DivDate>
+                <DivDateBirth>
+                    <LabelText htmlFor="dateofbirth">Data de Nascimento</LabelText>
+                    <input
+                        type="date"
+                        id="dateofbirth"
+                        className={`${errors.dateofbirth ? "requireddate" : ""}`}
+                        {
+                        ...register("dateofbirth", {
+                            required: "Required field"
+                        })}
+                        onChange={handleDateChange}
+                    />
+                </DivDateBirth>
+                <DivDateAge>
+                    <p>{age}</p>
+                    <p>anos</p>
+                </DivDateAge>
+            </DivDate>
             <LabelText htmlFor="telephone">Telefone</LabelText>
             <input
                 type="tel"

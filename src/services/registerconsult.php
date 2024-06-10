@@ -12,10 +12,11 @@ if ($dados) {
     $checked_cpf->execute();
     $cpf_count = $checked_cpf->fetchColumn();
     if ($cpf_count == 0) {
-        $query_addcpf = "INSERT INTO cpf (cpf, name) VALUES (:cpf, :name)";
+        $query_addcpf = "INSERT INTO cpf (cpf, name, dateofbirth) VALUES (:cpf, :name, :dateofbirth)";
         $cad_cpf = $conn->prepare($query_addcpf);
         $cad_cpf->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
         $cad_cpf->bindParam(':name', $dados['name'], PDO::PARAM_STR);
+        $cad_cpf->bindParam(':dateofbirth', $dados['dateofbirth'], PDO::PARAM_STR);
         $cad_cpf->execute();
         $query_checked_telephone = "SELECT COUNT(*) FROM telephone WHERE telephone = :telephone";
         $checked_telephone = $conn->prepare($query_checked_telephone);
