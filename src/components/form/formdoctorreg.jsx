@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/authcontext";
-import { viaCepApi } from "../../services/viacep";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { useNavigate } from "react-router-dom";
+import { viaCepApi } from "../../services/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
+import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-export const FormPatientDrX = () => {
-    const userSystem = useAuth().user;
-    const [radioSelect, setRadioSelect] = useState("casa");
-    const [selectRadio, setSelectRadio] = useState("plan");
+export const FormDoctorsRegister = () => {
+    const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
+    const [radioSelect, setRadioSelect] = useState("casa");
     const [age, setAge] = useState(null);
     const {
         register,
@@ -20,24 +21,8 @@ export const FormPatientDrX = () => {
         watch,
         formState: { errors }
     } = useForm();
-    const value = watch("particular");
-    const formatAsCurrency = (value) => {
-        if (!value) return "0";
-        const numericalValue = parseFloat(value.replace(/[^\d]/g, "")) / 100;
-        return numericalValue.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-    };
-    useEffect(() => {
-        const formatValue = formatAsCurrency(value);
-        setValue("particular", formatValue, { shouldValidate: true });
-    }, [value, setValue]);
     const swapRadioSelect = element => {
         setRadioSelect(element.target.value);
-    };
-    const swapSelectedRadio = element => {
-        setSelectRadio(element.target.value);
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -84,6 +69,42 @@ export const FormPatientDrX = () => {
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
+    const onSubmit = async (data) => {
+        await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.erro) {
+                    setFocus("cpf");
+                    setEventAlert({
+                        type: "erro",
+                        message: responseJson.message
+                    });
+                } else {
+                    setFocus("cpf");
+                    setEventAlert({
+                        type: "success",
+                        message: responseJson.message
+                    });
+                    setTimeout(function () {
+                        navigate("/");
+                    }, 3000);
+                };
+            }).catch(() => {
+                setFocus("cpf");
+                setEventAlert({
+                    type: "erro",
+                    message: "Usuário não cadastrado, erro com o Banco!"
+                });
+            });
+    };
+    const password = watch('password');
     const calculateAge = (data) => {
         const birthDate = new Date(data);
         const today = new Date();
@@ -103,41 +124,21 @@ export const FormPatientDrX = () => {
             setAge(null);
         };
     };
-    const onSubmit = async (data) => {
-        data.user_id = userSystem.id;
-        await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.error) {
-                    setFocus("cpf");
-                    setEventAlert({
-                        type: "error",
-                        message: responseJson.message
-                    });
-                } else {
-                    setFocus("cpf");
-                    setEventAlert({
-                        type: "success",
-                        message: responseJson.message
-                    });
-                };
-            }).catch(() => {
-                setFocus("cpf");
-                setEventAlert({
-                    type: "error",
-                    message: "Consulta não agendada, erro com o Banco!"
-                });
-            });
-    };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
+            <LabelText htmlFor="crm">CRM</LabelText>
+            <input
+                type="text"
+                id="crm"
+                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                className={`${errors.cpf ? "required" : ""}`}
+                {...register("crm", {
+                    required: "Required field",
+                    pattern: {
+                        value: /\d{11}/g
+                    }
+                })}
+            />
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
                 type="text"
@@ -187,8 +188,8 @@ export const FormPatientDrX = () => {
             <input
                 type="tel"
                 id="telephone"
-                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
-                className={`${errors.telephone ? "required" : ""}`}
+                placeholder={`${errors.tel ? "Campo Obrigatório" : ""}`}
+                className={`${errors.tel ? "required" : ""}`}
                 {...register("telephone", {
                     required: "Required field",
                     pattern: {
@@ -200,15 +201,15 @@ export const FormPatientDrX = () => {
             <input
                 type="email"
                 id="email"
-                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
-                className={`${errors.telephone ? "required" : ""}`}
+                placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
+                className={`${errors.email ? "required" : ""}`}
                 {...register("email", {
                     required: "Required field"
                 })}
             />
             <LabelText htmlFor="zipcode">CEP</LabelText>
             <input
-                type="number"
+                type="text"
                 id="zipcode"
                 {...register("zipcode")}
                 onBlur={checkedZipCode}
@@ -256,8 +257,8 @@ export const FormPatientDrX = () => {
             <DivNameEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
                 <input type="text" id="building" {...register("building", { value: "..." })} />
-                <LabelText htmlFor="block">Bloco</LabelText>
-                <input type="text" id="block" {...register("block", { value: "..." })} />
+                <LabelText htmlFor="buildingblock">Bloco</LabelText>
+                <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
                 <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
             </DivNameEd>
@@ -281,48 +282,34 @@ export const FormPatientDrX = () => {
                     required: "Required field"
                 })}
             />
-            <LabelText>CRM</LabelText>
-            <input type="number" id="crm" disabled={true} {...register("crm", { value: "5001" })} />
-            <DivRadio>
-                <LabelText htmlFor="plan">
-                    <input type="radio"
-                        id="plan"
-                        value="plan"
-                        checked={selectRadio === "plan" ? true : false}
-                        onChange={swapSelectedRadio}
-                    />
-                    Plano
-                </LabelText>
-                <LabelText htmlFor="particular">
-                    <input type="radio"
-                        value="particular"
-                        id="particular"
-                        checked={selectRadio === "particular" ? true : false}
-                        onChange={swapSelectedRadio}
-                    />
-                    Particular
-                </LabelText>
-            </DivRadio>
-            <DivPlan className={selectRadio}>
-                <LabelText htmlFor="plan">Plano</LabelText>
-                <input type="text" id="plan" {...register("plan", { value: "..." })} />
-            </DivPlan>
-            <DivParticular className={selectRadio}>
-                <LabelText htmlFor="particular">Valor</LabelText>
-                <input type="text" id="particular" {...register("particular")} />
-            </DivParticular>
-            <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
+            <LabelText htmlFor="password">Senha</LabelText>
             <input
-                type="date"
-                id="consultationdate"
-                className={`${errors.consultationdate ? "requireddate" : ""}`}
-                {...register("consultationdate", {
+                type="password"
+                id="password"
+                autoComplete="off"
+                placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
+                className={`${errors.password ? "required" : ""}`}
+                {...register("password", {
                     required: "Required field"
                 })}
             />
-            <LabelText htmlFor="observation">Observações</LabelText>
-            <textarea id="observation" {...register("observation", { value: "..." })}></textarea>
-            <SubmitButton value="Agendar" />
+            <LabelText htmlFor="passwordchecked">Confirme Senha</LabelText>
+            <input
+                type="password"
+                id="passwordchecked"
+                autoComplete="off"
+                placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
+                className={`${errors.passwordchecked ? "required" : ""}`}
+                {...register("passwordchecked", {
+                    required: "Checked required field",
+                    validate: (value) =>
+                        value === password || "A senha não corresponde"
+                })}
+            />
+            <DivButtons>
+                <SubmitButton title="Cadastrar" value="Cadastrar" />
+                <ButtonButton title="Iniciar" onClick={() => navigate("/")}>Iniciar</ButtonButton>
+            </DivButtons>
             {eventAlert && <ActivityClicked
                 event={eventAlert}
                 onClose={handleEventAlertClose}

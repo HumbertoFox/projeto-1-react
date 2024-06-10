@@ -72,4 +72,20 @@ const DivLogin = styled.div`
     }
 `;
 
-export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin };
+const DivMenus = styled(DivLogin)`
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+    svg {
+        font-size: 82px;
+        color: hsl(205.46, 86.5%, 46.47%);
+    }
+    a {
+        transition: .3s ease-in-out;
+    }
+    a:hover {
+        transform: scale(1.1);
+    }
+`;
+
+export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin, DivMenus };

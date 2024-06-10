@@ -300,7 +300,8 @@ export const FormUserRegister = () => {
             {eventAlert && <ActivityClicked
                 event={eventAlert}
                 onClose={handleEventAlertClose}
-            />}
+            />
+            }
         </FormDoctor>
     );
 };

@@ -303,7 +303,8 @@ export const FormPatientDrY = () => {
             {eventAlert && <ActivityClicked
                 event={eventAlert}
                 onClose={handleEventAlertClose}
-            />}
+            />
+            }
         </FormDoctor>
     );
 };

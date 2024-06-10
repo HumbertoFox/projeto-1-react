@@ -90,12 +90,13 @@ export const FormLogin = () => {
             />
             <DivButtons>
                 <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
-                <SubmitButton title="Cadastrar Usuário" value="Cadastrar Usuário" onClick={() => handleButtonClicked("register")} />
+                <SubmitButton title="Cadastrar Usuário" value="Menu Cadastrar" onClick={() => handleButtonClicked("register")} />
             </DivButtons>
             {eventAlert && <ActivityClicked
                 event={eventAlert}
                 onClose={handleEventAlertClose}
-            />}
+            />
+            }
         </FormDoctor>
     )
 };

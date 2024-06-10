@@ -1,5 +1,5 @@
 import React from "react";
-import { DivLogin, MainLogin, SectionLogin } from "../styles/mainpagestyle";
+import { MainLogin, SectionLogin, DivLogin } from "../styles/mainpagestyle";
 import { FormLogin } from "../components/form/formlogin";
 import LogoPrincipal from "../assets/simbolo-de-medicina.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
