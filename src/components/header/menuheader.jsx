@@ -39,7 +39,7 @@ export const HeaderMenu = () => {
     }, []);
     return (
         <Header>
-            <Link to={"/menuRegister"}>
+            <Link to={"/menuRegister"} title="Menu">
                 <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
             </Link>
             <UlHeader>

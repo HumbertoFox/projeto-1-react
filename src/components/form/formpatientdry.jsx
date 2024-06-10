@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { viaCepApi } from "../../services/viacep";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 export const FormPatientDrY = () => {
@@ -34,7 +34,8 @@ export const FormPatientDrY = () => {
         setRadioSelect(element.target.value);
     };
     const swapSelectedRadio = element => {
-        setSelectRadio(element.target.value);
+        const selectedValue = element.target.value;
+        setSelectRadio(selectedValue);
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -287,6 +288,10 @@ export const FormPatientDrY = () => {
                 <LabelText htmlFor="particular">Valor</LabelText>
                 <input type="text" id="particular" {...register("particular", { value: "..." })} />
             </DivParticular>
+            <DivCourtesy className={selectRadio}>
+                <LabelText htmlFor="courtesy">Cortesia</LabelText>
+                <input type="text" id="courtesy" {...register("courtesy", { value: "Não" })} />
+            </DivCourtesy>
             <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
             <input
                 type="date"

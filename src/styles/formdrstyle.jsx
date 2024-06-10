@@ -112,6 +112,17 @@ ${({ className }) => {
     }};
     flex-direction: column;
 `;
+const DivCourtesy = styled.div`
+    display: none;
+${({ className }) => {
+        if (className === "courtesy") {
+            return css`
+                display: flex;
+            `;
+        };
+    }};
+    flex-direction: column;
+`;
 const DivDate = styled.div`
     display: flex;
 `;
@@ -126,4 +137,4 @@ const DivDateAge = styled(DivDateBirth)`
         color: grey;
     }
 `;
-export { FormDoctor, DivRadio, DivNameEd, DivPlan, DivParticular, DivDate, DivDateBirth, DivDateAge };
+export { FormDoctor, DivRadio, DivNameEd, DivPlan, DivParticular, DivDate, DivDateBirth, DivDateAge, DivCourtesy };

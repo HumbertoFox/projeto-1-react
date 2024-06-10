@@ -69,12 +69,13 @@ if ($dados) {
         $cad_patient->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
         $cad_patient->bindParam(':address_id', $address_id, PDO::PARAM_INT);
         $cad_patient->execute();
-        $query_consultation = "INSERT INTO consultation (cpf, crm_doctor, plan, particular, observation, dataconsult, user_id) VALUES (:cpf, :crm_doctor, :plan, :particular, :observation, :dataconsult, :user_id)";
+        $query_consultation = "INSERT INTO consultation (cpf, crm_doctor, plan, particular, courtesy, observation, dataconsult, user_id) VALUES (:cpf, :crm_doctor, :plan, :particular, :courtesy, :observation, :dataconsult, :user_id)";
         $cad_consultation = $conn->prepare($query_consultation);
         $cad_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
         $cad_consultation->bindParam(':crm_doctor', $dados['crm'], PDO::PARAM_STR);
         $cad_consultation->bindParam(':plan', $dados['plan'], PDO::PARAM_STR);
         $cad_consultation->bindParam(':particular', $dados['particular'], PDO::PARAM_STR);
+        $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
         $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
         $cad_consultation->bindParam(':dataconsult', $dados['consultationdate'], PDO::PARAM_STR);
         $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_STR);
@@ -114,12 +115,13 @@ if ($dados) {
         $checked_consultation->execute();
         $result_checked_consultation = $checked_consultation->fetchColumn();
         if ($result_checked_consultation == 0) {
-            $query_consultation = "INSERT INTO consultation (cpf, crm_doctor, plan, particular, observation, dataconsult, user_id) VALUES (:cpf, :crm_doctor, :plan, :particular, :observation, :dataconsult, :user_id)";
+            $query_consultation = "INSERT INTO consultation (cpf, crm_doctor, plan, particular, courtesy, observation, dataconsult, user_id) VALUES (:cpf, :crm_doctor, :plan, :particular, :courtesy, :observation, :dataconsult, :user_id)";
             $cad_consultation = $conn->prepare($query_consultation);
             $cad_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':crm_doctor', $dados['crm'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':plan', $dados['plan'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':particular', $dados['particular'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':dataconsult', $dados['consultationdate'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_STR);
