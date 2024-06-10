@@ -41,10 +41,10 @@ export const FormLogin = () => {
                     });
                     login(responseJson[0].user);
                     setTimeout(function () {
-                        if (buttonType === "enter") {
+                        if (buttonType == "enter") {
                             navigate("/");
-                        } else if (buttonType === "register") {
-                            navigate("/registerUser");
+                        } else if (buttonType == "menu") {
+                            navigate("/menuRegister");
                         };
                     }, 3000);
                 };
@@ -90,7 +90,7 @@ export const FormLogin = () => {
             />
             <DivButtons>
                 <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
-                <SubmitButton title="Cadastrar Usuário" value="Menu Cadastrar" onClick={() => handleButtonClicked("register")} />
+                <SubmitButton title="Menu Cadastrar" value="Menu Cadastrar" onClick={() => handleButtonClicked("menu")} />
             </DivButtons>
             {eventAlert && <ActivityClicked
                 event={eventAlert}

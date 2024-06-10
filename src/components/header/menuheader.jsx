@@ -39,7 +39,9 @@ export const HeaderMenu = () => {
     }, []);
     return (
         <Header>
-            <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
+            <Link to={"/menuRegister"}>
+                <ImgMedicina src={LogoPrincipal} alt="Icon Medicina" />
+            </Link>
             <UlHeader>
                 <li key={"Calendar"}
                     title="Calendario"
