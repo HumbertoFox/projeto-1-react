@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useAuth } from "../../contexts/authcontext";
 import { useNavigate } from "react-router-dom";
 import { viaCepApi } from "../../services/viacep";
+import { useForm } from "react-hook-form";
 import { SubmitButton } from "../button/buttonsubmit";
 import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
@@ -9,6 +10,7 @@ import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } fr
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
 export const FormDoctorsRegister = () => {
+    const userSystem = useAuth().user;
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("casa");
@@ -18,7 +20,6 @@ export const FormDoctorsRegister = () => {
         handleSubmit,
         setValue,
         setFocus,
-        watch,
         formState: { errors }
     } = useForm();
     const swapRadioSelect = element => {
@@ -69,42 +70,6 @@ export const FormDoctorsRegister = () => {
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
-    const onSubmit = async (data) => {
-        await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.erro) {
-                    setFocus("cpf");
-                    setEventAlert({
-                        type: "erro",
-                        message: responseJson.message
-                    });
-                } else {
-                    setFocus("cpf");
-                    setEventAlert({
-                        type: "success",
-                        message: responseJson.message
-                    });
-                    setTimeout(function () {
-                        navigate("/");
-                    }, 3000);
-                };
-            }).catch(() => {
-                setFocus("cpf");
-                setEventAlert({
-                    type: "erro",
-                    message: "Usuário não cadastrado, erro com o Banco!"
-                });
-            });
-    };
-    const password = watch('password');
     const calculateAge = (data) => {
         const birthDate = new Date(data);
         const today = new Date();
@@ -124,18 +89,51 @@ export const FormDoctorsRegister = () => {
             setAge(null);
         };
     };
+    const onSubmit = async (data) => {
+        data.user_id = userSystem.id;
+        await fetch("http://localhost/projeto-1-react/src/services/registerdoctors.php", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.error) {
+                    setEventAlert({
+                        type: "error",
+                        message: responseJson.message
+                    });
+                } else {
+                    setEventAlert({
+                        type: "success",
+                        message: responseJson.message
+                    });
+                    setTimeout(function () {
+                        navigate("/");
+                    }, 3000);
+                };
+            }).catch(() => {
+                setEventAlert({
+                    type: "error",
+                    message: "Doutor não cadastrado, Erro com o Banco!"
+                });
+            });
+    };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="crm">CRM</LabelText>
             <input
                 type="text"
                 id="crm"
-                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
-                className={`${errors.cpf ? "required" : ""}`}
+                placeholder={`${errors.crm ? "Campo Obrigatório" : ""}`}
+                className={`${errors.crm ? "required" : ""}`}
                 {...register("crm", {
                     required: "Required field",
                     pattern: {
-                        value: /\d{11}/g
+                        value: /\d{4}/g
                     }
                 })}
             />
@@ -188,8 +186,8 @@ export const FormDoctorsRegister = () => {
             <input
                 type="tel"
                 id="telephone"
-                placeholder={`${errors.tel ? "Campo Obrigatório" : ""}`}
-                className={`${errors.tel ? "required" : ""}`}
+                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                className={`${errors.telephone ? "required" : ""}`}
                 {...register("telephone", {
                     required: "Required field",
                     pattern: {
@@ -280,30 +278,6 @@ export const FormDoctorsRegister = () => {
                 className={`${errors.city ? "required" : ""}`}
                 {...register("city", {
                     required: "Required field"
-                })}
-            />
-            <LabelText htmlFor="password">Senha</LabelText>
-            <input
-                type="password"
-                id="password"
-                autoComplete="off"
-                placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
-                className={`${errors.password ? "required" : ""}`}
-                {...register("password", {
-                    required: "Required field"
-                })}
-            />
-            <LabelText htmlFor="passwordchecked">Confirme Senha</LabelText>
-            <input
-                type="password"
-                id="passwordchecked"
-                autoComplete="off"
-                placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
-                className={`${errors.passwordchecked ? "required" : ""}`}
-                {...register("passwordchecked", {
-                    required: "Checked required field",
-                    validate: (value) =>
-                        value === password || "A senha não corresponde"
                 })}
             />
             <DivButtons>

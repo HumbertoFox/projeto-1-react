@@ -14,7 +14,7 @@ if ($dados) {
     $cpf_count = $checked_cpf->fetchColumn();
     if ($cpf_count > 0) {
         $response = [
-            "erro" => true,
+            "error" => true,
             "message" => 'CPF já cadastrado!'
         ];
     } else {
@@ -61,26 +61,26 @@ if ($dados) {
         $query_adduser = "INSERT INTO user (cpf, telephone, email, password, address_id) VALUES (:cpf, :telephone, :email, :password, :address_id)";
         $cad_user = $conn->prepare($query_adduser);
         $cad_user->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
-        $cad_user->bindParam(':email', $dados['email'], PDO::PARAM_STR);
         $cad_user->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
+        $cad_user->bindParam(':email', $dados['email'], PDO::PARAM_STR);
         $cad_user->bindParam(':password', $dados['password'], PDO::PARAM_STR);
         $cad_user->bindParam(':address_id', $address_id, PDO::PARAM_INT);
         $cad_user->execute();
         if ($cad_user->rowCount()) {
             $response = [
-                "erro" => false,
+                "error" => false,
                 "message" => 'Usuário Cadastrado com Sucesso!'
             ];
         } else {
             $response = [
-                "erro" => true,
+                "error" => true,
                 "message" => 'Usuário não Cadastrado!'
             ];
         };
     };
 } else {
     $response = [
-        "erro" => true,
+        "error" => true,
         "message" => 'Usuário não Cadastrado!'
     ];
 };

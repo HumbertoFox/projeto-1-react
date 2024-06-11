@@ -124,7 +124,7 @@ if ($dados) {
             $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
             $cad_consultation->bindParam(':dataconsult', $dados['consultationdate'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_INT);
             $cad_consultation->execute();
             $response = [
                 "error" => false,

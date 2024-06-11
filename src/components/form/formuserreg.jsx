@@ -69,41 +69,6 @@ export const FormUserRegister = () => {
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
-    const onSubmit = async (data) => {
-        await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.erro) {
-                    setFocus("cpf");
-                    setEventAlert({
-                        type: "erro",
-                        message: responseJson.message
-                    });
-                } else {
-                    setFocus("cpf");
-                    setEventAlert({
-                        type: "success",
-                        message: responseJson.message
-                    });
-                    setTimeout(function () {
-                        navigate("/");
-                    }, 3000);
-                };
-            }).catch(() => {
-                setFocus("cpf");
-                setEventAlert({
-                    type: "erro",
-                    message: "Usuário não cadastrado, erro com o Banco!"
-                });
-            });
-    };
     const password = watch('password');
     const calculateAge = (data) => {
         const birthDate = new Date(data);
@@ -123,6 +88,38 @@ export const FormUserRegister = () => {
         } else {
             setAge(null);
         };
+    };
+    const onSubmit = async (data) => {
+        await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.error) {
+                    setEventAlert({
+                        type: "error",
+                        message: responseJson.message
+                    });
+                } else {
+                    setEventAlert({
+                        type: "success",
+                        message: responseJson.message
+                    });
+                    setTimeout(function () {
+                        navigate("/");
+                    }, 3000);
+                };
+            }).catch(() => {
+                setEventAlert({
+                    type: "error",
+                    message: "Usuário não cadastrado, erro com o Banco!"
+                });
+            });
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
@@ -175,8 +172,8 @@ export const FormUserRegister = () => {
             <input
                 type="tel"
                 id="telephone"
-                placeholder={`${errors.tel ? "Campo Obrigatório" : ""}`}
-                className={`${errors.tel ? "required" : ""}`}
+                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                className={`${errors.telephone ? "required" : ""}`}
                 {...register("telephone", {
                     required: "Required field",
                     pattern: {
