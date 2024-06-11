@@ -112,7 +112,6 @@ export const FormPatientDrs = ({ title }) => {
     };
     const onSubmit = async (data) => {
         data.user_id = userSystem.id;
-        console.log(data);
         await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
             method: "POST",
             headers: {
@@ -329,13 +328,23 @@ export const FormPatientDrs = ({ title }) => {
                 <LabelText htmlFor="courtesy">Cortesia</LabelText>
                 <input type="text" id="courtesy" {...register("courtesy", { value: "Não" })} />
             </DivCourtesy>
-            <LabelText htmlFor="consultationdate">Data da Consulta</LabelText>
+            <LabelText htmlFor="consultdatestart">Data da Consulta</LabelText>
             <input
-                type="date"
-                id="consultationdate"
-                className={`${errors.consultationdate ? "requireddate" : ""}`}
+                type="datetime-local"
+                id="consultdatestart"
+                className={`${errors.consultdatestart ? "requireddate" : ""}`}
                 {
-                ...register("consultationdate", {
+                ...register("consultdatestart", {
+                    required: "Required field"
+                })}
+            />
+            <LabelText htmlFor="consultdateend">Data da Consulta</LabelText>
+            <input
+                type="datetime-local"
+                id="consultdateend"
+                className={`${errors.consultdateend ? "requireddate" : ""}`}
+                {
+                ...register("consultdateend", {
                     required: "Required field"
                 })}
             />

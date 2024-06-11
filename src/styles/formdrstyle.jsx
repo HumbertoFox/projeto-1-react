@@ -14,6 +14,7 @@ const FormDoctor = styled.form`
     input[type=tel],
     input[type=email],
     input[type=date],
+    input[type=datetime-local],
     input[type=password],
     textarea {
         height: 30px;
@@ -30,6 +31,7 @@ const FormDoctor = styled.form`
     input[type=tel]:focus,
     input[type=email]:focus,
     input[type=date]:focus,
+    input[type=datetime-local]:focus,
     input[type=password]:focus,
     textarea:focus {
         border: 1px solid hsla(205.46, 86.5%, 46.47%, .5);

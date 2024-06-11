@@ -69,21 +69,36 @@ if ($dados) {
         $cad_patient->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
         $cad_patient->bindParam(':address_id', $address_id, PDO::PARAM_INT);
         $cad_patient->execute();
-        $query_consultation = "INSERT INTO consultation (cpf, crm, plan, particular, courtesy, observation, dataconsult, user_id) VALUES (:cpf, :crm, :plan, :particular, :courtesy, :observation, :dataconsult, :user_id)";
-        $cad_consultation = $conn->prepare($query_consultation);
-        $cad_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':plan', $dados['plan'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':particular', $dados['particular'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':dataconsult', $dados['consultationdate'], PDO::PARAM_STR);
-        $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_STR);
-        $cad_consultation->execute();
-        $response = [
-            "error" => false,
-            "message" => 'Consulta Cadastrada com Sucesso!'
-        ];
+        $query_checked_consultdate = "SELECT COUNT(*) FROM consultation WHERE crm = :crm AND consultdatestart = :consultdatestart AND consultdateend = :consultdateend";
+        $checked_consultdate = $conn->prepare($query_checked_consultdate);
+        $checked_consultdate->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
+        $checked_consultdate->bindParam(':consultdatestart', $dados['consultdatestart'], PDO::PARAM_STR);
+        $checked_consultdate->bindParam(':consultdateend', $dados['consultdateend'], PDO::PARAM_STR);
+        $checked_consultdate->execute();
+        $result_checked_consultdate = $checked_consultdate->fetchColumn();
+        if ($result_checked_consultdate == 0) {
+            $query_consultation = "INSERT INTO consultation (cpf, crm, plan, particular, courtesy, observation, consultdatestart, consultdateend, user_id) VALUES (:cpf, :crm, :plan, :particular, :courtesy, :observation, :consultdatestart, :consultdateend, :user_id)";
+            $cad_consultation = $conn->prepare($query_consultation);
+            $cad_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':plan', $dados['plan'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':particular', $dados['particular'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':consultdatestart', $dados['consultdatestart'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':consultdateend', $dados['consultdateend'], PDO::PARAM_STR);
+            $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_STR);
+            $cad_consultation->execute();
+            $response = [
+                "error" => false,
+                "message" => 'Consulta Cadastrada com Sucesso!'
+            ];
+        } else {
+            $response = [
+                "error" => true,
+                "message" => 'Horário da Consulta já Agendado!'
+            ];
+        };
     } else {
         $query_checked_patient = "SELECT COUNT(*) FROM patients WHERE cpf = :cpf";
         $checked_cpf_patient = $conn->prepare($query_checked_patient);
@@ -107,33 +122,49 @@ if ($dados) {
             $cad_patient->bindParam(':address_id', $address_id, PDO::PARAM_INT);
             $cad_patient->execute();
         };
-        $query_checked_consultation = "SELECT COUNT(*) FROM consultation WHERE cpf = :cpf AND crm = :crm AND dataconsult = :dataconsult";
+        $query_checked_consultation = "SELECT COUNT(*) FROM consultation WHERE cpf = :cpf AND crm = :crm AND consultdatestart = :consultdatestart AND consultdateend = :consultdateend";
         $checked_consultation = $conn->prepare($query_checked_consultation);
         $checked_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
         $checked_consultation->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
-        $checked_consultation->bindParam(':dataconsult', $dados['consultationdate'], PDO::PARAM_STR);
+        $checked_consultation->bindParam(':consultdatestart', $dados['consultdatestart'], PDO::PARAM_STR);
+        $checked_consultation->bindParam(':consultdateend', $dados['consultdateend'], PDO::PARAM_STR);
         $checked_consultation->execute();
         $result_checked_consultation = $checked_consultation->fetchColumn();
         if ($result_checked_consultation == 0) {
-            $query_consultation = "INSERT INTO consultation (cpf, crm, plan, particular, courtesy, observation, dataconsult, user_id) VALUES (:cpf, :crm, :plan, :particular, :courtesy, :observation, :dataconsult, :user_id)";
-            $cad_consultation = $conn->prepare($query_consultation);
-            $cad_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':plan', $dados['plan'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':particular', $dados['particular'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':dataconsult', $dados['consultationdate'], PDO::PARAM_STR);
-            $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_INT);
-            $cad_consultation->execute();
-            $response = [
-                "error" => false,
-                "message" => 'Consulta Cadastrada com Sucesso!'
-            ];
+            $query_checked_consultdate = "SELECT COUNT(*) FROM consultation WHERE crm = :crm AND consultdatestart = :consultdatestart AND consultdateend = :consultdateend";
+            $checked_consultdate = $conn->prepare($query_checked_consultdate);
+            $checked_consultdate->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
+            $checked_consultdate->bindParam(':consultdatestart', $dados['consultdatestart'], PDO::PARAM_STR);
+            $checked_consultdate->bindParam(':consultdateend', $dados['consultdateend'], PDO::PARAM_STR);
+            $checked_consultdate->execute();
+            $result_checked_consultdate = $checked_consultdate->fetchColumn();
+            if ($result_checked_consultdate == 0) {
+                $query_consultation = "INSERT INTO consultation (cpf, crm, plan, particular, courtesy, observation, consultdatestart, consultdateend, user_id) VALUES (:cpf, :crm, :plan, :particular, :courtesy, :observation, :consultdatestart, :consultdateend, :user_id)";
+                $cad_consultation = $conn->prepare($query_consultation);
+                $cad_consultation->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':crm', $dados['crm'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':plan', $dados['plan'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':particular', $dados['particular'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':courtesy', $dados['courtesy'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':observation', $dados['observation'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':consultdatestart', $dados['consultdatestart'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':consultdateend', $dados['consultdateend'], PDO::PARAM_STR);
+                $cad_consultation->bindParam(':user_id', $dados['user_id'], PDO::PARAM_INT);
+                $cad_consultation->execute();
+                $response = [
+                    "error" => false,
+                    "message" => 'Consulta Cadastrada com Sucesso!'
+                ];
+            } else {
+                $response = [
+                    "error" => true,
+                    "message" => 'Horário da Consulta já Agendado!'
+                ];
+            }
         } else {
             $response = [
                 "error" => true,
-                "message" => 'Consulta já Agendada!'
+                "message" => 'Consulta do Paciente já Agendada!'
             ];
         };
     };
