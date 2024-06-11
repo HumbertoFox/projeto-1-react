@@ -112,6 +112,7 @@ export const FormPatientDrs = ({ title }) => {
     };
     const onSubmit = async (data) => {
         data.user_id = userSystem.id;
+        console.log(data);
         await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
             method: "POST",
             headers: {
@@ -260,8 +261,8 @@ export const FormPatientDrs = ({ title }) => {
             <DivNameEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
                 <input type="text" id="building" {...register("building", { value: "..." })} />
-                <LabelText htmlFor="block">Bloco</LabelText>
-                <input type="text" id="block" {...register("block", { value: "..." })} />
+                <LabelText htmlFor="buildingblock">Bloco</LabelText>
+                <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
                 <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
             </DivNameEd>
