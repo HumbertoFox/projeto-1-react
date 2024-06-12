@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 library.add(fas, far);
-
 export const HeaderMenu = () => {
     const navigate = useNavigate();
     const { logout } = useAuth();
@@ -64,7 +63,7 @@ export const HeaderMenu = () => {
                 >
                     <Link to={"/consultationDRX"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
-                        <span>Consulta</span>
+                        <span>Agendar Consulta</span>
                     </Link>
                 </li>
                 <li key={"Patients DoctorX"}
@@ -74,7 +73,7 @@ export const HeaderMenu = () => {
                 >
                     <Link to={"/reportDoctorX"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
-                        <span>Lista Pacientes</span>
+                        <span>Listar Pacientes</span>
                     </Link>
                 </li>
                 <li>
@@ -88,7 +87,7 @@ export const HeaderMenu = () => {
                 >
                     <Link to={"/consultationDRY"}>
                         <FontAwesomeIcon icon="fa-solid fa-notes-medical" />
-                        <span>Consulta</span>
+                        <span>Agendar Consulta</span>
                     </Link>
                 </li>
                 <li key={"Patients DoctorY"}
@@ -98,7 +97,7 @@ export const HeaderMenu = () => {
                 >
                     <Link to={"/reportDoctorY"}>
                         <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
-                        <span>Lista Pacientes</span>
+                        <span>Listar Pacientes</span>
                     </Link>
                 </li>
                 <LiLogout title="Sair do Sistema">

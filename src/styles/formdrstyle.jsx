@@ -42,7 +42,8 @@ const FormDoctor = styled.form`
         padding: 5px;
         resize: none;
     }
-    input[type=date] {
+    input[type=date],
+    input[type=datetime-local] {
         width: 220px;
         padding: 5px;
     }

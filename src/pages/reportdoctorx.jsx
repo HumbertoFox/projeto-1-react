@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { HeaderMenu } from "../components/header/menuheader";
 import { TableFormInfo, DivInforReport, DivReportMain, Thead, Tbody } from "../styles/reportstyle";
-
 export const ReportDoctorxPage = () => {
     const [consult, setConsult] = useState([]);
     const getConsults = async () => {
-        await fetch("http://localhost/projeto-1-react/src/services/getconsults.php")
+        await fetch("http://localhost/projeto-1-react/src/services/getconsultsx.php")
             .then((response) => response.json())
             .then((responseJson) => (
                 setConsult(responseJson.rescods)
