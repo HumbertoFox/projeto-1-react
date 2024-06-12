@@ -21,6 +21,21 @@ export const FormPatientDrs = ({ title }) => {
         formState: { errors }
     } = useForm();
     const value = watch("particular");
+    const checkedCpf = (data) => {
+        const checkePrimaryValue = (element) => {
+            let summation = 0;
+            for (let i = 0; i < element.length; i++) {
+                let currentdigit = element.charAt(i);
+                let constant = (element.length + 1 - i);
+                summation += Number(currentdigit) * constant;
+            };
+            const res = summation % 11;
+            return res < 2 ? "0" : (11 - res);
+        };
+        let primaryckecked = checkePrimaryValue(data.substring(0,9));
+        let secundechecked = checkePrimaryValue(data.substring(0,9) + primaryckecked);
+        let correctCpf = data.substring(0,9) + primaryckecked + secundechecked;
+    };
     const formatAsCurrency = (value) => {
         if (!value) return "0";
         const numericalValue = parseFloat(value.replace(/[^\d]/g, "")) / 100;
@@ -35,7 +50,7 @@ export const FormPatientDrs = ({ title }) => {
     }, [value, setValue]);
     useEffect(() => {
         setValue("crm", title);
-    }, [])
+    }, []);
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
         setRadioSelect(selectValue);
