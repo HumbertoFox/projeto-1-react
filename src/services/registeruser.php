@@ -30,9 +30,10 @@ if ($dados) {
         $checked_telephone->execute();
         $telephone_count = $checked_telephone->fetchColumn();
         if ($telephone_count === 0) {
-            $query_addtelephone = "INSERT INTO telephone (telephone) VALUES (:telephone)";
+            $query_addtelephone = "INSERT INTO telephone (telephone, email) VALUES (:telephone, :email)";
             $cad_telephone = $conn->prepare($query_addtelephone);
             $cad_telephone->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
+            $cad_telephone->bindParam(':email', $dados['email'], PDO::PARAM_STR);
             $cad_telephone->execute();
         };
         $query_checked_zipcode = "SELECT COUNT(*) FROM zipcode WHERE zipcode = :zipcode";
@@ -58,11 +59,10 @@ if ($dados) {
         $cad_addaddress_all->bindParam(':apartment', $dados['apartment'], PDO::PARAM_STR);
         $cad_addaddress_all->execute();
         $address_id = $conn->lastInsertId();
-        $query_adduser = "INSERT INTO user (cpf, telephone, email, password, address_id) VALUES (:cpf, :telephone, :email, :password, :address_id)";
+        $query_adduser = "INSERT INTO user (cpf, telephone, password, address_id) VALUES (:cpf, :telephone, :password, :address_id)";
         $cad_user = $conn->prepare($query_adduser);
         $cad_user->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
         $cad_user->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
-        $cad_user->bindParam(':email', $dados['email'], PDO::PARAM_STR);
         $cad_user->bindParam(':password', $dados['password'], PDO::PARAM_STR);
         $cad_user->bindParam(':address_id', $address_id, PDO::PARAM_INT);
         $cad_user->execute();

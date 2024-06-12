@@ -24,9 +24,10 @@ if ($dados) {
         $checked_telephone->execute();
         $telephone_count = $checked_telephone->fetchColumn();
         if ($telephone_count == 0) {
-            $query_addtelephone = "INSERT INTO telephone (telephone) VALUES (:telephone)";
+            $query_addtelephone = "INSERT INTO telephone (telephone, email) VALUES (:telephone, :email)";
             $cad_telephone = $conn->prepare($query_addtelephone);
             $cad_telephone->bindParam(':telephone', $dados['telephone'], PDO::PARAM_STR);
+            $cad_telephone->bindParam(':email', $dados['email'], PDO::PARAM_STR);
             $cad_telephone->execute();
         };
         $query_checked_zipcode = "SELECT COUNT(*) FROM zipcode WHERE zipcode = :zipcode";
