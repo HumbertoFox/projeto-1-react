@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormSerach } from "../../styles/formsearch";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-export const Search = () => {
+export const Search = ({ searshPatient }) => {
+    const [patientSearsh, setPatientSearsh] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
     const {
         register,
@@ -14,6 +15,9 @@ export const Search = () => {
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
+    useEffect(() => {
+        searshPatient(patientSearsh);
+    }, [patientSearsh]);
     const onSubmit = async (data) => {
         await fetch("http://localhost/projeto-1-react/src/services/searshgetpatient.php", {
             method: "POST",
@@ -25,7 +29,8 @@ export const Search = () => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson.records) {
+                if (responseJson) {
+                    setPatientSearsh(responseJson.records);
                     setEventAlert({
                         type: "Success",
                         message: "Paciente Encontrado"
@@ -37,7 +42,7 @@ export const Search = () => {
                     message: "Paciente não encontrado!"
                 });
             });
-    }
+    };
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="searchpatient">Pesquisar Paciente</LabelText>

@@ -6,7 +6,7 @@ include_once 'pdoconnection.php';
 $response_json = file_get_contents("php://input");
 $dados = json_decode($response_json, true);
 if (!empty($dados)) {
-    $query_user = "SELECT user_id, cpf, email, password FROM user WHERE cpf = :cpf LIMIT 1";
+    $query_user = "SELECT user_id, cpf, email, password FROM user JOIN telephone WHERE cpf = :cpf LIMIT 1";
     $checked_user = $conn->prepare($query_user);
     $checked_user->bindParam(':cpf', $dados['cpf'], PDO::PARAM_STR);
     $checked_user->execute();
@@ -34,6 +34,6 @@ if (!empty($dados)) {
             "message" => 'CPF ou Senha Invalidos!'
         ];
     };
+    http_response_code(200);
+    echo json_encode($response);
 };
-http_response_code(200);
-echo json_encode($response);

@@ -6,7 +6,7 @@ import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticula
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-export const FormPatientDrs = ({ title }) => {
+export const FormPatientDrs = ({ title, searshPatient }) => {
     const userSystem = useAuth().user;
     const [radioSelect, setRadioSelect] = useState("casa");
     const [selectRadio, setSelectRadio] = useState("plan");
@@ -32,9 +32,9 @@ export const FormPatientDrs = ({ title }) => {
             const res = summation % 11;
             return res < 2 ? "0" : (11 - res);
         };
-        let primaryckecked = checkePrimaryValue(data.substring(0,9));
-        let secundechecked = checkePrimaryValue(data.substring(0,9) + primaryckecked);
-        let correctCpf = data.substring(0,9) + primaryckecked + secundechecked;
+        let primaryckecked = checkePrimaryValue(data.substring(0, 9));
+        let secundechecked = checkePrimaryValue(data.substring(0, 9) + primaryckecked);
+        let correctCpf = data.substring(0, 9) + primaryckecked + secundechecked;
     };
     const formatAsCurrency = (value) => {
         if (!value) return "0";
@@ -51,6 +51,23 @@ export const FormPatientDrs = ({ title }) => {
     useEffect(() => {
         setValue("crm", title);
     }, []);
+    useEffect(() => {
+        if (searshPatient !== null) {
+            setValue("cpf", searshPatient.cpf);
+            setValue("name", searshPatient.name);
+            setValue("dateofbirth", searshPatient.dateofbirth);
+            setValue("telephone", searshPatient.telephone);
+            setValue("email", searshPatient.email);
+            setValue("zipcode", searshPatient.zipcode);
+            setValue("street", searshPatient.street);
+            setValue("district", searshPatient.district);
+            setValue("city", searshPatient.city);
+            setValue("residencenumber", searshPatient.residencenumber);
+            setValue("building", searshPatient.building);
+            setValue("buildingblock", searshPatient.buildingblock);
+            setValue("apartment",searshPatient.apartment);
+        };
+    }, [searshPatient]);
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
         setRadioSelect(selectValue);
