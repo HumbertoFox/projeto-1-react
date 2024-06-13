@@ -8,7 +8,7 @@ export const ReportDoctoryPage = () => {
         await fetch("http://localhost/projeto-1-react/src/services/getconsultsy.php")
             .then((response) => response.json())
             .then((responseJson) => (
-                setConsult(responseJson.rescods)
+                setConsult(responseJson.records)
             ));
     };
     useEffect(() => {

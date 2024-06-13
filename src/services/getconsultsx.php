@@ -8,7 +8,7 @@ $result_consultations->execute();
 if (($result_consultations) && ($result_consultations->rowCount() != 0)) {
     while ($row_consultation = $result_consultations->fetch(PDO::FETCH_ASSOC)) {
         extract($row_consultation);
-        $list_consults['rescods'][$consultation_id] = [
+        $list_consults['records'][$consultation_id] = [
             'consultation_id' => $consultation_id,
             'crm' => $crm,
             'cpf' => $cpf,

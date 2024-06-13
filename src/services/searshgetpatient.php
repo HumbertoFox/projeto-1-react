@@ -16,7 +16,7 @@ zipcode on address_all.zipcode = zipcode.zipcode WHERE patients.cpf = :searchpat
     if (($result_patient) && ($result_patient->rowCount() != 0)) {
         while ($row_patient = $result_patient->fetch(PDO::FETCH_ASSOC)) {
             extract($row_patient);
-            $list_patient['rescods'][$cpf] = [
+            $list_patient['records'][$cpf] = [
                 'cpf' => $cpf,
                 'name' => $name,
                 'dateofbirth' => $dateofbirth,

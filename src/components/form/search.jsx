@@ -25,15 +25,10 @@ export const Search = () => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson.error) {
-                    setEventAlert({
-                        type: "Error",
-                        message: responseJson.message
-                    });
-                } else {
+                if (responseJson.records) {
                     setEventAlert({
                         type: "Success",
-                        message: responseJson.message
+                        message: "Paciente Encontrado"
                     });
                 };
             }).catch(() => {
