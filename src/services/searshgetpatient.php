@@ -35,5 +35,5 @@ zipcode on address_all.zipcode = zipcode.zipcode WHERE patients.cpf = :searchpat
         };
         echo json_encode($list_patient);
     };
+    http_response_code(200);
 };
-http_response_code(200);
