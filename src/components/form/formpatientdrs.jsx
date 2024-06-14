@@ -17,24 +17,28 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         handleSubmit,
         setValue,
         setFocus,
+        reset,
         watch,
         formState: { errors }
     } = useForm();
     const value = watch("particular");
     const checkedCpf = (data) => {
         const checkePrimaryValue = (element) => {
-            let summation = 0;
+            let sumation = 0;
             for (let i = 0; i < element.length; i++) {
                 let currentdigit = element.charAt(i);
                 let constant = (element.length + 1 - i);
-                summation += Number(currentdigit) * constant;
+                sumation += Number(currentdigit) * constant;
             };
-            const res = summation % 11;
+            const res = sumation % 11;
             return res < 2 ? "0" : (11 - res);
         };
         let primaryckecked = checkePrimaryValue(data.substring(0, 9));
         let secundechecked = checkePrimaryValue(data.substring(0, 9) + primaryckecked);
         let correctCpf = data.substring(0, 9) + primaryckecked + secundechecked;
+        if (data != correctCpf) {
+            return
+        };
     };
     const formatAsCurrency = (value) => {
         if (!value) return "0";
@@ -44,12 +48,15 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
             currency: "BRL"
         });
     };
+    const crmInputText = () => {
+        setValue("crm", title);
+    };
     useEffect(() => {
         const formatValue = formatAsCurrency(value);
         setValue("particular", formatValue, { shouldValidate: true });
     }, [value, setValue]);
     useEffect(() => {
-        setValue("crm", title);
+        crmInputText();
     }, []);
     useEffect(() => {
         if (searshPatient !== null) {
@@ -65,7 +72,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
             setValue("residencenumber", searshPatient.residencenumber);
             setValue("building", searshPatient.building);
             setValue("buildingblock", searshPatient.buildingblock);
-            setValue("apartment",searshPatient.apartment);
+            setValue("apartment", searshPatient.apartment);
         };
     }, [searshPatient]);
     const swapRadioSelect = element => {
@@ -160,23 +167,8 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                         message: responseJson.message
                     });
                 } else {
-                    setValue("cpf", "");
-                    setValue("name", "");
-                    setValue("dateofbirth", "");
-                    setValue("telephone", "");
-                    setValue("email", "");
-                    setValue("zipcode", "");
-                    setValue("street", "");
-                    setValue("residencenumber", "");
-                    setValue("building", "...");
-                    setValue("buildingblock", "...");
-                    setValue("apartment", "...");
-                    setValue("district", "");
-                    setValue("city", "");
-                    setValue("plan", "...");
-                    setValue("particular", "0");
-                    setValue("courtesy", "Não");
-                    setValue("observation", "...");
+                    reset();
+                    crmInputText();
                     setEventAlert({
                         type: "success",
                         message: responseJson.message
@@ -193,12 +185,13 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF</LabelText>
             <input
-                type="text"
+                type="number"
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
                 {...register("cpf", {
                     required: "Required field",
+                    maxLength: 11,
                     pattern: {
                         value: /\d{11}/g
                     }
