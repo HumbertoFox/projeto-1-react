@@ -160,6 +160,23 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                         message: responseJson.message
                     });
                 } else {
+                    setValue("cpf", "");
+                    setValue("name", "");
+                    setValue("dateofbirth", "");
+                    setValue("telephone", "");
+                    setValue("email", "");
+                    setValue("zipcode", "");
+                    setValue("street", "");
+                    setValue("residencenumber", "");
+                    setValue("building", "...");
+                    setValue("buildingblock", "...");
+                    setValue("apartment", "...");
+                    setValue("district", "");
+                    setValue("city", "");
+                    setValue("plan", "...");
+                    setValue("particular", "0");
+                    setValue("courtesy", "Não");
+                    setValue("observation", "...");
                     setEventAlert({
                         type: "success",
                         message: responseJson.message
@@ -236,8 +253,8 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
             <input
                 type="email"
                 id="email"
-                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
-                className={`${errors.telephone ? "required" : ""}`}
+                placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
+                className={`${errors.email ? "required" : ""}`}
                 {...register("email", {
                     required: "Required field"
                 })}
@@ -354,7 +371,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor</LabelText>
-                <input type="text" id="particular" {...register("particular", { value: "..." })} />
+                <input type="text" id="particular" {...register("particular")} />
             </DivParticular>
             <DivCourtesy className={selectRadio}>
                 <LabelText htmlFor="courtesy">Cortesia</LabelText>
