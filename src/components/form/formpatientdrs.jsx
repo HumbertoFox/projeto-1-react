@@ -7,6 +7,8 @@ import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
 export const FormPatientDrs = ({ title, searshPatient }) => {
+    const now = new Date();
+    const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
     const [radioSelect, setRadioSelect] = useState("casa");
     const [selectRadio, setSelectRadio] = useState("plan");
@@ -375,16 +377,18 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
             <input
                 type="datetime-local"
                 id="consultdatestart"
+                min={formattedNow}
                 className={`${errors.consultdatestart ? "requireddate" : ""}`}
                 {
                 ...register("consultdatestart", {
-                    required: "Required field"
+                    required: "Required field",
                 })}
             />
             <LabelText htmlFor="consultdateend">Data da Consulta</LabelText>
             <input
                 type="datetime-local"
                 id="consultdateend"
+                min={formattedNow}
                 className={`${errors.consultdateend ? "requireddate" : ""}`}
                 {
                 ...register("consultdateend", {
