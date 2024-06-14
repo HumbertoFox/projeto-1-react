@@ -13,6 +13,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
     const [radioSelect, setRadioSelect] = useState("casa");
     const [selectRadio, setSelectRadio] = useState("plan");
     const [eventAlert, setEventAlert] = useState(null);
+    const [endDateStart, setEndDateStart] = useState(formattedNow);
     const [age, setAge] = useState(null);
     const {
         register,
@@ -382,13 +383,14 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                 {
                 ...register("consultdatestart", {
                     required: "Required field",
+                    onBlur: (elementDate) => setEndDateStart(elementDate.target.value)
                 })}
             />
             <LabelText htmlFor="consultdateend">Data da Consulta</LabelText>
             <input
                 type="datetime-local"
                 id="consultdateend"
-                min={formattedNow}
+                min={endDateStart == "" ? formattedNow : endDateStart}
                 className={`${errors.consultdateend ? "requireddate" : ""}`}
                 {
                 ...register("consultdateend", {
