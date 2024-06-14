@@ -17,6 +17,8 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         handleSubmit,
         setValue,
         setFocus,
+        setError,
+        clearErrors,
         reset,
         watch,
         formState: { errors }
@@ -36,9 +38,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         let primaryckecked = checkePrimaryValue(data.substring(0, 9));
         let secundechecked = checkePrimaryValue(data.substring(0, 9) + primaryckecked);
         let correctCpf = data.substring(0, 9) + primaryckecked + secundechecked;
-        if (data != correctCpf) {
-            return
-        };
+        return data !== correctCpf ? setError("cpf") : clearErrors("cpf");
     };
     const formatAsCurrency = (value) => {
         if (!value) return "0";
@@ -191,6 +191,9 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                 className={`${errors.cpf ? "required" : ""}`}
                 {...register("cpf", {
                     required: "Required field",
+                    onChange: (element) => {
+                        checkedCpf(element.target.value);
+                    },
                     maxLength: 11,
                     pattern: {
                         value: /\d{11}/g
