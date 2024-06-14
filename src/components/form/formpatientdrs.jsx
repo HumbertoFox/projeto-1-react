@@ -51,30 +51,6 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
     const crmInputText = () => {
         setValue("crm", title);
     };
-    useEffect(() => {
-        const formatValue = formatAsCurrency(value);
-        setValue("particular", formatValue, { shouldValidate: true });
-    }, [value, setValue]);
-    useEffect(() => {
-        crmInputText();
-    }, []);
-    useEffect(() => {
-        if (searshPatient !== null) {
-            setValue("cpf", searshPatient.cpf);
-            setValue("name", searshPatient.name);
-            setValue("dateofbirth", searshPatient.dateofbirth);
-            setValue("telephone", searshPatient.telephone);
-            setValue("email", searshPatient.email);
-            setValue("zipcode", searshPatient.zipcode);
-            setValue("street", searshPatient.street);
-            setValue("district", searshPatient.district);
-            setValue("city", searshPatient.city);
-            setValue("residencenumber", searshPatient.residencenumber);
-            setValue("building", searshPatient.building);
-            setValue("buildingblock", searshPatient.buildingblock);
-            setValue("apartment", searshPatient.apartment);
-        };
-    }, [searshPatient]);
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
         setRadioSelect(selectValue);
@@ -181,6 +157,30 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                 });
             });
     };
+    useEffect(() => {
+        const formatValue = formatAsCurrency(value);
+        setValue("particular", formatValue, { shouldValidate: true });
+    }, [value, setValue]);
+    useEffect(() => {
+        crmInputText();
+    }, []);
+    useEffect(() => {
+        if (searshPatient !== null) {
+            setValue("cpf", searshPatient.cpf);
+            setValue("name", searshPatient.name);
+            setValue("dateofbirth", searshPatient.dateofbirth);
+            setValue("telephone", searshPatient.telephone);
+            setValue("email", searshPatient.email);
+            setValue("zipcode", searshPatient.zipcode);
+            setValue("street", searshPatient.street);
+            setValue("district", searshPatient.district);
+            setValue("city", searshPatient.city);
+            setValue("residencenumber", searshPatient.residencenumber);
+            setValue("building", searshPatient.building);
+            setValue("buildingblock", searshPatient.buildingblock);
+            setValue("apartment", searshPatient.apartment);
+        };
+    }, [searshPatient]);
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF</LabelText>
@@ -191,9 +191,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                 className={`${errors.cpf ? "required" : ""}`}
                 {...register("cpf", {
                     required: "Required field",
-                    onChange: (element) => {
-                        checkedCpf(element.target.value);
-                    },
+                    onChange: (element) => checkedCpf(element.target.value),
                     maxLength: 11,
                     pattern: {
                         value: /\d{11}/g
