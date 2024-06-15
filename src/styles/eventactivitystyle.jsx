@@ -76,11 +76,16 @@ const DivEventsActive = styled(DivEvents)`
     }
     h3 {
         font-size: 1rem;
+        font-weight: bold;
+        text-shadow: hsl(120, 73.44%, 74.9%, .5);
     }
     span {
         font-size: 1rem;
         font-weight: bold;
         color: #FF0075;
+    }
+    p {
+        color: gray;
     }
 `;
 export { DivMaimEvents, DivEventsMessage, DivEventsActive };

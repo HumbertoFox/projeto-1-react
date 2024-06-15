@@ -3,7 +3,7 @@ import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { HeaderMenu } from "../components/header/menuheader";
 import { TableFormInfo, DivInforReport, DivReportMain, Thead, Tbody } from "../styles/reportstyle";
 export const ReportDoctoryPage = () => {
-    const [consult, setConsult] = useState([]);
+    const [consult, setConsult] = useState({});
     const getConsults = async () => {
         try {
             const response = await fetch("http://localhost/projeto-1-react/src/services/getconsultsy.php");

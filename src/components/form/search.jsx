@@ -15,9 +15,6 @@ export const Search = ({ searshPatient }) => {
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
-    useEffect(() => {
-        searshPatient(patientSearsh);
-    }, [patientSearsh]);
     const onSubmit = async (data) => {
         await fetch("http://localhost/projeto-1-react/src/services/searshgetpatient.php", {
             method: "POST",
@@ -43,6 +40,9 @@ export const Search = ({ searshPatient }) => {
                 });
             });
     };
+    useEffect(() => {
+        searshPatient(patientSearsh);
+    }, [patientSearsh]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="searchpatient">Pesquisar Paciente</LabelText>
