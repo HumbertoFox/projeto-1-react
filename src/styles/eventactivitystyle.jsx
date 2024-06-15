@@ -33,7 +33,8 @@ const DivEvents = styled.div`
     border-radius: 15px;
     box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     animation: ${FaceIn} .4s ease-in-out;
-
+`;
+const DivEventsMessage = styled(DivEvents)`
     ${({ className }) => {
         if (className == "success") {
             return css`
@@ -59,8 +60,27 @@ const DivEvents = styled.div`
     p {
         font-size: .9rem;
     }
-    p:nth-child(2) {
+`;
+const DivEventsActive = styled(DivEvents)`
+    h2,
+    h3,
+    p,
+    span {
         margin: 0 auto;
     }
+    h2 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #3C91E6;
+        text-shadow: 0 0 1px hsla(332.47, 100%, 50%, .5);
+    }
+    h3 {
+        font-size: 1rem;
+    }
+    span {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #FF0075;
+    }
 `;
-export { DivMaimEvents, DivEvents };
+export { DivMaimEvents, DivEventsMessage, DivEventsActive };

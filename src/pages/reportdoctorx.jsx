@@ -10,6 +10,7 @@ export const ReportDoctorxPage = () => {
             const responseJson = await response.json();
             for (const key in responseJson) {
                 responseJson[key].cpf = responseJson[key].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                responseJson[key].consultdatestart = responseJson[key].consultdatestart.replace(/-/g, "/");
             };
             setConsult(responseJson);
         } catch (error) {
