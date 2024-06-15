@@ -2,7 +2,7 @@ const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
 const currentDay = new Date().getDate();
 
-const eventsTest = [{
+export const eventsTest = [{
     id: 1,
     title: 'Paciente Ciclano',
     start: new Date(currentYear, currentMonth, currentDay, 14, 0),
@@ -20,5 +20,3 @@ const eventsTest = [{
     color: '#3C91E6',
     tipo: 'activity'
 }];
-
-export { eventsTest };

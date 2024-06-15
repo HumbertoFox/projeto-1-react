@@ -5,11 +5,16 @@ import { TableFormInfo, DivInforReport, DivReportMain, Thead, Tbody } from "../s
 export const ReportDoctoryPage = () => {
     const [consult, setConsult] = useState([]);
     const getConsults = async () => {
-        await fetch("http://localhost/projeto-1-react/src/services/getconsultsy.php")
-            .then((response) => response.json())
-            .then((responseJson) => (
-                setConsult(responseJson.records)
-            ));
+        try {
+            const response = await fetch("http://localhost/projeto-1-react/src/services/getconsultsy.php");
+            const responseJson = await response.json();
+            for (const key in responseJson) {
+                responseJson[key].cpf = responseJson[key].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            };
+            setConsult(responseJson);
+        } catch (error) {
+            console.error("Error fetching events:", error);
+        };
     };
     useEffect(() => {
         getConsults();
@@ -19,13 +24,13 @@ export const ReportDoctoryPage = () => {
             <HeaderMenu />
             <MainSecondary>
                 <DivReportMain>
-                    <h1>Lista de Pacientes da Doutor CRM</h1>
+                    <h1>Lista de Pacientes Dr 5000</h1>
                     <DivInforReport>
                         <TableFormInfo>
                             <Thead>
                                 <tr>
-                                    <th>Código Consulta</th>
-                                    <th>CRM Doutor</th>
+                                    <th>Cód. Con.</th>
+                                    <th>CRM</th>
                                     <th>CPF</th>
                                     <th>Nome</th>
                                     <th>Plano</th>

@@ -7,6 +7,9 @@ export const ActivityActive = ({ event, onClose }) => {
         <DivMaimEvents>
             <DivEvents>
                 <h2>{event.title}</h2>
+                <h3>{event.name}</h3>
+                <p>{event.telephone}</p>
+                <p>{event.plan}</p>
                 <p>{event.desc}</p>
                 <p>Início do atendimento: {event.start.toLocaleString()}</p>
                 <p>Termino do atendimento: {event.end.toLocaleString()}</p>
