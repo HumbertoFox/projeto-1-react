@@ -6,8 +6,9 @@ import widthDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import { HeaderMenu } from "../components/header/menuheader";
-import { DivHomeMain, DivToolbarCalendar } from "../styles/homestyle";
+import { DivHomeMain } from "../styles/homestyle";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
+import { CustomToolbar } from "../components/toobar/tobarcalendar";
 import { ActivityActive } from "../components/modal/eventactivity";
 const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -25,33 +26,13 @@ export const HomePage = () => {
     const handleEventSelectClose = () => {
         setEventSelected(null);
     };
-    const CustomToolbar = ({
-        onView = ['month', 'week', 'day', 'agenda'],
-        label = ['date', 'label'],
-        onNavigate = ['TODAY', 'PREV', 'NEXT']
-    }) => (
-        <DivToolbarCalendar className="rbc-toolbar">
-            <div className="rbc-btn-group">
-                <button type="button" onClick={() => onNavigate('PREV')}>Voltar</button>
-                <button type="button" onClick={() => onNavigate('TODAY')}>Hoje</button>
-                <button type="button" onClick={() => onNavigate('NEXT')}>Avançar</button>
-            </div>
-            <div className="rbc-toolbar-label">
-                <h2>{label}</h2>
-            </div>
-            <div className="rbc-btn-group">
-                <button type="button" onClick={() => onView('day')}>Dia</button>
-                <button type="button" onClick={() => onView('week')}>Semana</button>
-                <button type="button" onClick={() => onView('month')}>Mês</button>
-                <button type="button" onClick={() => onView('agenda')}>Agenda</button>
-            </div>
-        </DivToolbarCalendar>
-    );
     const eventAgendCalendar = async () => {
         try {
             const response = await fetch("http://localhost/projeto-1-react/src/services/eventsday.php");
             const responseJson = await response.json();
             for (const key in responseJson) {
+                responseJson[key].color = responseJson[key].desc == "5001" ? "#FF0075" :"#3C91E6";
+                responseJson[key].tipo = "activity";
                 responseJson[key].start = responseJson[key].start.replace(/-/g, ",");
                 responseJson[key].end = responseJson[key].end.replace(/-/g, ",");
                 responseJson[key].title = responseJson[key].title.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
