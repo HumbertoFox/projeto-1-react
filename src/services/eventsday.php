@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 require_once 'pdoconnection.php';
-$query_get_consult = "SELECT consultation_id, consultation.cpf, telephone, name, consultation.crm, plan, consultdatestart, consultdateend FROM consultation JOIN cpf on consultation.cpf = cpf.cpf JOIN crm on consultation.crm JOIN patients on consultation.cpf = patients.cpf";
+$query_get_consult = "SELECT consultation_id, consultation.cpf, telephone, name, consultation.crm, plan, observation, consultdatestart, consultdateend FROM consultation JOIN cpf on consultation.cpf = cpf.cpf JOIN crm on consultation.crm JOIN patients on consultation.cpf = patients.cpf";
 $result_consultations = $conn->prepare($query_get_consult);
 $result_consultations->execute();
 if (($result_consultations) && ($result_consultations->rowCount() != 0)) {
@@ -16,7 +16,8 @@ if (($result_consultations) && ($result_consultations->rowCount() != 0)) {
             'start' => $consultdatestart,
             'end' => $consultdateend,
             'desc' => $crm,
-            'plan' => $plan
+            'plan' => $plan,
+            'observation' => $observation
         ];
     };
     http_response_code(200);
