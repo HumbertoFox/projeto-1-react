@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import IconError from "../assets/ponto-de-exclamacao.png";
-
-const FormSerach = styled.form`
+export const FormSerach = styled.form`
     width: 280px;
     display: flex;
     flex-direction: column;
-
     input[type=search] {
         height: 30px;
         font-size: .9rem;
@@ -26,7 +24,7 @@ const FormSerach = styled.form`
     }
     input.required {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
-        background: url(${IconError}) right 2% bottom 50% no-repeat;
+        background: url(${IconError}) right 9% bottom 50% no-repeat;
         background-size: 20px;
     }
     .required::placeholder {
@@ -34,5 +32,3 @@ const FormSerach = styled.form`
         color: hsla(332.47, 100%, 50%, .5);
     }
 `;
-
-export { FormSerach };

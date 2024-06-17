@@ -45,7 +45,7 @@ export const Search = ({ searshPatient }) => {
     }, [patientSearsh]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="searchpatient">Pesquisar Paciente</LabelText>
+            <LabelText htmlFor="searchpatient">Pesquisar Paciente por CPF</LabelText>
             <input
                 type="search"
                 id="searchpatient"
