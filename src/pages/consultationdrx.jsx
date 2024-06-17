@@ -4,17 +4,17 @@ import { Search } from "../components/form/search";
 import { DivForms, MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { FormPatientDrs } from "../components/form/formpatientdrs";
 export const ConsultationDrX = () => {
-    const [searshCpf, setSearshCpf] = useState(null);
+    const [searchCpf, setSearchCpf] = useState(null);
     function cpfPatient(cpf) {
-        setSearshCpf(cpf);
+        setSearchCpf(cpf);
     };
     return (
         <MainPrimary>
             <HeaderMenu />
             <MainSecondary>
                 <DivForms>
-                    <Search searshPatient={cpfPatient} />
-                    <FormPatientDrs searshPatient={searshCpf} title={"5001"} />
+                    <Search searchPatient={cpfPatient} />
+                    <FormPatientDrs searchPatient={searchCpf} title={"5001"} />
                 </DivForms>
             </MainSecondary>
         </MainPrimary>

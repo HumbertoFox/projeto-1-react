@@ -20,8 +20,32 @@ export const FormDoctorsRegister = () => {
         handleSubmit,
         setValue,
         setFocus,
+        setError,
         formState: { errors }
     } = useForm();
+    const getCheckedCpf = (data) => {
+        const isRepeatedCpf = (cpf) => {
+            const firstDigit = cpf[0];
+            return cpf.split('').every(digit => digit === firstDigit);
+        };
+        if (isRepeatedCpf(data)) {
+            return;
+        };
+        const calculateCheckDigit = (input) => {
+            let sum = 0;
+            for (let i = 0; i < input.length; i++) {
+                const digit = input.charAt(i);
+                const weight = (input.length + 1 - i);
+                sum += Number(digit) * weight;
+            };
+            const remainder = sum % 11;
+            return remainder < 2 ? "0" : (11 - remainder);
+        };
+        let primaryCheckDigit = calculateCheckDigit(data.substring(0, 9));
+        let secondaryCheckDigit = calculateCheckDigit(data.substring(0, 9) + primaryCheckDigit);
+        let correctCpf = data.substring(0, 9) + primaryCheckDigit + secondaryCheckDigit;
+        return data === correctCpf;
+    };
     const swapRadioSelect = element => {
         setRadioSelect(element.target.value);
     };
@@ -90,37 +114,42 @@ export const FormDoctorsRegister = () => {
         };
     };
     const onSubmit = async (data) => {
+        const cpf = data.cpf;
+        if (!getCheckedCpf(cpf)) {
+            setError("cpf", { type: "focus" }, { shouldFocus: true });
+            return;
+        };
         data.user_id = userSystem.id;
-        await fetch("http://localhost/projeto-1-react/src/services/registerdoctors.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.error) {
-                    setEventAlert({
-                        type: "error",
-                        message: responseJson.message
-                    });
-                } else {
-                    setEventAlert({
-                        type: "success",
-                        message: responseJson.message
-                    });
-                    setTimeout(function () {
-                        navigate("/");
-                    }, 3000);
-                };
-            }).catch(() => {
-                setEventAlert({
-                    type: "error",
-                    message: "Doutor não cadastrado, Erro com o Banco!"
-                });
+        try {
+            const response = await fetch("http://localhost/projeto-1-react/src/services/registerdoctors.php", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
             });
+            const responseJson = await response.json();
+            if (responseJson.error == true) {
+                setEventAlert({
+                    type: "Error",
+                    message: responseJson.message
+                });
+            } else {
+                setEventAlert({
+                    type: "Success",
+                    message: responseJson.message
+                });
+                setTimeout(function () {
+                    navigate("/");
+                }, 3000);
+            };
+        } catch (error) {
+            setEventAlert({
+                type: "Error",
+                message: "Doutor não cadastrado, Erro com o Banco!"
+            });
+        };
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>

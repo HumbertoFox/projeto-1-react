@@ -36,7 +36,7 @@ const DivEvents = styled.div`
 `;
 const DivEventsMessage = styled(DivEvents)`
     ${({ className }) => {
-        if (className == "success") {
+        if (className == "Success") {
             return css`
             p {
                 color: #3C91E6;

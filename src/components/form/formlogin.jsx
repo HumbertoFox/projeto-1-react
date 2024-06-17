@@ -18,48 +18,48 @@ export const FormLogin = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const onSubmit = async (data) => {
-        await fetch("http://localhost/projeto-1-react/src/services/login.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.error) {
-                    setEventAlert({
-                        type: "error",
-                        message: responseJson.message
-                    });
-                } else {
-                    setEventAlert({
-                        type: "success",
-                        message: responseJson[0].message
-                    });
-                    login(responseJson[0].user);
-                    setTimeout(function () {
-                        if (buttonType == "enter") {
-                            navigate("/");
-                        } else if (buttonType == "menu") {
-                            navigate("/menuRegister");
-                        };
-                    }, 3000);
-                };
-            }).catch(() => {
-                setEventAlert({
-                    type: "error",
-                    message: "Erro ao fazer login, Tente novamente!"
-                });
-            });
-    };
     const handleButtonClicked = (type) => {
         setButtonType(type);
     };
     const handleEventAlertClose = () => {
         setEventAlert(null);
+    };
+    const onSubmit = async (data) => {
+        try {
+            const response = await fetch("http://localhost/projeto-1-react/src/services/login.php", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const responseJson = await response.json();
+            if (responseJson.error == true) {
+                setEventAlert({
+                    type: "Error",
+                    message: responseJson.message
+                });
+            } else {
+                setEventAlert({
+                    type: "Success",
+                    message: responseJson[0].message
+                });
+                login(responseJson[0].user);
+                setTimeout(function () {
+                    if (buttonType == "enter") {
+                        navigate("/");
+                    } else if (buttonType == "menu") {
+                        navigate("/menuRegister");
+                    };
+                }, 3000);
+            };
+        } catch (error) {
+            setEventAlert({
+                type: "Error",
+                message: "Erro ao fazer login, Tente novamente!"
+            });
+        };
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
@@ -70,12 +70,7 @@ export const FormLogin = () => {
                 autoComplete="off"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", {
-                    required: "Required field",
-                    pattern: {
-                        value: /\d{11}/g
-                    }
-                })}
+                {...register("cpf", { required: true })}
             />
             <LabelText htmlFor="password">Senha</LabelText>
             <input

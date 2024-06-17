@@ -6,7 +6,7 @@ import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticula
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-export const FormPatientDrs = ({ title, searshPatient }) => {
+export const FormPatientDrs = ({ title, searchPatient }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
@@ -21,13 +21,19 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         setValue,
         setFocus,
         setError,
-        clearErrors,
         reset,
         watch,
         formState: { errors }
     } = useForm();
     const value = watch("particular");
     const getCheckedCpf = (data) => {
+        const isRepeatedCpf = (cpf) => {
+            const firstDigit = cpf[0];
+            return cpf.split('').every(digit => digit === firstDigit);
+        };
+        if (isRepeatedCpf(data)) {
+            return;
+        };
         const calculateCheckDigit = (input) => {
             let sum = 0;
             for (let i = 0; i < input.length; i++) {
@@ -41,7 +47,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         let primaryCheckDigit = calculateCheckDigit(data.substring(0, 9));
         let secondaryCheckDigit = calculateCheckDigit(data.substring(0, 9) + primaryCheckDigit);
         let correctCpf = data.substring(0, 9) + primaryCheckDigit + secondaryCheckDigit;
-        return data !== correctCpf ? setError("cpf") : clearErrors("cpf");
+        return data === correctCpf;
     };
     const formatAsCurrency = (value) => {
         if (!value) return "0";
@@ -129,36 +135,41 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         };
     };
     const onSubmit = async (data) => {
+        const cpf = data.cpf;
+        if (!getCheckedCpf(cpf)) {
+            setError("cpf", { type: "focus" }, { shouldFocus: true });
+            return;
+        };
         data.user_id = userSystem.id;
-        await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson.error) {
-                    setEventAlert({
-                        type: "error",
-                        message: responseJson.message
-                    });
-                } else {
-                    reset();
-                    crmInputText();
-                    setEventAlert({
-                        type: "success",
-                        message: responseJson.message
-                    });
-                };
-            }).catch(() => {
-                setEventAlert({
-                    type: "error",
-                    message: "Consulta não agendada, Erro com o Banco!"
-                });
+        try {
+            const response = await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
             });
+            const responseJson = await response.json();
+            if (responseJson.error == true) {
+                setEventAlert({
+                    type: "Error",
+                    message: responseJson.message
+                });
+            } else {
+                reset();
+                crmInputText();
+                setEventAlert({
+                    type: "Success",
+                    message: responseJson.message
+                });
+            };
+        } catch (error) {
+            setEventAlert({
+                type: "Error",
+                message: responseJson.message
+            });
+        };
     };
     useEffect(() => {
         const formatValue = formatAsCurrency(value);
@@ -168,22 +179,23 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         crmInputText();
     }, []);
     useEffect(() => {
-        if (searshPatient !== null) {
-            setValue("cpf", searshPatient.cpf);
-            setValue("name", searshPatient.name);
-            setValue("dateofbirth", searshPatient.dateofbirth);
-            setValue("telephone", searshPatient.telephone);
-            setValue("email", searshPatient.email);
-            setValue("zipcode", searshPatient.zipcode);
-            setValue("street", searshPatient.street);
-            setValue("district", searshPatient.district);
-            setValue("city", searshPatient.city);
-            setValue("residencenumber", searshPatient.residencenumber);
-            setValue("building", searshPatient.building);
-            setValue("buildingblock", searshPatient.buildingblock);
-            setValue("apartment", searshPatient.apartment);
+        if (searchPatient !== null) {
+            setValue("cpf", searchPatient.cpf);
+            setValue("name", searchPatient.name);
+            setValue("dateofbirth", searchPatient.dateofbirth);
+            setValue("telephone", searchPatient.telephone);
+            setValue("email", searchPatient.email);
+            setValue("zipcode", searchPatient.zipcode);
+            setValue("street", searchPatient.street);
+            setValue("district", searchPatient.district);
+            setValue("city", searchPatient.city);
+            setValue("plan", searchPatient.plan);
+            setValue("residencenumber", searchPatient.residencenumber);
+            setValue("building", searchPatient.building);
+            setValue("buildingblock", searchPatient.buildingblock);
+            setValue("apartment", searchPatient.apartment);
         };
-    }, [searshPatient]);
+    }, [searchPatient]);
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF</LabelText>
@@ -193,8 +205,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
                 {...register("cpf", {
-                    required: "Required field",
-                    onChange: (element) => getCheckedCpf(element.target.value),
+                    required: true,
                     maxLength: 11,
                     pattern: {
                         value: /\d{11}/g

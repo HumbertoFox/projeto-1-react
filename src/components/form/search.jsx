@@ -4,20 +4,26 @@ import { FormSerach } from "../../styles/formsearch";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-export const Search = ({ searshPatient }) => {
-    const [patientSearsh, setPatientSearsh] = useState(null);
+export const Search = ({ searchPatient }) => {
+    const [patientSearch, setPatientSearch] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
     const {
         register,
         handleSubmit,
         setError,
-        clearErrors,
         formState: { errors }
     } = useForm();
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
     const getCheckedCpf = (data) => {
+        const isRepeatedCPF = (cpf) => {
+            const firstDigit = cpf[0];
+            return cpf.split('').every(digit => digit === firstDigit);
+        };
+        if (isRepeatedCPF(data)) {
+            return;
+        };
         const calculateCheckDigit = (input) => {
             let sum = 0;
             for (let i = 0; i < input.length; i++) {
@@ -31,11 +37,16 @@ export const Search = ({ searshPatient }) => {
         let primaryCheckDigit = calculateCheckDigit(data.substring(0, 9));
         let secondaryCheckDigit = calculateCheckDigit(data.substring(0, 9) + primaryCheckDigit);
         let correctCpf = data.substring(0, 9) + primaryCheckDigit + secondaryCheckDigit;
-        return data !== correctCpf ? setError("searchpatient") : clearErrors("searchpatient");
+        return data === correctCpf;
     };
     const onSubmit = async (data) => {
+        const cpf = data.searchpatient;
+        if (!getCheckedCpf(cpf)) {
+            setError("searchpatient", { type: "focus" }, { shouldFocus: true });
+            return;
+        };
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/searshgetpatient.php", {
+            const response = await fetch("http://localhost/projeto-1-react/src/services/searchgetpatient.php", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -45,7 +56,7 @@ export const Search = ({ searshPatient }) => {
             });
             const responseJson = await response.json();
             if (responseJson && responseJson.records) {
-                setPatientSearsh(responseJson.records);
+                setPatientSearch(responseJson.records);
                 setEventAlert({
                     type: "Success",
                     message: "Paciente Encontrado"
@@ -64,8 +75,8 @@ export const Search = ({ searshPatient }) => {
         };
     };
     useEffect(() => {
-        searshPatient(patientSearsh);
-    }, [patientSearsh]);
+        searchPatient(patientSearch);
+    }, [patientSearch]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="searchpatient">Pesquisar Paciente por CPF</LabelText>
@@ -77,7 +88,7 @@ export const Search = ({ searshPatient }) => {
                 {
                 ...register("searchpatient", {
                     required: true,
-                    onChange: (element) => getCheckedCpf(element.target.value),
+                    maxLength: 11,
                     pattern: {
                         value: /\d{11}/g
                     }

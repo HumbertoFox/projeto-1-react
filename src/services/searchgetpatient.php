@@ -6,7 +6,7 @@ require_once 'pdoconnection.php';
 $response_json = file_get_contents("php://input");
 $dados = json_decode($response_json, true);
 if ($dados) {
-    $query_get_patient = "SELECT patients.cpf, name, dateofbirth, patients.telephone, email, patients.address_id, address_all.zipcode, residencenumber, building, buildingblock, apartment, street, district, city FROM patients JOIN cpf on patients.cpf = cpf.cpf JOIN telephone on patients.telephone = telephone.telephone JOIN address_all on patients.address_id = address_all.address_id JOIN zipcode on address_all.zipcode = zipcode.zipcode WHERE patients.cpf = :searchpatient";
+    $query_get_patient = "SELECT patients.cpf, name, dateofbirth, patients.telephone, email, patients.address_id, address_all.zipcode, residencenumber, building, buildingblock, apartment, street, district, city, plan FROM patients JOIN cpf on patients.cpf = cpf.cpf JOIN telephone on patients.telephone = telephone.telephone JOIN address_all on patients.address_id = address_all.address_id JOIN zipcode on address_all.zipcode = zipcode.zipcode JOIN consultation on cpf.cpf = consultation.cpf WHERE patients.cpf = :searchpatient";
     $result_patient = $conn->prepare($query_get_patient);
     $result_patient->bindParam(':searchpatient', $dados['searchpatient'], PDO::PARAM_STR);
     $result_patient->execute();
@@ -24,6 +24,7 @@ if ($dados) {
                 'street' => $street,
                 'district' => $district,
                 'city' => $city,
+                'plan' => $plan,
                 'residencenumber' => $residencenumber,
                 'building' => $building,
                 'buildingblock' => $buildingblock,
