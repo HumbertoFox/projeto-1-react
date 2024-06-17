@@ -10,10 +10,28 @@ export const Search = ({ searshPatient }) => {
     const {
         register,
         handleSubmit,
+        setError,
+        clearErrors,
         formState: { errors }
     } = useForm();
     const handleEventAlertClose = () => {
         setEventAlert(null);
+    };
+    const getCheckedCpf = (data) => {
+        const checkePrimaryValue = (element) => {
+            let sumation = 0;
+            for (let i = 0; i < element.length; i++) {
+                let currentdigit = element.charAt(i);
+                let constant = (element.length + 1 - i);
+                sumation += Number(currentdigit) * constant;
+            };
+            const res = sumation % 11;
+            return res < 2 ? "0" : (11 - res);
+        };
+        let primaryckecked = checkePrimaryValue(data.substring(0, 9));
+        let secundechecked = checkePrimaryValue(data.substring(0, 9) + primaryckecked);
+        let correctCpf = data.substring(0, 9) + primaryckecked + secundechecked;
+        return data !== correctCpf ? setError("searchpatient") : clearErrors("searchpatient");
     };
     const onSubmit = async (data) => {
         await fetch("http://localhost/projeto-1-react/src/services/searshgetpatient.php", {
@@ -54,6 +72,7 @@ export const Search = ({ searshPatient }) => {
                 {
                 ...register("searchpatient", {
                     required: "Required field",
+                    onChange: (element) => getCheckedCpf(element.target.value),
                     pattern: {
                         value: /\d{11}/g
                     }

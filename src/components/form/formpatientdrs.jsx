@@ -27,7 +27,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
         formState: { errors }
     } = useForm();
     const value = watch("particular");
-    const checkedCpf = (data) => {
+    const getCheckedCpf = (data) => {
         const checkePrimaryValue = (element) => {
             let sumation = 0;
             for (let i = 0; i < element.length; i++) {
@@ -194,7 +194,7 @@ export const FormPatientDrs = ({ title, searshPatient }) => {
                 className={`${errors.cpf ? "required" : ""}`}
                 {...register("cpf", {
                     required: "Required field",
-                    onChange: (element) => checkedCpf(element.target.value),
+                    onChange: (element) => getCheckedCpf(element.target.value),
                     maxLength: 11,
                     pattern: {
                         value: /\d{11}/g
