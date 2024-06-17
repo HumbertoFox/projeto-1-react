@@ -18,45 +18,50 @@ export const Search = ({ searshPatient }) => {
         setEventAlert(null);
     };
     const getCheckedCpf = (data) => {
-        const checkePrimaryValue = (element) => {
-            let sumation = 0;
-            for (let i = 0; i < element.length; i++) {
-                let currentdigit = element.charAt(i);
-                let constant = (element.length + 1 - i);
-                sumation += Number(currentdigit) * constant;
+        const calculateCheckDigit = (input) => {
+            let sum = 0;
+            for (let i = 0; i < input.length; i++) {
+                const digit = input.charAt(i);
+                const weight = (input.length + 1 - i);
+                sum += Number(digit) * weight;
             };
-            const res = sumation % 11;
-            return res < 2 ? "0" : (11 - res);
+            const remainder = sum % 11;
+            return remainder < 2 ? "0" : (11 - remainder);
         };
-        let primaryckecked = checkePrimaryValue(data.substring(0, 9));
-        let secundechecked = checkePrimaryValue(data.substring(0, 9) + primaryckecked);
-        let correctCpf = data.substring(0, 9) + primaryckecked + secundechecked;
+        let primaryCheckDigit = calculateCheckDigit(data.substring(0, 9));
+        let secondaryCheckDigit = calculateCheckDigit(data.substring(0, 9) + primaryCheckDigit);
+        let correctCpf = data.substring(0, 9) + primaryCheckDigit + secondaryCheckDigit;
         return data !== correctCpf ? setError("searchpatient") : clearErrors("searchpatient");
     };
     const onSubmit = async (data) => {
-        await fetch("http://localhost/projeto-1-react/src/services/searshgetpatient.php", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson) {
-                    setPatientSearsh(responseJson.records);
-                    setEventAlert({
-                        type: "Success",
-                        message: "Paciente Encontrado"
-                    });
-                };
-            }).catch(() => {
+        try {
+            const response = await fetch("http://localhost/projeto-1-react/src/services/searshgetpatient.php", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            const responseJson = await response.json();
+            if (responseJson && responseJson.records) {
+                setPatientSearsh(responseJson.records);
+                setEventAlert({
+                    type: "Success",
+                    message: "Paciente Encontrado"
+                });
+            } else {
                 setEventAlert({
                     type: "Error",
-                    message: "Paciente não encontrado!"
+                    message: "Paciente não encontrado! Erro com o BD"
                 });
+            }
+        } catch (error) {
+            setEventAlert({
+                type: "Error",
+                message: "Paciente não encontrado!"
             });
+        };
     };
     useEffect(() => {
         searshPatient(patientSearsh);
@@ -71,7 +76,7 @@ export const Search = ({ searshPatient }) => {
                 className={`${errors.searchpatient ? "required" : ""}`}
                 {
                 ...register("searchpatient", {
-                    required: "Required field",
+                    required: true,
                     onChange: (element) => getCheckedCpf(element.target.value),
                     pattern: {
                         value: /\d{11}/g
