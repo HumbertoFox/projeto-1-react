@@ -17,17 +17,21 @@ npm install react-hook-form
 
 npm install axios
 
-npm install --save @fortawesome/fontawesome-svg-core
+npm install -D @fortawesome/fontawesome-svg-core
 
-npm install --save @fortawesome/free-solid-svg-icons
+npm install -D @fortawesome/free-solid-svg-icons
 
-npm install --save @fortawesome/react-fontawesome@latest
+npm install -D @fortawesome/react-fontawesome@latest
 
-npm install --save react-big-calendar
+npm install -D react-big-calendar
 
-npm install --save moment react-moment
+npm install -D moment react-moment
 
 npm install js-cookie
+
+npm i -g vercel@latest
+
+npm i @vercel/postgres
 
 ##
 
