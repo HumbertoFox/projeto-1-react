@@ -27,6 +27,8 @@ npm install --save react-big-calendar
 
 npm install --save moment react-moment
 
+npm install js-cookie
+
 ##
 
 ### Construído com
