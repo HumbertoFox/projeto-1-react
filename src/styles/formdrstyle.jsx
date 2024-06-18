@@ -86,7 +86,7 @@ const DivNameEd = styled.div`
     display: none;
     flex-direction: column;
 ${({ className }) => {
-        if (className === "edificio") {
+        if (className === "building") {
             return css`
             display: flex;
         `;

@@ -9,6 +9,7 @@ import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } fr
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
 export const FormUserRegister = () => {
+
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("casa");
@@ -22,6 +23,7 @@ export const FormUserRegister = () => {
         watch,
         formState: { errors }
     } = useForm();
+    const password = watch('password');
     const getCheckedCpf = (data) => {
         const isRepeatedCpf = (cpf) => {
             const firstDigit = cpf[0];
@@ -93,7 +95,6 @@ export const FormUserRegister = () => {
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
-    const password = watch('password');
     const calculateAge = (data) => {
         const birthDate = new Date(data);
         const today = new Date();
@@ -158,12 +159,7 @@ export const FormUserRegister = () => {
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", {
-                    required: true,
-                    pattern: {
-                        value: /\d{11}/g
-                    }
-                })}
+                {...register("cpf", { required: true, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="name">Nome</LabelText>
             <input
@@ -171,12 +167,7 @@ export const FormUserRegister = () => {
                 id="name"
                 placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
                 className={`${errors.name ? "required" : ""}`}
-                {...register("name", {
-                    required: "Required field",
-                    pattern: {
-                        value: /[A-Za-z]{5}/g
-                    }
-                })}
+                {...register("name", { required: true, pattern: { value: /[A-Za-z]{5}/g } })}
             />
             <DivDate>
                 <DivDateBirth>
@@ -185,11 +176,7 @@ export const FormUserRegister = () => {
                         type="date"
                         id="dateofbirth"
                         className={`${errors.dateofbirth ? "requireddate" : ""}`}
-                        {
-                        ...register("dateofbirth", {
-                            required: "Required field"
-                        })}
-                        onChange={handleDateChange}
+                        {...register("dateofbirth", { required: true, onChange: handleDateChange })}
                     />
                 </DivDateBirth>
                 <DivDateAge>
@@ -203,12 +190,7 @@ export const FormUserRegister = () => {
                 id="telephone"
                 placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
                 className={`${errors.telephone ? "required" : ""}`}
-                {...register("telephone", {
-                    required: "Required field",
-                    pattern: {
-                        value: /\d{11}/g
-                    }
-                })}
+                {...register("telephone", { required: true, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="email">Email</LabelText>
             <input
@@ -216,26 +198,17 @@ export const FormUserRegister = () => {
                 id="email"
                 placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
                 className={`${errors.email ? "required" : ""}`}
-                {...register("email", {
-                    required: "Required field"
-                })}
+                {...register("email", { required: true })}
             />
             <LabelText htmlFor="zipcode">CEP</LabelText>
-            <input
-                type="text"
-                id="zipcode"
-                {...register("zipcode")}
-                onBlur={checkedZipCode}
-            />
+            <input type="text" id="zipcode" {...register("zipcode", { onBlur: checkedZipCode })} />
             <LabelText htmlFor="street">Logradouro Av/Travessa/Rua</LabelText>
             <input
                 type="text"
                 id="street"
                 placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
                 className={`${errors.street ? "required" : ""}`}
-                {...register("street", {
-                    required: "Required field"
-                })}
+                {...register("street", { required: true })}
             />
             <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
             <input
@@ -243,9 +216,7 @@ export const FormUserRegister = () => {
                 id="residencenumber"
                 placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
                 className={`${errors.residencenumber ? "required" : ""}`}
-                {...register("residencenumber", {
-                    required: "Required field"
-                })}
+                {...register("residencenumber", { required: true })}
             />
             <DivRadio>
                 <LabelText htmlFor="casa">
@@ -281,9 +252,7 @@ export const FormUserRegister = () => {
                 id="district"
                 placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
                 className={`${errors.district ? "required" : ""}`}
-                {...register("district", {
-                    required: "Required field"
-                })}
+                {...register("district", { required: true })}
             />
             <LabelText htmlFor="city">Cidade</LabelText>
             <input
@@ -291,9 +260,7 @@ export const FormUserRegister = () => {
                 id="city"
                 placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
                 className={`${errors.city ? "required" : ""}`}
-                {...register("city", {
-                    required: "Required field"
-                })}
+                {...register("city", { required: true })}
             />
             <LabelText htmlFor="password">Senha</LabelText>
             <input
@@ -302,9 +269,7 @@ export const FormUserRegister = () => {
                 autoComplete="off"
                 placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
                 className={`${errors.password ? "required" : ""}`}
-                {...register("password", {
-                    required: "Required field"
-                })}
+                {...register("password", { required: true })}
             />
             <LabelText htmlFor="passwordchecked">Confirme Senha</LabelText>
             <input
@@ -313,22 +278,14 @@ export const FormUserRegister = () => {
                 autoComplete="off"
                 placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
                 className={`${errors.passwordchecked ? "required" : ""}`}
-                {...register("passwordchecked", {
-                    required: "Checked required field",
-                    validate: (value) =>
-                        value === password || "A senha não corresponde"
-                })}
+                {...register("passwordchecked", { required: true, validate: (value) => value === password })}
             />
             <DivButtons>
                 <SubmitButton title="Cadastrar" value="Cadastrar" />
                 <ButtonButton title="Iniciar" onClick={() => navigate("/")}>Iniciar</ButtonButton>
                 <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
             </DivButtons>
-            {eventAlert && <ActivityClicked
-                event={eventAlert}
-                onClose={handleEventAlertClose}
-            />
-            }
+            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>
     );
 };

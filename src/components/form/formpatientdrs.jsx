@@ -10,7 +10,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
-    const [radioSelect, setRadioSelect] = useState("casa");
+    const [radioSelect, setRadioSelect] = useState("house");
     const [selectRadio, setSelectRadio] = useState("plan");
     const [eventAlert, setEventAlert] = useState(null);
     const [endDateStart, setEndDateStart] = useState(formattedNow);
@@ -63,12 +63,15 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
         setRadioSelect(selectValue);
+        setValue("building", selectValue !== "building" ? "..." : "");
+        setValue("buildingblock", selectValue !== "building" ? "..." : "");
+        setValue("apartment", selectValue !== "building" ? "..." : "");
     };
     const swapSelectedRadio = element => {
         const selectedValue = element.target.value;
-        const isCourtesy = selectedValue !== "courtesy";
         setSelectRadio(selectedValue);
-        setValue("courtesy", isCourtesy ? "Não" : "Sim");
+        setValue("courtesy", selectedValue !== "courtesy" ? "Não" : "Sim");
+        setValue("plan", selectedValue !== "plan" ? "..." : "");
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -204,13 +207,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", {
-                    required: true,
-                    maxLength: 11,
-                    pattern: {
-                        value: /\d{11}/g
-                    }
-                })}
+                {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="name">Nome</LabelText>
             <input
@@ -218,12 +215,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="name"
                 placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
                 className={`${errors.name ? "required" : ""}`}
-                {...register("name", {
-                    required: "Required field",
-                    pattern: {
-                        value: /[A-Za-z]{5}/g
-                    }
-                })}
+                {...register("name", { required: true, pattern: { value: /[A-Za-z]{5}/g } })}
             />
             <DivDate>
                 <DivDateBirth>
@@ -232,11 +224,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                         type="date"
                         id="dateofbirth"
                         className={`${errors.dateofbirth ? "requireddate" : ""}`}
-                        {
-                        ...register("dateofbirth", {
-                            required: "Required field"
-                        })}
-                        onChange={handleDateChange}
+                        {...register("dateofbirth", { required: true, onChange: handleDateChange })}
                     />
                 </DivDateBirth>
                 <DivDateAge>
@@ -250,12 +238,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="telephone"
                 placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
                 className={`${errors.telephone ? "required" : ""}`}
-                {...register("telephone", {
-                    required: "Required field",
-                    pattern: {
-                        value: /\d{11}/g
-                    }
-                })}
+                {...register("telephone", { required: true, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="email">Email</LabelText>
             <input
@@ -263,16 +246,13 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="email"
                 placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
                 className={`${errors.email ? "required" : ""}`}
-                {...register("email", {
-                    required: "Required field"
-                })}
+                {...register("email", { required: true })}
             />
             <LabelText htmlFor="zipcode">CEP</LabelText>
             <input
                 type="number"
                 id="zipcode"
-                {...register("zipcode")}
-                onBlur={checkedZipCode}
+                {...register("zipcode", { required: true, onBlur: checkedZipCode })}
             />
             <LabelText htmlFor="street">Logradouro Av/Travessa/Rua</LabelText>
             <input
@@ -280,9 +260,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="street"
                 placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
                 className={`${errors.street ? "required" : ""}`}
-                {...register("street", {
-                    required: "Required field"
-                })}
+                {...register("street", { required: true })}
             />
             <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
             <input
@@ -290,25 +268,23 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="residencenumber"
                 placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
                 className={`${errors.residencenumber ? "required" : ""}`}
-                {...register("residencenumber", {
-                    required: "Required field"
-                })}
+                {...register("residencenumber", { required: true })}
             />
             <DivRadio>
-                <LabelText htmlFor="casa">
+                <LabelText htmlFor="house">
                     <input type="radio"
-                        id="casa"
-                        value="casa"
-                        checked={radioSelect === "casa" ? true : false}
+                        id="house"
+                        value="house"
+                        checked={radioSelect === "house" ? true : false}
                         onChange={swapRadioSelect}
                     />
                     Casa
                 </LabelText>
-                <LabelText htmlFor="edificio">
+                <LabelText htmlFor="building">
                     <input type="radio"
-                        id="edificio"
-                        value="edificio"
-                        checked={radioSelect === "edificio" ? true : false}
+                        id="building"
+                        value="building"
+                        checked={radioSelect === "building" ? true : false}
                         onChange={swapRadioSelect}
                     />
                     Edifício
@@ -316,11 +292,11 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
             </DivRadio>
             <DivNameEd className={radioSelect}>
                 <LabelText htmlFor="building">Nome do Edifício</LabelText>
-                <input type="text" id="building" {...register("building", { value: "..." })} />
+                <input type="text" id="building" {...register("building", { required: true, value: "..." })} />
                 <LabelText htmlFor="buildingblock">Bloco</LabelText>
-                <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
+                <input type="text" id="buildingblock" {...register("buildingblock", { required: true, value: "..." })} />
                 <LabelText htmlFor="apartment">Apartamento</LabelText>
-                <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
+                <input type="text" id="apartment" {...register("apartment", { required: true, value: "..." })} />
             </DivNameEd>
             <LabelText htmlFor="district">Bairro/Distrito</LabelText>
             <input
@@ -328,9 +304,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="district"
                 placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
                 className={`${errors.district ? "required" : ""}`}
-                {...register("district", {
-                    required: "Required field"
-                })}
+                {...register("district", { required: true })}
             />
             <LabelText htmlFor="city">Cidade</LabelText>
             <input
@@ -338,9 +312,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="city"
                 placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
                 className={`${errors.city ? "required" : ""}`}
-                {...register("city", {
-                    required: "Required field"
-                })}
+                {...register("city", { required: true })}
             />
             <LabelText>CRM</LabelText>
             <input type="number" id="crm" disabled={true} {...register("crm")} />
@@ -375,7 +347,12 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
             </DivRadio>
             <DivPlan className={selectRadio}>
                 <LabelText htmlFor="plan">Plano</LabelText>
-                <input type="text" id="plan" {...register("plan", { value: "..." })} />
+                <input
+                    type="text"
+                    id="plan"
+                    placeholder={`${errors.plan ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.plan ? "required" : ""}`}
+                    {...register("plan", { required: true })} />
             </DivPlan>
             <DivParticular className={selectRadio}>
                 <LabelText htmlFor="particular">Valor</LabelText>
@@ -391,11 +368,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="consultdatestart"
                 min={formattedNow}
                 className={`${errors.consultdatestart ? "requireddate" : ""}`}
-                {
-                ...register("consultdatestart", {
-                    required: "Required field",
-                    onBlur: (elementDate) => setEndDateStart(elementDate.target.value)
-                })}
+                {...register("consultdatestart", { required: true, onBlur: (elementDate) => setEndDateStart(elementDate.target.value) })}
             />
             <LabelText htmlFor="consultdateend">Data da Consulta</LabelText>
             <input
@@ -403,19 +376,12 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="consultdateend"
                 min={endDateStart == "" ? formattedNow : endDateStart}
                 className={`${errors.consultdateend ? "requireddate" : ""}`}
-                {
-                ...register("consultdateend", {
-                    required: "Required field"
-                })}
+                {...register("consultdateend", { required: true })}
             />
             <LabelText htmlFor="observation">Observações</LabelText>
             <textarea id="observation" {...register("observation", { value: "..." })} />
             <SubmitButton value="Agendar" />
-            {eventAlert && <ActivityClicked
-                event={eventAlert}
-                onClose={handleEventAlertClose}
-            />
-            }
+            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>
     );
 };

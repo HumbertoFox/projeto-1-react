@@ -85,21 +85,10 @@ export const Search = ({ searchPatient }) => {
                 id="searchpatient"
                 placeholder={`${errors.searchpatient ? "Campo Obrigatório" : ""}`}
                 className={`${errors.searchpatient ? "required" : ""}`}
-                {
-                ...register("searchpatient", {
-                    required: true,
-                    maxLength: 11,
-                    pattern: {
-                        value: /\d{11}/g
-                    }
-                })}
+                {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <SubmitButton value="Pesquisar" />
-            {eventAlert && <ActivityClicked
-                event={eventAlert}
-                onClose={handleEventAlertClose}
-            />
-            }
+            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormSerach>
     );
 };

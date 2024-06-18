@@ -7,7 +7,6 @@ import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -79,19 +78,13 @@ export const FormLogin = () => {
                 autoComplete="off"
                 placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
                 className={`${errors.password ? "required" : ""}`}
-                {...register("password", {
-                    required: "Required field"
-                })}
+                {...register("password", { required: true })}
             />
             <DivButtons>
                 <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
                 <SubmitButton title="Menu" value="Menu" onClick={() => handleButtonClicked("menu")} />
             </DivButtons>
-            {eventAlert && <ActivityClicked
-                event={eventAlert}
-                onClose={handleEventAlertClose}
-            />
-            }
+            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>
-    )
+    );
 };

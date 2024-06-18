@@ -1,6 +1,5 @@
 import React from "react";
 import { DivToolbarCalendar } from "../../styles/homestyle";
-
 export const CustomToolbar = ({
     onView = ['month', 'week', 'day', 'agenda'],
     label = ['date', 'label'],
