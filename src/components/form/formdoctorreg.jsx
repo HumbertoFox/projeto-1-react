@@ -13,7 +13,7 @@ export const FormDoctorsRegister = () => {
     const userSystem = useAuth().user;
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
-    const [radioSelect, setRadioSelect] = useState("casa");
+    const [radioSelect, setRadioSelect] = useState("house");
     const [age, setAge] = useState(null);
     const {
         register,
@@ -226,22 +226,22 @@ export const FormDoctorsRegister = () => {
                 {...register("residencenumber", { required: true })}
             />
             <DivRadio>
-                <LabelText htmlFor="casa">
+                <LabelText htmlFor="house">
                     <input
                         type="radio"
-                        id="casa"
-                        value="casa"
-                        checked={radioSelect === "casa" ? true : false}
+                        id="house"
+                        value="house"
+                        checked={radioSelect === "house" ? true : false}
                         onChange={swapRadioSelect}
                     />
                     Casa
                 </LabelText>
-                <LabelText htmlFor="edificio">
+                <LabelText htmlFor="building">
                     <input
                         type="radio"
-                        id="edificio"
-                        value="edificio"
-                        checked={radioSelect === "edificio" ? true : false}
+                        id="building"
+                        value="building"
+                        checked={radioSelect === "building" ? true : false}
                         onChange={swapRadioSelect}
                     />
                     Edifício
