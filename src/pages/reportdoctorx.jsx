@@ -10,9 +10,14 @@ export const ReportDoctorxPage = () => {
             const responseJson = await response.json();
             for (const key in responseJson) {
                 responseJson[key].cpf = responseJson[key].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-                responseJson[key].consultdatestart = responseJson[key].consultdatestart.replace(/-/g, "/");
+                let dateTimeParts = responseJson[key].consultdatestart.split(' ');
+                let dateParts = dateTimeParts[0].split('-');
+                let timePart = dateTimeParts[1].substring(0, 5);
+                responseJson[key].consultdatestart = `${timePart} ${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
             };
-            setConsult(responseJson);
+            let consultArray = Object.values(responseJson);
+            consultArray.sort((a, b) => b.consultation_id - a.consultation_id);
+            setConsult(consultArray);
         } catch (error) {
             console.error("Error fetching events:", error);
         };
@@ -35,7 +40,7 @@ export const ReportDoctorxPage = () => {
                                     <th>CPF</th>
                                     <th>Nome</th>
                                     <th>Plano</th>
-                                    <th>Data e Horário</th>
+                                    <th>Horário e Data</th>
                                 </tr>
                             </Thead>
                             <Tbody>
