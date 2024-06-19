@@ -11,11 +11,13 @@ Currently, two official plugins are available:
 
 npm install styled-components
 
-npm install -D react-router-dom
-
 npm install react-hook-form
 
 npm install axios
+
+npm install js-cookie
+
+npm install -D react-router-dom
 
 npm install -D @fortawesome/fontawesome-svg-core
 
@@ -27,11 +29,19 @@ npm install -D react-big-calendar
 
 npm install -D moment react-moment
 
-npm install js-cookie
+npm install -D typescript
 
-npm i -g vercel@latest
+npm install -D @types/node
 
-npm i @vercel/postgres
+npm install -D tsx
+
+npm install -D prisma
+
+npm install -g vercel@latest
+
+npm install @vercel/postgres
+
+npx tsc --init
 
 ##
 
