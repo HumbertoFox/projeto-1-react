@@ -35,8 +35,6 @@ npm install -D @types/node
 
 npm install -D tsx
 
-npm install -D prisma
-
 npm install -g vercel@latest
 
 npx tsc --init

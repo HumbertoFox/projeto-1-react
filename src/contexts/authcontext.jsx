@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
         const token = Cookies.get("authToken");
         if (token) {
             fetchUserFromToken(token);
-        }
+        };
     }, []);
     const fetchUserFromToken = async (token) => {
         try {
