@@ -1,7 +1,6 @@
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth();
 const currentDay = new Date().getDate();
-
 export const eventsTest = [{
     id: 1,
     title: 'Paciente Ciclano',
