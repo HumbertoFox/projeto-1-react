@@ -39,8 +39,6 @@ npm install -D prisma
 
 npm install -g vercel@latest
 
-npm install @vercel/postgres
-
 npx tsc --init
 
 ##
