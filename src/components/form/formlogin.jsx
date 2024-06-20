@@ -39,13 +39,16 @@ export const FormLogin = () => {
                     type: "Error",
                     message: responseJson.message
                 });
+                setTimeout(() => {
+                    navigate("/");
+                }, 3000);
             } else {
                 setEventAlert({
                     type: "Success",
                     message: responseJson[0].message
                 });
                 login(responseJson[0].user);
-                setTimeout(function () {
+                setTimeout(() => {
                     if (buttonType == "enter") {
                         navigate("/");
                     } else if (buttonType == "menu") {

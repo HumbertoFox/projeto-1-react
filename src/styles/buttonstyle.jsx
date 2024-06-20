@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 const Button = styled.button.attrs({ type: 'button' })`
     font-size: .9rem;
     color: black;
@@ -20,6 +20,13 @@ const Button = styled.button.attrs({ type: 'button' })`
         border: 1px solid hsl(120, 73.44%, 74.9%, .5);
         box-shadow: 0 0 5px hsl(120, 73.44%, 74.9%, .5);
     }
+    ${(props) => {
+        if (props.title == "fechar login") {
+            return css`
+                display: none;
+            `;
+        };
+    }};
 `;
 const Input = styled.input.attrs({ type: 'submit' })`
     font-size: .9rem;
@@ -43,5 +50,4 @@ const Input = styled.input.attrs({ type: 'submit' })`
         box-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
     }
 `;
-
 export { Button, Input };
