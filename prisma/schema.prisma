@@ -7,13 +7,125 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model AddressAll {
-//   address_id Int @id @default(autoincrement())
-//   zipcode String 
-//   residencenumber String
-//   building String
-//   buildingblock String
-//   apartment String
-//   registerdate DateTime @default(now())
-//   @@map("address_all")
-// }
+model address_all {
+  address_id                           Int        @id @default(autoincrement())
+  zipcode                              String     @db.VarChar(11)
+  residencenumber                      String     @db.VarChar(50)
+  building                             String     @db.VarChar(100)
+  buildingblock                        String     @db.VarChar(50)
+  apartment                            String     @db.VarChar(50)
+  registerdate                         DateTime   @default(now()) @db.Timestamp(0)
+  zipcode_address_all_zipcodeTozipcode zipcode    @relation("address_all_zipcodeTozipcode", fields: [zipcode], references: [zipcode], onUpdate: Restrict, map: "zipcode_address_fk")
+  doctors                              doctors[]
+  patients                             patients[]
+  user                                 user[]
+
+  @@index([zipcode], map: "zipcode_address_fk")
+}
+
+model consultation {
+  consultation_id           Int      @id @default(autoincrement())
+  cpf                       String   @db.VarChar(11)
+  crm                       String   @db.VarChar(11)
+  plan                      String   @db.VarChar(50)
+  particular                String   @db.VarChar(50)
+  courtesy                  String   @db.VarChar(20)
+  observation               String   @db.Text
+  consultdatestart          DateTime @db.Date
+  consultdateend            DateTime @db.Date
+  user_id                   Int
+  registerdate              DateTime @default(now()) @db.Timestamp(0)
+  cpf_consultation_cpfTocpf cpf      @relation("consultation_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_patient_consult_fk")
+  crm_consultation_crmTocrm crm      @relation("consultation_crmTocrm", fields: [crm], references: [crm], onUpdate: Restrict, map: "crm_consult_fk")
+  user                      user     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "user_id_consult_fk")
+
+  @@index([crm], map: "crm_consult_fk")
+  @@index([cpf], map: "id_patient_fk")
+  @@index([user_id], map: "user_id_consultation_fk")
+}
+
+model cpf {
+  cpf                                String         @id @db.VarChar(11)
+  name                               String         @db.VarChar(100)
+  dateofbirth                        DateTime       @db.Date
+  consultation_consultation_cpfTocpf consultation[] @relation("consultation_cpfTocpf")
+  doctors_doctors_cpfTocpf           doctors[]      @relation("doctors_cpfTocpf")
+  patients_patients_cpfTocpf         patients[]     @relation("patients_cpfTocpf")
+  user_user_cpfTocpf                 user[]         @relation("user_cpfTocpf")
+}
+
+model crm {
+  crm                                String         @id @db.VarChar(11)
+  consultation_consultation_crmTocrm consultation[] @relation("consultation_crmTocrm")
+  doctors_doctors_crmTocrm           doctors[]      @relation("doctors_crmTocrm")
+}
+
+model doctors {
+  doctor_id                              Int         @id @default(autoincrement())
+  crm                                    String      @db.VarChar(11)
+  cpf                                    String      @db.VarChar(11)
+  telephone                              String      @db.VarChar(11)
+  address_id                             Int
+  user_id                                Int
+  registerdate                           DateTime    @default(now()) @db.Timestamp(0)
+  address_all                            address_all @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "address_id_doctor_fk")
+  cpf_doctors_cpfTocpf                   cpf         @relation("doctors_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_doctor_fk")
+  crm_doctors_crmTocrm                   crm         @relation("doctors_crmTocrm", fields: [crm], references: [crm], onUpdate: Restrict, map: "crm_doctor_fk")
+  telephone_doctors_telephoneTotelephone telephone   @relation("doctors_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_doctor_fk")
+  user                                   user        @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "user_id_doctor_fk")
+
+  @@index([address_id], map: "address_id_doctor_fk")
+  @@index([cpf], map: "cpf_doctor_fk")
+  @@index([crm], map: "crm_doctor_fk")
+  @@index([telephone], map: "telephone_doctor_fk")
+  @@index([user_id], map: "user_id_doctor_fk")
+}
+
+model patients {
+  patient_id                              Int         @id @default(autoincrement())
+  cpf                                     String      @db.VarChar(11)
+  telephone                               String      @db.VarChar(11)
+  address_id                              Int
+  registerdate                            DateTime    @default(now()) @db.Timestamp(0)
+  address_all                             address_all @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "address_id_patient_fk")
+  cpf_patients_cpfTocpf                   cpf         @relation("patients_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_patient_fk")
+  telephone_patients_telephoneTotelephone telephone   @relation("patients_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_patient_fk")
+
+  @@index([address_id], map: "address_id_patient_fk")
+  @@index([cpf], map: "cpf_patient_fk")
+  @@index([telephone], map: "telephone_patient_fk")
+}
+
+model telephone {
+  telephone                              String     @id @db.VarChar(11)
+  email                                  String     @db.VarChar(150)
+  doctors_doctors_telephoneTotelephone   doctors[]  @relation("doctors_telephoneTotelephone")
+  patients_patients_telephoneTotelephone patients[] @relation("patients_telephoneTotelephone")
+  user_user_telephoneTotelephone         user[]     @relation("user_telephoneTotelephone")
+}
+
+model user {
+  user_id                             Int            @id @default(autoincrement())
+  cpf                                 String         @db.VarChar(11)
+  telephone                           String         @db.VarChar(11)
+  password                            String         @db.VarChar(250)
+  address_id                          Int
+  registerdate                        DateTime       @default(now()) @db.Timestamp(0)
+  consultation                        consultation[]
+  doctors                             doctors[]
+  cpf_user_cpfTocpf                   cpf            @relation("user_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_user_fk")
+  address_all                         address_all    @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "id_address_user_fk")
+  telephone_user_telephoneTotelephone telephone      @relation("user_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_user_fk")
+
+  @@index([cpf], map: "cpf_user_fk")
+  @@index([address_id], map: "id_address_user_fk")
+  @@index([telephone], map: "telephone_user_fk")
+}
+
+model zipcode {
+  zipcode                                  String        @id @db.VarChar(11)
+  street                                   String        @db.VarChar(100)
+  district                                 String        @db.VarChar(100)
+  city                                     String        @db.VarChar(100)
+  address_all_address_all_zipcodeTozipcode address_all[] @relation("address_all_zipcodeTozipcode")
+}
