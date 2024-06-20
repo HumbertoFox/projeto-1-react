@@ -19,8 +19,6 @@ model address_all {
   doctors                              doctors[]
   patients                             patients[]
   user                                 user[]
-
-  @@index([zipcode], map: "zipcode_address_fk")
 }
 
 model consultation {
@@ -38,10 +36,6 @@ model consultation {
   cpf_consultation_cpfTocpf cpf      @relation("consultation_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_patient_consult_fk")
   crm_consultation_crmTocrm crm      @relation("consultation_crmTocrm", fields: [crm], references: [crm], onUpdate: Restrict, map: "crm_consult_fk")
   user                      user     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "user_id_consult_fk")
-
-  @@index([crm], map: "crm_consult_fk")
-  @@index([cpf], map: "id_patient_fk")
-  @@index([user_id], map: "user_id_consultation_fk")
 }
 
 model cpf {
@@ -73,12 +67,6 @@ model doctors {
   crm_doctors_crmTocrm                   crm         @relation("doctors_crmTocrm", fields: [crm], references: [crm], onUpdate: Restrict, map: "crm_doctor_fk")
   telephone_doctors_telephoneTotelephone telephone   @relation("doctors_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_doctor_fk")
   user                                   user        @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "user_id_doctor_fk")
-
-  @@index([address_id], map: "address_id_doctor_fk")
-  @@index([cpf], map: "cpf_doctor_fk")
-  @@index([crm], map: "crm_doctor_fk")
-  @@index([telephone], map: "telephone_doctor_fk")
-  @@index([user_id], map: "user_id_doctor_fk")
 }
 
 model patients {
@@ -90,10 +78,6 @@ model patients {
   address_all                             address_all @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "address_id_patient_fk")
   cpf_patients_cpfTocpf                   cpf         @relation("patients_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_patient_fk")
   telephone_patients_telephoneTotelephone telephone   @relation("patients_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_patient_fk")
-
-  @@index([address_id], map: "address_id_patient_fk")
-  @@index([cpf], map: "cpf_patient_fk")
-  @@index([telephone], map: "telephone_patient_fk")
 }
 
 model telephone {
@@ -116,10 +100,6 @@ model user {
   cpf_user_cpfTocpf                   cpf            @relation("user_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_user_fk")
   address_all                         address_all    @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "id_address_user_fk")
   telephone_user_telephoneTotelephone telephone      @relation("user_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_user_fk")
-
-  @@index([cpf], map: "cpf_user_fk")
-  @@index([address_id], map: "id_address_user_fk")
-  @@index([telephone], map: "telephone_user_fk")
 }
 
 model zipcode {
