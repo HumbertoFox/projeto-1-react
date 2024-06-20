@@ -61,6 +61,9 @@ export const FormLogin = () => {
                 type: "Error",
                 message: "Erro ao fazer login, Tente novamente!"
             });
+            setTimeout(() => {
+                navigate("/");
+            }, 3000);
         };
     };
     return (
