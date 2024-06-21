@@ -227,11 +227,11 @@ export const FormUserRegister = () => {
                     />
                     Casa
                 </LabelText>
-                <LabelText htmlFor="building">
+                <LabelText htmlFor="buildingradio">
                     <input type="radio"
-                        id="building"
-                        value="building"
-                        checked={radioSelect === "building" ? true : false}
+                        id="buildingradio"
+                        value="buildingradio"
+                        checked={radioSelect === "buildingradio" ? true : false}
                         onChange={swapRadioSelect}
                     />
                     Edifício

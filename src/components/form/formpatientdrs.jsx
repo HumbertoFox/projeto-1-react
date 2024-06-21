@@ -11,7 +11,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
     const [radioSelect, setRadioSelect] = useState("house");
-    const [selectRadio, setSelectRadio] = useState("plan");
+    const [selectRadio, setSelectRadio] = useState("planradio");
     const [eventAlert, setEventAlert] = useState(null);
     const [endDateStart, setEndDateStart] = useState(formattedNow);
     const [age, setAge] = useState(null);
@@ -63,15 +63,15 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
         setRadioSelect(selectValue);
-        setValue("building", selectValue !== "building" ? "..." : "");
-        setValue("buildingblock", selectValue !== "building" ? "..." : "");
-        setValue("apartment", selectValue !== "building" ? "..." : "");
+        setValue("building", selectValue !== "buildingradio" ? "..." : "");
+        setValue("buildingblock", selectValue !== "buildingradio" ? "..." : "");
+        setValue("apartment", selectValue !== "buildingradio" ? "..." : "");
     };
     const swapSelectedRadio = element => {
         const selectedValue = element.target.value;
         setSelectRadio(selectedValue);
-        setValue("courtesy", selectedValue !== "courtesy" ? "Não" : "Sim");
-        setValue("plan", selectedValue !== "plan" ? "..." : "");
+        setValue("courtesy", selectedValue !== "courtesyradio" ? "Não" : "Sim");
+        setValue("plan", selectedValue !== "planradio" ? "..." : "");
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -139,6 +139,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     };
     const onSubmit = async (data) => {
         const cpf = data.cpf;
+        console.log(data);
         if (!getCheckedCpf(cpf)) {
             setError("cpf", { type: "focus" }, { shouldFocus: true });
             return;
@@ -280,11 +281,11 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                     />
                     Casa
                 </LabelText>
-                <LabelText htmlFor="building">
+                <LabelText htmlFor="buildingradio">
                     <input type="radio"
-                        id="building"
-                        value="building"
-                        checked={radioSelect === "building" ? true : false}
+                        id="buildingradio"
+                        value="buildingradio"
+                        checked={radioSelect === "buildingradio" ? true : false}
                         onChange={swapRadioSelect}
                     />
                     Edifício
@@ -317,29 +318,29 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
             <LabelText>CRM</LabelText>
             <input type="number" id="crm" disabled={true} {...register("crm")} />
             <DivRadio>
-                <LabelText htmlFor="plan">
+                <LabelText htmlFor="planradio">
                     <input type="radio"
-                        id="plan"
-                        value="plan"
-                        checked={selectRadio === "plan" ? true : false}
+                        id="planradio"
+                        value="planradio"
+                        checked={selectRadio === "planradio" ? true : false}
                         onChange={swapSelectedRadio}
                     />
                     Plano
                 </LabelText>
-                <LabelText htmlFor="particular">
+                <LabelText htmlFor="particularradio">
                     <input type="radio"
-                        value="particular"
-                        id="particular"
-                        checked={selectRadio === "particular" ? true : false}
+                        value="particularradio"
+                        id="particularradio"
+                        checked={selectRadio === "particularradio" ? true : false}
                         onChange={swapSelectedRadio}
                     />
                     Particular
                 </LabelText>
-                <LabelText htmlFor="courtesy">
+                <LabelText htmlFor="courtesyradio">
                     <input type="radio"
-                        value="courtesy"
-                        id="courtesy"
-                        checked={selectRadio === "courtesy" ? true : false}
+                        value="courtesyradio"
+                        id="courtesyradio"
+                        checked={selectRadio === "courtesyradio" ? true : false}
                         onChange={swapSelectedRadio}
                     />
                     Cortesia

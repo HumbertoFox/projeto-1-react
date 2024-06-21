@@ -86,7 +86,7 @@ const DivNameEd = styled.div`
     display: none;
     flex-direction: column;
 ${({ className }) => {
-        if (className === "building") {
+        if (className === "buildingradio") {
             return css`
             display: flex;
         `;
@@ -97,7 +97,7 @@ const DivPlan = styled.div`
     display: none;
     flex-direction: column;
 ${({ className }) => {
-        if (className === "plan") {
+        if (className === "planradio") {
             return css`
             display: flex;
         `;
@@ -107,7 +107,7 @@ ${({ className }) => {
 const DivParticular = styled.div`
     display: none;
 ${({ className }) => {
-        if (className === "particular") {
+        if (className === "particularradio") {
             return css`
                 display: flex;
             `;
@@ -118,7 +118,7 @@ ${({ className }) => {
 const DivCourtesy = styled.div`
     display: none;
 ${({ className }) => {
-        if (className === "courtesy") {
+        if (className === "courtesyradio") {
             return css`
                 display: flex;
             `;
