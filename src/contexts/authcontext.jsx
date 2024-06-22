@@ -10,31 +10,17 @@ export const AuthProvider = ({ children }) => {
             fetchUserFromToken(token);
         };
     }, []);
-    const fetchUserFromToken = async (token) => {
-        try {
-            const response = await fetch("/api/verifyToken", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            const data = await response.json();
-            if (response.ok) {
-                setUser(data.user);
+    const fetchUserFromToken = (token) => {
+        if (user !== null) {
+            if (token === user.email) {
                 setIsLoggedIn(true);
-            } else {
-                logout();
             };
-        } catch (error) {
-            console.error("Error verifying token:", error);
-            logout();
         };
     };
-    const login = (userData, token) => {
+    const login = (userData) => {
         setIsLoggedIn(true);
         setUser(userData);
-        Cookies.set("authToken", token, { secure: true, sameSite: "Strict" });
+        Cookies.set("authToken", userData.email, { secure: true, sameSite: "Strict", expires: 1 });
     };
     const logout = () => {
         setIsLoggedIn(false);
