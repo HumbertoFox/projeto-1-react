@@ -139,7 +139,6 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     };
     const onSubmit = async (data) => {
         const cpf = data.cpf;
-        console.log(data);
         if (!getCheckedCpf(cpf)) {
             setError("cpf", { type: "focus" }, { shouldFocus: true });
             return;

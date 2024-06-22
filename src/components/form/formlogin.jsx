@@ -34,7 +34,7 @@ export const FormLogin = () => {
                 body: JSON.stringify(data)
             });
             const responseJson = await response.json();
-            if (responseJson.error == true) {
+            if (responseJson.Error == true) {
                 setEventAlert({
                     type: "Error",
                     message: responseJson.message
