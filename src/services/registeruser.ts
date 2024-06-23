@@ -1,7 +1,7 @@
-const express = require('express');
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcrypt');
-const dotenv = require('dotenv');
+import express, { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -10,8 +10,40 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
-app.post('/register', async (req, res) => {
-    const { cpf, name, dateofbirth, telephone, email, zipcode, street, district, city, residencenumber, building, buildingblock, apartment, password } = req.body;
+interface UserData {
+    cpf: string;
+    name: string;
+    dateofbirth: string;
+    telephone: string;
+    email: string;
+    zipcode: string;
+    street: string;
+    district: string;
+    city: string;
+    residencenumber: string;
+    building?: string;
+    buildingblock?: string;
+    apartment?: string;
+    password: string;
+};
+
+app.post('/register', async (req: Request, res: Response) => {
+    const {
+        cpf,
+        name,
+        dateofbirth,
+        telephone,
+        email,
+        zipcode,
+        street,
+        district,
+        city,
+        residencenumber,
+        building,
+        buildingblock,
+        apartment,
+        password
+    }: UserData = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,13 +57,13 @@ app.post('/register', async (req, res) => {
                 error: true,
                 message: 'CPF já cadastrado!'
             });
-        }
+        };
 
         const newCpf = await prisma.cpf.create({
             data: {
                 cpf: cpf,
                 name: name,
-                dateOfBirth: new Date(dateofbirth)
+                dateofbirth: new Date(dateofbirth)
             }
         });
 
@@ -46,7 +78,7 @@ app.post('/register', async (req, res) => {
                     email: email
                 }
             });
-        }
+        };
 
         const existingZipcode = await prisma.zipcode.findUnique({
             where: { zipcode: zipcode },
@@ -61,30 +93,30 @@ app.post('/register', async (req, res) => {
                     city: city
                 }
             });
-        }
+        };
 
-        const newAddress = await prisma.address.create({
+        const newAddress_all = await prisma.address_all.create({
             data: {
-                zipcode: {
+                zipcode_address_all_zipcodeTozipcode: {
                     connect: { zipcode: zipcode }
                 },
-                residenceNumber: residencenumber,
-                building: building,
-                buildingBlock: buildingblock,
-                apartment: apartment
+                residencenumber: residencenumber,
+                building: building || '',
+                buildingblock: buildingblock || '',
+                apartment: apartment || ''
             }
         });
 
         const newUser = await prisma.user.create({
             data: {
-                cpf: {
+                cpf_user_cpfTocpf: {
                     connect: { cpf: cpf }
                 },
-                telephone: {
+                telephone_user_telephoneTotelephone: {
                     connect: { telephone: telephone }
                 },
-                address: {
-                    connect: { id: newAddress.id }
+                address_all: {
+                    connect: { address_id: newAddress_all.address_id }
                 },
                 password: hashedPassword
             }
@@ -101,10 +133,5 @@ app.post('/register', async (req, res) => {
             error: true,
             message: 'Erro ao cadastrar usuário!'
         });
-    }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    };
 });

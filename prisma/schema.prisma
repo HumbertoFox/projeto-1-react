@@ -86,7 +86,7 @@ model telephone {
   email                                  String     @db.VarChar(150)
   doctors_doctors_telephoneTotelephone   doctors[]  @relation("doctors_telephoneTotelephone")
   patients_patients_telephoneTotelephone patients[] @relation("patients_telephoneTotelephone")
-  user_user_telephoneTotelephone         user[]     @relation("user_telephoneTotelephone")
+  user_telephoneTotelephone         user[]     @relation("user_telephoneTotelephone")
 }
 
 model user {
