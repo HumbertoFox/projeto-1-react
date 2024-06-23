@@ -48,7 +48,7 @@ app.post('/register', async (req: Request, res: Response) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const existingCpf = await prisma.cpf.findUnique({
+        const existingCpf = await prisma.cpf_all.findUnique({
             where: { cpf: cpf },
         });
 
@@ -59,7 +59,7 @@ app.post('/register', async (req: Request, res: Response) => {
             });
         };
 
-        const newCpf = await prisma.cpf.create({
+        const newCpf = await prisma.cpf_all.create({
             data: {
                 cpf: cpf,
                 name: name,
@@ -67,12 +67,12 @@ app.post('/register', async (req: Request, res: Response) => {
             }
         });
 
-        const existingTelephone = await prisma.telephone.findUnique({
+        const existingTelephone = await prisma.telephone_all.findUnique({
             where: { telephone: telephone },
         });
 
         if (!existingTelephone) {
-            await prisma.telephone.create({
+            await prisma.telephone_all.create({
                 data: {
                     telephone: telephone,
                     email: email
@@ -80,12 +80,12 @@ app.post('/register', async (req: Request, res: Response) => {
             });
         };
 
-        const existingZipcode = await prisma.zipcode.findUnique({
+        const existingZipcode = await prisma.zipcode_all.findUnique({
             where: { zipcode: zipcode },
         });
 
         if (!existingZipcode) {
-            await prisma.zipcode.create({
+            await prisma.zipcode_all.create({
                 data: {
                     zipcode: zipcode,
                     street: street,
@@ -97,7 +97,7 @@ app.post('/register', async (req: Request, res: Response) => {
 
         const newAddress_all = await prisma.address_all.create({
             data: {
-                zipcode_address_all_zipcodeTozipcode: {
+                address_all_zipcode: {
                     connect: { zipcode: zipcode }
                 },
                 residencenumber: residencenumber,
@@ -107,12 +107,12 @@ app.post('/register', async (req: Request, res: Response) => {
             }
         });
 
-        const newUser = await prisma.user.create({
+        const newUser = await prisma.user_all.create({
             data: {
-                cpf_user_cpfTocpf: {
+                user_cpf: {
                     connect: { cpf: cpf }
                 },
-                telephone_user_telephoneTotelephone: {
+                user_telephone: {
                     connect: { telephone: telephone }
                 },
                 address_all: {
