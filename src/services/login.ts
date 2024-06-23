@@ -19,16 +19,17 @@ app.post('/login', async (req: Request, res: Response) => {
     const { cpf, password }: LoginRequestBody = req.body;
 
     try {
-        const user = await prisma.user.findFirst({
+        const user = await prisma.user_all.findFirst({
             where: { cpf: cpf, password: { equals: password } }
         });
 
-        const telephone = await prisma.telephone.findUnique({
+        const telephone = await prisma.telephone_all.findUnique({
             where: { telephone: user?.telephone }
         });
 
         if (user && bcrypt.compareSync(password, user.password)) {
             const userData = {
+
                 id: user.user_id,
                 email: telephone?.email,
                 password: user.password
