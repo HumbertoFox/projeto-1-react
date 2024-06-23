@@ -16,7 +16,7 @@ model address_all {
   buildingblock                        String     @db.VarChar(50)
   apartment                            String     @db.VarChar(50)
   registerdate                         DateTime   @default(now()) @db.Timestamp(0)
-  zipcode_address_all_zipcodeTozipcode zipcode    @relation("address_all_zipcodeTozipcode", fields: [zipcode], references: [zipcode], onUpdate: Restrict, map: "zipcode_address_fk")
+  address_all_zipcodeTozipcode         zipcode    @relation("address_all_zipcodeTozipcode", fields: [zipcode], references: [zipcode])
   doctors                              doctors[]
   patients                             patients[]
   user                                 user[]
@@ -34,24 +34,24 @@ model consultation {
   consultdateend            DateTime @db.Date
   user_id                   Int
   registerdate              DateTime @default(now()) @db.Timestamp(0)
-  cpf_consultation_cpfTocpf cpf      @relation("consultation_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_patient_consult_fk")
-  crm_consultation_crmTocrm crm      @relation("consultation_crmTocrm", fields: [crm], references: [crm], onUpdate: Restrict, map: "crm_consult_fk")
-  user                      user     @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "user_id_consult_fk")
+  consultation_cpfTocpf     cpf      @relation("consultation_cpfTocpf", fields: [cpf], references: [cpf])
+  consultation_crmTocrm     crm      @relation("consultation_crmTocrm", fields: [crm], references: [crm])
+  user                      user     @relation(fields: [user_id], references: [user_id])
 }
 
 model cpf {
   cpf                                String         @id @db.VarChar(11)
   name                               String         @db.VarChar(100)
   dateofbirth                        DateTime       @db.Date
-  consultation_consultation_cpfTocpf consultation[] @relation("consultation_cpfTocpf")
-  doctors_doctors_cpfTocpf           doctors[]      @relation("doctors_cpfTocpf")
-  patients_patients_cpfTocpf         patients[]     @relation("patients_cpfTocpf")
-  user_user_cpfTocpf                 user[]         @relation("user_cpfTocpf")
+  consultation_cpfTocpf              consultation[] @relation("consultation_cpfTocpf")
+  doctors_cpfTocpf                   doctors[]      @relation("doctors_cpfTocpf")
+  patients_cpfTocpf                  patients[]     @relation("patients_cpfTocpf")
+  user_cpfTocpf                      user[]         @relation("user_cpfTocpf")
 }
 
 model crm {
   crm                                String         @id @db.VarChar(11)
-  consultation_consultation_crmTocrm consultation[] @relation("consultation_crmTocrm")
+  consultation_crmTocrm              consultation[] @relation("consultation_crmTocrm")
   doctors_doctors_crmTocrm           doctors[]      @relation("doctors_crmTocrm")
 }
 
@@ -63,11 +63,11 @@ model doctors {
   address_id                             Int
   user_id                                Int
   registerdate                           DateTime    @default(now()) @db.Timestamp(0)
-  address_all                            address_all @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "address_id_doctor_fk")
-  cpf_doctors_cpfTocpf                   cpf         @relation("doctors_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_doctor_fk")
-  crm_doctors_crmTocrm                   crm         @relation("doctors_crmTocrm", fields: [crm], references: [crm], onUpdate: Restrict, map: "crm_doctor_fk")
-  telephone_doctors_telephoneTotelephone telephone   @relation("doctors_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_doctor_fk")
-  user                                   user        @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "user_id_doctor_fk")
+  address_all                            address_all @relation(fields: [address_id], references: [address_id])
+  cpf_doctors_cpfTocpf                   cpf         @relation("doctors_cpfTocpf", fields: [cpf], references: [cpf])
+  crm_doctors_crmTocrm                   crm         @relation("doctors_crmTocrm", fields: [crm], references: [crm])
+  doctors_telephoneTotelephone           telephone   @relation("doctors_telephoneTotelephone", fields: [telephone], references: [telephone])
+  user                                   user        @relation(fields: [user_id], references: [user_id])
 }
 
 model patients {
@@ -76,9 +76,9 @@ model patients {
   telephone                               String      @db.VarChar(11)
   address_id                              Int
   registerdate                            DateTime    @default(now()) @db.Timestamp(0)
-  address_all                             address_all @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "address_id_patient_fk")
-  cpf_patients_cpfTocpf                   cpf         @relation("patients_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_patient_fk")
-  telephone_patients_telephoneTotelephone telephone   @relation("patients_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_patient_fk")
+  address_all                             address_all @relation(fields: [address_id], references: [address_id])
+  cpf_patients_cpfTocpf                   cpf         @relation("patients_cpfTocpf", fields: [cpf], references: [cpf])
+  patients_telephoneTotelephone telephone   @relation("patients_telephoneTotelephone", fields: [telephone], references: [telephone])
 }
 
 model telephone {
@@ -86,7 +86,7 @@ model telephone {
   email                                  String     @db.VarChar(150)
   doctors_doctors_telephoneTotelephone   doctors[]  @relation("doctors_telephoneTotelephone")
   patients_patients_telephoneTotelephone patients[] @relation("patients_telephoneTotelephone")
-  user_telephoneTotelephone         user[]     @relation("user_telephoneTotelephone")
+  user_telephoneTotelephone              user[]     @relation("user_telephoneTotelephone")
 }
 
 model user {
@@ -98,9 +98,9 @@ model user {
   registerdate                        DateTime       @default(now()) @db.Timestamp(0)
   consultation                        consultation[]
   doctors                             doctors[]
-  cpf_user_cpfTocpf                   cpf            @relation("user_cpfTocpf", fields: [cpf], references: [cpf], onUpdate: Restrict, map: "cpf_user_fk")
-  address_all                         address_all    @relation(fields: [address_id], references: [address_id], onUpdate: Restrict, map: "id_address_user_fk")
-  telephone_user_telephoneTotelephone telephone      @relation("user_telephoneTotelephone", fields: [telephone], references: [telephone], onUpdate: Restrict, map: "telephone_user_fk")
+  cpf_user_cpfTocpf                   cpf            @relation("user_cpfTocpf", fields: [cpf], references: [cpf])
+  address_all                         address_all    @relation(fields: [address_id], references: [address_id])
+  user_telephoneTotelephone telephone      @relation("user_telephoneTotelephone", fields: [telephone], references: [telephone])
 }
 
 model zipcode {
@@ -108,5 +108,5 @@ model zipcode {
   street                                   String        @db.VarChar(100)
   district                                 String        @db.VarChar(100)
   city                                     String        @db.VarChar(100)
-  address_all_address_all_zipcodeTozipcode address_all[] @relation("address_all_zipcodeTozipcode")
+  address_all_zipcodeTozipcode             address_all[] @relation("address_all_zipcodeTozipcode")
 }

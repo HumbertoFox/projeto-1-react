@@ -20,13 +20,13 @@ app.post('/login', async (req: Request, res: Response) => {
 
     try {
         const user = await prisma.user.findFirst({
-            where: { cpf: cpf, password: { equals: password } },
+            where: { cpf: cpf, password: { equals: password } }
         });
 
         if (user && bcrypt.compareSync(password, user.password)) {
             const userData = {
                 id: user.user_id,
-                email: user.email,
+                email: user.address_id,
                 password: user.password
             };
 
