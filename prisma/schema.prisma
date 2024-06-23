@@ -9,104 +9,104 @@ generator client {
 }
 
 model address_all {
-  address_id                           Int        @id @default(autoincrement())
-  zipcode                              String     @db.VarChar(11)
-  residencenumber                      String     @db.VarChar(50)
-  building                             String     @db.VarChar(100)
-  buildingblock                        String     @db.VarChar(50)
-  apartment                            String     @db.VarChar(50)
-  registerdate                         DateTime   @default(now()) @db.Timestamp(0)
-  address_all_zipcodeTozipcode         zipcode    @relation("address_all_zipcodeTozipcode", fields: [zipcode], references: [zipcode])
-  doctors                              doctors[]
-  patients                             patients[]
-  user                                 user[]
+  address_id           Int            @id @default(autoincrement())
+  zipcode              String
+  residencenumber      String         @db.VarChar(50)
+  building             String         @db.VarChar(100)
+  buildingblock        String         @db.VarChar(50)
+  apartment            String         @db.VarChar(50)
+  registerdate         DateTime       @default(now()) @db.Timestamp(0)
+  address_all_zipcode  zipcode_all    @relation(fields: [zipcode], references: [zipcode])
+  address_all_doctors  doctors_all[]
+  address_all_patients patients_all[]
+  address_all_user     user_all[]
 }
 
-model consultation {
-  consultation_id           Int      @id @default(autoincrement())
-  cpf                       String   @db.VarChar(11)
-  crm                       String   @db.VarChar(11)
-  plan                      String   @db.VarChar(50)
-  particular                String   @db.VarChar(50)
-  courtesy                  String   @db.VarChar(20)
-  observation               String   @db.Text
-  consultdatestart          DateTime @db.Date
-  consultdateend            DateTime @db.Date
-  user_id                   Int
-  registerdate              DateTime @default(now()) @db.Timestamp(0)
-  consultation_cpfTocpf     cpf      @relation("consultation_cpfTocpf", fields: [cpf], references: [cpf])
-  consultation_crmTocrm     crm      @relation("consultation_crmTocrm", fields: [crm], references: [crm])
-  user                      user     @relation(fields: [user_id], references: [user_id])
+model consultation_all {
+  consultation_id       Int      @id @default(autoincrement())
+  cpf                   String
+  crm                   String
+  plan                  String   @db.VarChar(50)
+  particular            String   @db.VarChar(50)
+  courtesy              String   @db.VarChar(20)
+  observation           String   @db.Text
+  consultdatestart      DateTime @db.Date
+  consultdateend        DateTime @db.Date
+  user_id               Int
+  registerdate          DateTime @default(now()) @db.Timestamp(0)
+  consultation_cpf      cpf_all  @relation(fields: [cpf], references: [cpf])
+  consultation_crm      crm_all  @relation(fields: [crm], references: [crm])
+  consultation_all_user user_all @relation(fields: [user_id], references: [user_id])
 }
 
-model cpf {
-  cpf                                String         @id @db.VarChar(11)
-  name                               String         @db.VarChar(100)
-  dateofbirth                        DateTime       @db.Date
-  consultation_cpfTocpf              consultation[] @relation("consultation_cpfTocpf")
-  doctors_cpfTocpf                   doctors[]      @relation("doctors_cpfTocpf")
-  patients_cpfTocpf                  patients[]     @relation("patients_cpfTocpf")
-  user_cpfTocpf                      user[]         @relation("user_cpfTocpf")
+model cpf_all {
+  cpf                  String             @id @db.VarChar(11)
+  name                 String             @db.VarChar(100)
+  dateofbirth          DateTime           @db.Date
+  cpf_all_patients     patients_all[]
+  cpf_all_doctors      doctors_all[]
+  cpf_all_consultation consultation_all[]
+  cpf_all_user         user_all[]
 }
 
-model crm {
-  crm                                String         @id @db.VarChar(11)
-  consultation_crmTocrm              consultation[] @relation("consultation_crmTocrm")
-  doctors_doctors_crmTocrm           doctors[]      @relation("doctors_crmTocrm")
+model crm_all {
+  crm                  String             @id @db.VarChar(11)
+  crm_all_consultation consultation_all[]
+  crm_all_doctor       doctors_all[]
 }
 
-model doctors {
-  doctor_id                              Int         @id @default(autoincrement())
-  crm                                    String      @db.VarChar(11)
-  cpf                                    String      @db.VarChar(11)
-  telephone                              String      @db.VarChar(11)
-  address_id                             Int
-  user_id                                Int
-  registerdate                           DateTime    @default(now()) @db.Timestamp(0)
-  address_all                            address_all @relation(fields: [address_id], references: [address_id])
-  cpf_doctors_cpfTocpf                   cpf         @relation("doctors_cpfTocpf", fields: [cpf], references: [cpf])
-  crm_doctors_crmTocrm                   crm         @relation("doctors_crmTocrm", fields: [crm], references: [crm])
-  doctors_telephoneTotelephone           telephone   @relation("doctors_telephoneTotelephone", fields: [telephone], references: [telephone])
-  user                                   user        @relation(fields: [user_id], references: [user_id])
+model doctors_all {
+  doctor_id             Int           @id @default(autoincrement())
+  crm                   String
+  cpf                   String
+  telephone             String
+  address_id            Int
+  user_id               Int
+  registerdate          DateTime      @default(now()) @db.Timestamp(0)
+  address_all           address_all   @relation(fields: [address_id], references: [address_id])
+  doctors_all_cpf       cpf_all       @relation(fields: [cpf], references: [cpf])
+  doctors_all_crm       crm_all       @relation(fields: [crm], references: [crm])
+  doctors_all_telephone telephone_all @relation(fields: [telephone], references: [telephone])
+  user                  user_all      @relation(fields: [user_id], references: [user_id])
 }
 
-model patients {
-  patient_id                              Int         @id @default(autoincrement())
-  cpf                                     String      @db.VarChar(11)
-  telephone                               String      @db.VarChar(11)
-  address_id                              Int
-  registerdate                            DateTime    @default(now()) @db.Timestamp(0)
-  address_all                             address_all @relation(fields: [address_id], references: [address_id])
-  cpf_patients_cpfTocpf                   cpf         @relation("patients_cpfTocpf", fields: [cpf], references: [cpf])
-  patients_telephoneTotelephone telephone   @relation("patients_telephoneTotelephone", fields: [telephone], references: [telephone])
+model patients_all {
+  patient_id               Int           @id @default(autoincrement())
+  cpf                      String
+  telephone                String
+  address_id               Int
+  registerdate             DateTime      @default(now()) @db.Timestamp(0)
+  parients_all_address_all address_all   @relation(fields: [address_id], references: [address_id])
+  patients_all_cpf         cpf_all       @relation(fields: [cpf], references: [cpf])
+  patients__all_telephone  telephone_all @relation(fields: [telephone], references: [telephone])
 }
 
-model telephone {
-  telephone                              String     @id @db.VarChar(11)
-  email                                  String     @db.VarChar(150)
-  doctors_doctors_telephoneTotelephone   doctors[]  @relation("doctors_telephoneTotelephone")
-  patients_patients_telephoneTotelephone patients[] @relation("patients_telephoneTotelephone")
-  user_telephoneTotelephone              user[]     @relation("user_telephoneTotelephone")
+model telephone_all {
+  telephone             String         @id @db.VarChar(11)
+  email                 String         @db.VarChar(150)
+  telephone_all_doctors doctors_all[]
+  telephone_patients    patients_all[]
+  telephone_user        user_all[]
 }
 
-model user {
-  user_id                             Int            @id @default(autoincrement())
-  cpf                                 String         @db.VarChar(11)
-  telephone                           String         @db.VarChar(11)
-  password                            String         @db.VarChar(250)
-  address_id                          Int
-  registerdate                        DateTime       @default(now()) @db.Timestamp(0)
-  consultation                        consultation[]
-  doctors                             doctors[]
-  cpf_user_cpfTocpf                   cpf            @relation("user_cpfTocpf", fields: [cpf], references: [cpf])
-  address_all                         address_all    @relation(fields: [address_id], references: [address_id])
-  user_telephoneTotelephone telephone      @relation("user_telephoneTotelephone", fields: [telephone], references: [telephone])
+model user_all {
+  user_id        Int                @id @default(autoincrement())
+  cpf            String
+  telephone      String
+  password       String             @db.VarChar(200)
+  address_id     Int
+  registerdate   DateTime           @default(now()) @db.Timestamp(0)
+  user_cpf       cpf_all            @relation(fields: [cpf], references: [cpf])
+  user_telephone telephone_all      @relation(fields: [telephone], references: [telephone])
+  address_all    address_all        @relation(fields: [address_id], references: [address_id])
+  consultation   consultation_all[]
+  doctors        doctors_all[]
 }
 
-model zipcode {
-  zipcode                                  String        @id @db.VarChar(11)
-  street                                   String        @db.VarChar(100)
-  district                                 String        @db.VarChar(100)
-  city                                     String        @db.VarChar(100)
-  address_all_zipcodeTozipcode             address_all[] @relation("address_all_zipcodeTozipcode")
+model zipcode_all {
+  zipcode             String        @id @db.VarChar(11)
+  street              String        @db.VarChar(100)
+  district            String        @db.VarChar(100)
+  city                String        @db.VarChar(100)
+  zipcode_address_all address_all[]
 }
