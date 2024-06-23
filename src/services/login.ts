@@ -23,10 +23,14 @@ app.post('/login', async (req: Request, res: Response) => {
             where: { cpf: cpf, password: { equals: password } }
         });
 
+        const telephone = await prisma.telephone.findUnique({
+            where: { telephone: user?.telephone }
+        });
+
         if (user && bcrypt.compareSync(password, user.password)) {
             const userData = {
                 id: user.user_id,
-                email: user.address_id,
+                email: telephone?.email,
                 password: user.password
             };
 
