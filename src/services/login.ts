@@ -15,7 +15,7 @@ interface LoginRequestBody {
     password: string;
 };
 
-app.post('/login', async (req: Request, res: Response) => {
+app.post('/loginuser', async (req: Request, res: Response) => {
     const { cpf, password }: LoginRequestBody = req.body;
 
     try {
