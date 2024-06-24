@@ -25,7 +25,7 @@ export const AppRouters = () => {
                     <Route path="/consultationDRY" element={<PrivateRoute element={<ConsultationDrY />} />} />
                     <Route path="/reportDoctorX" element={<PrivateRoute element={<ReportDoctorxPage />} />} />
                     <Route path="/reportDoctorY" element={<PrivateRoute element={<ReportDoctoryPage />} />} />
-                    {/* <Route path="*" element={<LoginPage />} /> */}
+                    <Route path="*" element={<LoginPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
