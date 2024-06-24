@@ -29,7 +29,6 @@ app.post('/login', async (req: Request, res: Response) => {
 
         if (user && bcrypt.compareSync(password, user.password)) {
             const userData = {
-
                 id: user.user_id,
                 email: telephone?.email,
                 password: user.password
