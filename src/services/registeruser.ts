@@ -27,70 +27,55 @@ interface UserData {
     password: string;
 };
 
-app.post('/register', async (req: Request, res: Response) => {
-    const {
-        cpf,
-        name,
-        dateofbirth,
-        telephone,
-        email,
-        zipcode,
-        street,
-        district,
-        city,
-        residencenumber,
-        building,
-        buildingblock,
-        apartment,
-        password
-    }: UserData = req.body;
+app.post('/registeruser', async (req: Request, res: Response) => {
+    const dados: UserData = req.body;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(dados.password, 10);
 
         const existingCpf = await prisma.cpf_all.findUnique({
-            where: { cpf: cpf },
+            where: { cpf: dados.cpf }
         });
 
         if (existingCpf) {
             return res.status(400).json({
-                error: true,
+                Error: true,
                 message: 'CPF já cadastrado!'
             });
         };
 
         const newCpf = await prisma.cpf_all.create({
             data: {
-                cpf: cpf,
-                name: name,
-                dateofbirth: new Date(dateofbirth)
+                cpf: dados.cpf,
+                name: dados.name,
+                dateofbirth: dados.dateofbirth
             }
         });
 
         const existingTelephone = await prisma.telephone_all.findUnique({
-            where: { telephone: telephone },
+            where: { telephone: dados.telephone }
         });
 
         if (!existingTelephone) {
             await prisma.telephone_all.create({
                 data: {
-                    telephone: telephone,
-                    email: email
+                    telephone: dados.telephone,
+                    email: dados.email
                 }
             });
         };
 
         const existingZipcode = await prisma.zipcode_all.findUnique({
-            where: { zipcode: zipcode },
+            where: { zipcode: dados.zipcode }
         });
 
         if (!existingZipcode) {
             await prisma.zipcode_all.create({
                 data: {
-                    zipcode: zipcode,
-                    street: street,
-                    district: district,
-                    city: city
+                    zipcode: dados.zipcode,
+                    street: dados.street,
+                    district: dados.district,
+                    city: dados.city
                 }
             });
         };
@@ -98,22 +83,22 @@ app.post('/register', async (req: Request, res: Response) => {
         const newAddress_all = await prisma.address_all.create({
             data: {
                 address_all_zipcode: {
-                    connect: { zipcode: zipcode }
+                    connect: { zipcode: dados.zipcode }
                 },
-                residencenumber: residencenumber,
-                building: building || '',
-                buildingblock: buildingblock || '',
-                apartment: apartment || ''
+                residencenumber: dados.residencenumber,
+                building: dados.building || '',
+                buildingblock: dados.buildingblock || '',
+                apartment: dados.apartment || ''
             }
         });
 
         const newUser = await prisma.user_all.create({
             data: {
                 user_cpf: {
-                    connect: { cpf: cpf }
+                    connect: { cpf: dados.cpf }
                 },
                 user_telephone: {
-                    connect: { telephone: telephone }
+                    connect: { telephone: dados.telephone }
                 },
                 address_all: {
                     connect: { address_id: newAddress_all.address_id }
@@ -123,14 +108,14 @@ app.post('/register', async (req: Request, res: Response) => {
         });
 
         res.status(201).json({
-            error: false,
+            Error: false,
             message: 'Usuário Cadastrado com Sucesso!'
         });
 
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            error: true,
+            Error: true,
             message: 'Erro ao cadastrar usuário!'
         });
     };
