@@ -1,7 +1,7 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import loginRouters from './login.router';
-import eventsdayRouters from './eventsday.router';
+import express from "express";
+import dotenv from "dotenv";
+import loginRouters from "./api/login.router.js";
+import eventsdayRouters from "./api/eventsday.router.js";
 
 dotenv.config();
 
