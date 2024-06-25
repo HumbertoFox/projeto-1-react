@@ -1,21 +1,20 @@
-import express, { Request, Response } from 'express';
+import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = express();
 const prisma = new PrismaClient();
 
-app.use(express.json());
+const router = Router();
 
 interface LoginRequestBody {
     cpf: string;
     password: string;
 };
 
-app.post('/loginuser', async (req: Request, res: Response) => {
+router.post('/loginuser', async (req, res) => {
     const { cpf, password }: LoginRequestBody = req.body;
 
     try {
@@ -53,3 +52,5 @@ app.post('/loginuser', async (req: Request, res: Response) => {
         });
     };
 });
+
+export default router;

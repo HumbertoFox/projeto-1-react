@@ -1,12 +1,11 @@
-import express from 'express';
+import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 
-const app = express();
 const prisma = new PrismaClient();
 
-app.use(express.json());
+const router = Router();
 
-app.get('/agendaconsultations', async (req, res) => {
+router.get('/agendarconsultations', async (req, res) => {
     try {
         const consultations = await prisma.consultation_all.findMany({
             include: {
@@ -36,3 +35,5 @@ app.get('/agendaconsultations', async (req, res) => {
         });
     };
 });
+
+export default router;
