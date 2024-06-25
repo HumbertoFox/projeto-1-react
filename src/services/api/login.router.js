@@ -8,7 +8,7 @@ dotenv.config();
 const prisma = new PrismaClient();
 const router = Router();
 
-router.post('/login', async (req, res) => {
+router.post('/loginuser', async (req, res) => {
   const { cpf, password } = req.body;
 
   try {

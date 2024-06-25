@@ -7,7 +7,6 @@ import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import axios from "axios";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -26,7 +25,14 @@ export const FormLogin = () => {
     };
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post("http://localhost:5173/src/services/login.php", { data });
+            const response = await fetch("http://localhost/projeto-1-react/src/services/login.php", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
