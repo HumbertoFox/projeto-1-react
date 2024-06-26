@@ -8,6 +8,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
+import { registerUser } from "../../services/api/apiregisteruser";
 export const FormUserRegister = () => {
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
@@ -120,24 +121,16 @@ export const FormUserRegister = () => {
             return;
         };
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/registeruser.php", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            const responseJson = await response.json();
-            if (responseJson.error == true) {
+            const response = await registerUser(data);
+            if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
-                    message: responseJson.message
+                    message: response.message
                 });
             } else {
                 setEventAlert({
                     type: "Success",
-                    message: responseJson.message
+                    message: response.message
                 });
                 setTimeout(function () {
                     navigate("/");
@@ -146,7 +139,7 @@ export const FormUserRegister = () => {
         } catch (error) {
             setEventAlert({
                 type: "Error",
-                message: responseJson.message
+                message: response.message
             });
         };
     };

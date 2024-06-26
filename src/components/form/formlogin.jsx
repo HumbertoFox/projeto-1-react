@@ -7,6 +7,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
+import { loginUser } from "../../services/api/apilogin";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -25,14 +26,7 @@ export const FormLogin = () => {
     };
     const onSubmit = async (data) => {
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/login.php", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
+            const response = await loginUser(data);
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -44,9 +38,9 @@ export const FormLogin = () => {
             } else {
                 setEventAlert({
                     type: "Success",
-                    message: response[0].message
+                    message: response.message
                 });
-                login(response[0].user);
+                login(response.user);
                 setTimeout(() => {
                     if (buttonType == "enter") {
                         navigate("/");

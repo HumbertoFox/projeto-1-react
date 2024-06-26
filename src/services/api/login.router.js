@@ -1,12 +1,15 @@
-import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
+const express = require('express');
+const { PrismaClient } = require('@prisma/client');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const prisma = new PrismaClient();
-const router = Router();
+app.use(bodyParser.json());
+
 
 router.post('/loginuser', async (req, res) => {
   const { cpf, password } = req.body;
