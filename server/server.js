@@ -81,7 +81,7 @@ app.post('/registeruser', async (req, res) => {
                 Error: true,
                 message: 'CPF já cadastrado!'
             });
-        }
+        };
 
         await prisma.cpf_all.create({
             data: {
