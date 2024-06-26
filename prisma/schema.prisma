@@ -1,11 +1,11 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model address_all {
@@ -29,7 +29,7 @@ model consultation_all {
   plan                  String   @db.VarChar(50)
   particular            String   @db.VarChar(50)
   courtesy              String   @db.VarChar(20)
-  observation           String   @db.Text
+  observation           String
   consultdatestart      DateTime @db.Date
   consultdateend        DateTime @db.Date
   user_id               Int
@@ -43,9 +43,9 @@ model cpf_all {
   cpf                  String             @id @db.VarChar(11)
   name                 String             @db.VarChar(100)
   dateofbirth          DateTime           @db.Date
-  cpf_all_patients     patients_all[]
-  cpf_all_doctors      doctors_all[]
   cpf_all_consultation consultation_all[]
+  cpf_all_doctors      doctors_all[]
+  cpf_all_patients     patients_all[]
   cpf_all_user         user_all[]
 }
 
@@ -96,11 +96,11 @@ model user_all {
   password       String             @db.VarChar(200)
   address_id     Int
   registerdate   DateTime           @default(now()) @db.Timestamp(0)
-  user_cpf       cpf_all            @relation(fields: [cpf], references: [cpf])
-  user_telephone telephone_all      @relation(fields: [telephone], references: [telephone])
-  address_all    address_all        @relation(fields: [address_id], references: [address_id])
   consultation   consultation_all[]
   doctors        doctors_all[]
+  address_all    address_all        @relation(fields: [address_id], references: [address_id])
+  user_cpf       cpf_all            @relation(fields: [cpf], references: [cpf])
+  user_telephone telephone_all      @relation(fields: [telephone], references: [telephone])
 }
 
 model zipcode_all {
