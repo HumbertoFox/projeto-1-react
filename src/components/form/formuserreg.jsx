@@ -151,7 +151,7 @@ export const FormUserRegister = () => {
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", { required: true, pattern: { value: /\d{11}/g } })}
+                {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="name">Nome</LabelText>
             <input
@@ -182,7 +182,7 @@ export const FormUserRegister = () => {
                 id="telephone"
                 placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
                 className={`${errors.telephone ? "required" : ""}`}
-                {...register("telephone", { required: true, pattern: { value: /\d{11}/g } })}
+                {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="email">Email</LabelText>
             <input

@@ -238,7 +238,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 id="telephone"
                 placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
                 className={`${errors.telephone ? "required" : ""}`}
-                {...register("telephone", { required: true, pattern: { value: /\d{11}/g } })}
+                {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="email">Email</LabelText>
             <input

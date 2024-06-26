@@ -9,6 +9,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
+import { registerDoctor } from "../../services/api/apiregisterdoctor";
 export const FormDoctorsRegister = () => {
     const userSystem = useAuth().user;
     const navigate = useNavigate();
@@ -122,24 +123,16 @@ export const FormDoctorsRegister = () => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/registerdoctors.php", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            const responseJson = await response.json();
-            if (responseJson.error == true) {
+            const response = await registerDoctor(data);
+            if (response.error == true) {
                 setEventAlert({
                     type: "Error",
-                    message: responseJson.message
+                    message: response.message
                 });
             } else {
                 setEventAlert({
                     type: "Success",
-                    message: responseJson.message
+                    message: response.message
                 });
                 reset();
             };
@@ -166,7 +159,7 @@ export const FormDoctorsRegister = () => {
                 id="cpf"
                 placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                 className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", { required: true, pattern: { value: /\d{11}/g } })}
+                {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="name">Nome</LabelText>
             <input
@@ -197,7 +190,7 @@ export const FormDoctorsRegister = () => {
                 id="telephone"
                 placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
                 className={`${errors.telephone ? "required" : ""}`}
-                {...register("telephone", { required: true, pattern: { value: /\d{11}/g } })}
+                {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <LabelText htmlFor="email">Email</LabelText>
             <input
