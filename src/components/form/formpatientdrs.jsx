@@ -6,6 +6,7 @@ import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticula
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
+import { registerConsultation } from "../../services/api/apiregisterconsult";
 export const FormPatientDrs = ({ title, searchPatient }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
@@ -145,32 +146,24 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/registerconsult.php", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            const responseJson = await response.json();
-            if (responseJson.error == true) {
+            const response = await registerConsultation(data);
+            if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
-                    message: responseJson.message
+                    message: response.message
                 });
             } else {
                 reset();
                 crmInputText();
                 setEventAlert({
                     type: "Success",
-                    message: responseJson.message
+                    message: response.message
                 });
             };
         } catch (error) {
             setEventAlert({
                 type: "Error",
-                message: responseJson.message
+                message: response.message
             });
         };
     };

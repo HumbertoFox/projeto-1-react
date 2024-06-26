@@ -14,7 +14,210 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post("/login", async (req, res) => {
+app.post('/registerconsultation', async (req, res) => {
+    const dados = req.body;
+
+    try {
+        const cpfExists = await prisma.cpf_all.count({
+            where: { cpf: dados.cpf }
+        });
+
+        if (cpfExists === 0) {
+            await prisma.cpf_all.create({
+                data: {
+                    cpf: dados.cpf,
+                    name: dados.name,
+                    dateofbirth: new Date(dados.dateofbirth)
+                }
+            });
+
+            const telephoneExists = await prisma.telephone_all.count({
+                where: { telephone: dados.telephone }
+            });
+
+            if (telephoneExists === 0) {
+                await prisma.telephone_all.create({
+                    data: {
+                        telephone: dados.telephone,
+                        email: dados.email
+                    }
+                });
+            };
+
+            const zipcodeExists = await prisma.zipcode_all.count({
+                where: { zipcode: dados.zipcode }
+            });
+
+            if (zipcodeExists === 0) {
+                await prisma.zipcode_all.create({
+                    data: {
+                        zipcode: dados.zipcode,
+                        street: dados.street,
+                        district: dados.district,
+                        city: dados.city
+                    }
+                });
+            };
+
+            const address = await prisma.address_all.findFirst({
+                where: {
+                    zipcode: dados.zipcode,
+                    residencenumber: dados.residencenumber,
+                    building: dados.building,
+                    buildingblock: dados.buildingblock,
+                    apartment: dados.apartment
+                }
+            });
+
+            if (!address) {
+                await prisma.address_all.create({
+                    data: {
+                        zipcode: dados.zipcode,
+                        residencenumber: dados.residencenumber,
+                        building: dados.building,
+                        buildingblock: dados.buildingblock,
+                        apartment: dados.apartment
+                    }
+                });
+            };
+
+            await prisma.patients_all.create({
+                data: {
+                    cpf: dados.cpf,
+                    telephone: dados.telephone,
+                    address_id: parseInt(address.address_id, 10)
+                }
+            });
+
+            const consultDateExists = await prisma.consultation_all.count({
+                where: {
+                    crm: dados.crm,
+                    consultdatestart: dados.consultdatestart,
+                    consultdateend: dados.consultdateend
+                }
+            });
+
+            if (consultDateExists === 0) {
+                await prisma.consultation_all.create({
+                    data: {
+                        cpf: dados.cpf,
+                        crm: dados.crm,
+                        plan: dados.plan,
+                        particular: dados.particular,
+                        courtesy: dados.courtesy,
+                        observation: dados.observation,
+                        consultdatestart: new Date(dados.consultdatestart),
+                        consultdateend: new Date(dados.consultdateend),
+                        user_id: parseInt(dados.user_id, 10)
+                    }
+                });
+
+                res.status(200).json({
+                    Error: false,
+                    message: 'Consulta Cadastrada com Sucesso!'
+                });
+            } else {
+                res.status(400).json({
+                    Error: true,
+                    message: 'Horário da Consulta já Agendado!'
+                });
+            };
+        } else {
+            const patientExists = await prisma.patients_all.count({
+                where: { cpf: dados.cpf }
+            });
+
+            if (patientExists === 0) {
+                let address = await prisma.address_all.findFirst({
+                    where: {
+                        zipcode: dados.zipcode,
+                        residencenumber: dados.residencenumber,
+                        building: dados.building,
+                        buildingblock: dados.buildingblock,
+                        apartment: dados.apartment
+                    }
+                });
+
+                if (!address) {
+                    address = await prisma.address_all.create({
+                        data: {
+                            zipcode: dados.zipcode,
+                            residencenumber: dados.residencenumber,
+                            building: dados.building,
+                            buildingblock: dados.buildingblock,
+                            apartment: dados.apartment
+                        }
+                    });
+                };
+
+                await prisma.patients_all.create({
+                    data: {
+                        cpf: dados.cpf,
+                        telephone: dados.telephone,
+                        address_id: parseInt(address.address_id, 10)
+                    }
+                });
+            };
+
+            const consultExists = await prisma.consultation_all.count({
+                where: {
+                    cpf: dados.cpf,
+                    crm: dados.crm,
+                    consultdatestart: dados.consultdatestart,
+                    consultdateend: dados.consultdateend
+                }
+            });
+
+            if (consultExists === 0) {
+                const consultDateExists = await prisma.consultation_all.count({
+                    where: {
+                        crm: dados.crm,
+                        consultdatestart: dados.consultdatestart,
+                        consultdateend: dados.consultdateend
+                    }
+                });
+
+                if (consultDateExists === 0) {
+                    await prisma.consultation_all.create({
+                        data: {
+                            cpf: dados.cpf,
+                            crm: dados.crm,
+                            plan: dados.plan,
+                            particular: dados.particular,
+                            courtesy: dados.courtesy,
+                            observation: dados.observation,
+                            consultdatestart: new Date(dados.consultdatestart),
+                            consultdateend: new Date(dados.consultdateend),
+                            user_id: parseInt(dados.user_id, 10)
+                        }
+                    });
+                    res.status(200).json({
+                        Error: false,
+                        message: 'Consulta Cadastrada com Sucesso!'
+                    });
+                } else {
+                    res.status(400).json({
+                        Error: true,
+                        message: 'Horário da Consulta já Agendado!'
+                    });
+                };
+            } else {
+                res.status(400).json({
+                    Error: true,
+                    message: 'Consulta do Paciente já Agendada!'
+                });
+            };
+        };
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro ao processar a requisição.'
+        });
+    };
+});
+
+app.post('/login', async (req, res) => {
     const { cpf, password } = req.body;
 
     try {
@@ -46,7 +249,7 @@ app.post("/login", async (req, res) => {
         });
 
         const userData = {
-            id: user.user_id,
+            id: parseInt(user.user_id, 10),
             email: user_telephone.email,
             password: user.password
         };
@@ -177,7 +380,7 @@ app.post('/registerdoctor', async (req, res) => {
                 cpf: dados.cpf,
                 telephone: dados.telephone,
                 address_id: addressId.address_id,
-                user_id: dados.user_id
+                user_id: parseInt(dados.user_id, 10)
             }
         });
 
@@ -271,7 +474,7 @@ app.post('/registeruser', async (req, res) => {
                 cpf: dados.cpf,
                 telephone: dados.telephone,
                 password: hashedPassword,
-                address_id: newAddress.address_id
+                address_id: parseInt(newAddress.address_id, 10)
             }
         });
 
