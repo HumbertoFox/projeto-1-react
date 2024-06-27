@@ -1,7 +1,8 @@
 {
   "name": "projeto-1-react",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -57,5 +58,8 @@
     "tsx": "^4.15.6",
     "typescript": "^5.5.2",
     "vite": "^5.2.0"
-  }
+  },
+  "keywords": [],
+  "author": "BetoFoxNet_info",
+  "license": "ISC"
 }
