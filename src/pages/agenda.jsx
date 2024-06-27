@@ -13,7 +13,7 @@ import { ActivityActive } from "../components/modal/eventactivity";
 import { eventsPatient } from "../services/api/apis";
 const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
-export const HomePage = () => {
+export const AgendaPage = () => {
     const [events, setEvents] = useState("");
     const [eventSelected, setEventSelected] = useState(null);
     const styleColor = (element) => ({
