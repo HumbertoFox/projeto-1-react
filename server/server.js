@@ -14,6 +14,8 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use(express.static("dist"));
+
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
 
