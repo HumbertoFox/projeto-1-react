@@ -9,7 +9,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { registerDoctor } from "../../services/api/apiregisterdoctor";
+import { registerDoctor } from "../../services/api/apis";
 export const FormDoctorsRegister = () => {
     const userSystem = useAuth().user;
     const navigate = useNavigate();

@@ -8,7 +8,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { registerUser } from "../../services/api/apiregisteruser";
+import { registerUser } from "../../services/api/apis";
 export const FormUserRegister = () => {
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);

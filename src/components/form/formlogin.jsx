@@ -7,7 +7,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { loginUser } from "../../services/api/apilogin";
+import { loginUser } from "../../services/api/apis";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();

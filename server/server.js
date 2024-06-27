@@ -1,9 +1,9 @@
-import express from "express";
-import { PrismaClient } from "@prisma/client";
-import cors from "cors";
-import bodyParser from "body-parser";
-import bcrypt from "bcrypt";
-import dotenv from "dotenv";
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 const PORT = process.env.PORT || 3001;
 
 dotenv.config();
@@ -17,11 +17,6 @@ app.use(bodyParser.json());
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
 
-    function ensureISODateTime(dateString) {
-        const date = new Date(dateString);
-        return date.toISOString();
-    };
-
     try {
         const cpfExists = await prisma.cpf_all.count({
             where: { cpf: dados.cpf }
@@ -32,7 +27,7 @@ app.post('/registerconsultation', async (req, res) => {
                 data: {
                     cpf: dados.cpf,
                     name: dados.name,
-                    dateofbirth: new Date(dados.dateofbirth)
+                    dateofbirth: dados.dateofbirth
                 }
             });
 
@@ -64,7 +59,7 @@ app.post('/registerconsultation', async (req, res) => {
                 });
             };
 
-            const addressId = await prisma.address_all.findFirst({
+            let addressId = await prisma.address_all.findFirst({
                 where: {
                     zipcode: dados.zipcode,
                     residencenumber: dados.residencenumber,
@@ -101,8 +96,8 @@ app.post('/registerconsultation', async (req, res) => {
             const consultDateExists = await prisma.consultation_all.count({
                 where: {
                     crm: dados.crm,
-                    consultdatestart: ensureISODateTime(dados.consultdatestart),
-                    consultdateend: ensureISODateTime(dados.consultdateend)
+                    consultdatestart: dados.consultdatestart,
+                    consultdateend: dados.consultdateend
                 }
             });
 
@@ -115,8 +110,8 @@ app.post('/registerconsultation', async (req, res) => {
                         particular: dados.particular,
                         courtesy: dados.courtesy,
                         observation: dados.observation,
-                        consultdatestart: ensureISODateTime(dados.consultdatestart),
-                        consultdateend: ensureISODateTime(dados.consultdateend),
+                        consultdatestart: dados.consultdatestart,
+                        consultdateend: dados.consultdateend,
                         user_id: parseInt(dados.user_id, 10)
                     }
                 });
@@ -176,8 +171,8 @@ app.post('/registerconsultation', async (req, res) => {
                 where: {
                     cpf: dados.cpf,
                     crm: dados.crm,
-                    consultdatestart: new Date(dados.consultdatestart),
-                    consultdateend: new Date(dados.consultdateend)
+                    consultdatestart: dados.consultdatestart,
+                    consultdateend: dados.consultdateend
                 }
             });
 
@@ -185,8 +180,8 @@ app.post('/registerconsultation', async (req, res) => {
                 const consultDateExists = await prisma.consultation_all.count({
                     where: {
                         crm: dados.crm,
-                        consultdatestart: new Date(dados.consultdatestart),
-                        consultdateend: new Date(dados.consultdateend)
+                        consultdatestart: dados.consultdatestart,
+                        consultdateend: dados.consultdateend
                     }
                 });
 
@@ -199,8 +194,8 @@ app.post('/registerconsultation', async (req, res) => {
                             particular: dados.particular,
                             courtesy: dados.courtesy,
                             observation: dados.observation,
-                            consultdatestart: new Date(dados.consultdatestart),
-                            consultdateend: new Date(dados.consultdateend),
+                            consultdatestart: dados.consultdatestart,
+                            consultdateend: dados.consultdateend,
                             user_id: parseInt(dados.user_id, 10)
                         }
                     });
@@ -328,7 +323,7 @@ app.post('/registerdoctor', async (req, res) => {
                 data: {
                     cpf: dados.cpf,
                     name: dados.name,
-                    dateofbirth: new Date(dados.dateofbirth)
+                    dateofbirth: dados.dateofbirth
                 }
             });
         };
@@ -438,7 +433,7 @@ app.post('/registeruser', async (req, res) => {
             data: {
                 cpf: dados.cpf,
                 name: dados.name,
-                dateofbirth: new Date(dados.dateofbirth)
+                dateofbirth: dados.dateofbirth
             }
         });
 
@@ -501,6 +496,43 @@ app.post('/registeruser', async (req, res) => {
         res.status(500).json({
             Error: true,
             message: 'Erro interno do servidor.'
+        });
+    };
+});
+
+app.get('/eventspatient', async (req, res) => {
+    try {
+        const consultations = await prisma.consultation_all.findMany({
+            include: {
+                consultation_cpf: true,
+                consultation_crm: true
+            }
+        });
+
+        const listConsults = await Promise.all(consultations.map(async (consultation) => {
+            const patient = await prisma.patients_all.findUnique({
+                where: { cpf: consultation.cpf }
+            });
+
+            return {
+                id: consultation.consultation_id,
+                title: consultation.cpf,
+                name: consultation.consultation_cpf.name,
+                telephone: patient ? patient.telephone : null,
+                start: consultation.consultdatestart,
+                end: consultation.consultdateend,
+                desc: consultation.crm,
+                plan: consultation.plan,
+                observation: consultation.observation,
+            };
+        }));
+
+        res.status(200).json(listConsults);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro ao buscar consulta.'
         });
     };
 });

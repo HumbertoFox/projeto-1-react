@@ -30,8 +30,8 @@ model consultation_all {
   particular            String   @db.VarChar(50)
   courtesy              String   @db.VarChar(20)
   observation           String
-  consultdatestart      DateTime @db.Date
-  consultdateend        DateTime @db.Date
+  consultdatestart      String
+  consultdateend        String
   user_id               Int
   registerdate          DateTime @default(now()) @db.Timestamp(0)
   consultation_cpf      cpf_all  @relation(fields: [cpf], references: [cpf])
@@ -42,7 +42,7 @@ model consultation_all {
 model cpf_all {
   cpf                  String             @id @db.VarChar(11)
   name                 String             @db.VarChar(100)
-  dateofbirth          DateTime           @db.Date
+  dateofbirth          String
   cpf_all_consultation consultation_all[]
   cpf_all_doctors      doctors_all[]
   cpf_all_patients     patients_all[]
