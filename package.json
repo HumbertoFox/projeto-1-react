@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server/server.js",
-    "build": "vite build",
+    "build": "node server/server.js build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
