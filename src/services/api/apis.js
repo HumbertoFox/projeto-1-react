@@ -1,5 +1,11 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+
 const loginUser = async (data) => {
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch(`http://localhost:${PORT}/loginuser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -10,7 +16,7 @@ const loginUser = async (data) => {
 };
 
 const registerUser = async (data) => {
-    const response = await fetch('http://localhost:3000/registeruser', {
+    const response = await fetch(`http://localhost:${PORT}/registeruser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -21,7 +27,7 @@ const registerUser = async (data) => {
 };
 
 const registerDoctor = async (data) => {
-    const response = await fetch('http://localhost:3000/registerdoctor', {
+    const response = await fetch(`http://localhost:${PORT}/registerdoctor`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +38,7 @@ const registerDoctor = async (data) => {
 };
 
 const registerConsultation = async (data) => {
-    const response = await fetch('http://localhost:3000/registerconsultation', {
+    const response = await fetch(`http://localhost:${PORT}/registerconsultation`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -43,7 +49,7 @@ const registerConsultation = async (data) => {
 };
 
 const eventsPatient = async (data) => {
-    const response = await fetch('http://localhost:3000/eventspatient', {
+    const response = await fetch(`http://localhost:${PORT}/eventspatient`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

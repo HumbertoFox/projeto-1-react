@@ -4,17 +4,17 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static("dist"));
+app.use(express.static('dist'));
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
@@ -227,7 +227,7 @@ app.post('/registerconsultation', async (req, res) => {
     };
 });
 
-app.post('/login', async (req, res) => {
+app.post('/loginuser', async (req, res) => {
     const { cpf, password } = req.body;
 
     try {
