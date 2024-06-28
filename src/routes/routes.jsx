@@ -17,14 +17,14 @@ export const AppRouters = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/registerUser" element={<PrivateRoute element={<RegisterUserPage />} />} />
-                    <Route path="/registerDoctors" element={<PrivateRoute element={<RegisterDoctorsPage />} />} />
-                    <Route path="/menuRegister" element={<PrivateRoute element={<MenuRegistersPage />} />} />
-                    <Route path="/" element={<PrivateRoute element={<AgendaPage />} />} />
-                    <Route path="/consultationDRX" element={<PrivateRoute element={<ConsultationDrX />} />} />
-                    <Route path="/consultationDRY" element={<PrivateRoute element={<ConsultationDrY />} />} />
-                    <Route path="/reportDoctorX" element={<PrivateRoute element={<ReportDoctorxPage />} />} />
-                    <Route path="/reportDoctorY" element={<PrivateRoute element={<ReportDoctoryPage />} />} />
+                    <Route path="/registerUser" element={<PrivateRoute><RegisterUserPage /></PrivateRoute>} />
+                    <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
+                    <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
+                    <Route path="/" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
+                    <Route path="/consultationDRX" element={<PrivateRoute><ConsultationDrX /></PrivateRoute>} />
+                    <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrY /></PrivateRoute>} />
+                    <Route path="/reportDoctorX" element={<PrivateRoute><ReportDoctorxPage /></PrivateRoute>} />
+                    <Route path="/reportDoctorY" element={<PrivateRoute><ReportDoctoryPage /></PrivateRoute>} />
                     <Route path="*" element={<LoginPage />} />
                 </Routes>
             </BrowserRouter>

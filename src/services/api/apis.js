@@ -1,5 +1,5 @@
 const loginUser = async (data) => {
-    const response = await fetch('http://localhost:3001/login', {
+    const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -10,7 +10,7 @@ const loginUser = async (data) => {
 };
 
 const registerUser = async (data) => {
-    const response = await fetch('http://localhost:3001/registeruser', {
+    const response = await fetch('http://localhost:3000/registeruser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const registerUser = async (data) => {
 };
 
 const registerDoctor = async (data) => {
-    const response = await fetch('http://localhost:3001/registerdoctor', {
+    const response = await fetch('http://localhost:3000/registerdoctor', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const registerDoctor = async (data) => {
 };
 
 const registerConsultation = async (data) => {
-    const response = await fetch('http://localhost:3001/registerconsultation', {
+    const response = await fetch('http://localhost:3000/registerconsultation', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const registerConsultation = async (data) => {
 };
 
 const eventsPatient = async (data) => {
-    const response = await fetch('http://localhost:3001/eventspatient', {
+    const response = await fetch('http://localhost:3000/eventspatient', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
