@@ -1,3 +1,4 @@
+import axios from 'axios';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -5,58 +6,49 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const loginUser = async (data) => {
-    const response = await fetch(`http://localhost:${PORT}/loginuser`, {
-        method: 'POST',
+    const response = await axios.post(`http://localhost:${PORT}/login`, data, {
         headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            'Content-Type': 'application/json'
+        }
     });
-    return response.json();
+    return response.data;
 };
+console.log(loginUser);
 
 const registerUser = async (data) => {
-    const response = await fetch(`http://localhost:${PORT}/registeruser`, {
-        method: 'POST',
+    const response = await axios.post(`http://localhost:${PORT}/registeruser`, data, {
         headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            'Content-Type': 'application/json'
+        }
     });
-    return response.json();
+    return response.data;
 };
 
 const registerDoctor = async (data) => {
-    const response = await fetch(`http://localhost:${PORT}/registerdoctor`, {
-        method: 'POST',
+    const response = await axios.post(`http://localhost:${PORT}/registerdoctor`, data, {
         headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            'Content-Type': 'application/json'
+        }
     });
-    return response.json();
+    return response.data;
 };
 
 const registerConsultation = async (data) => {
-    const response = await fetch(`http://localhost:${PORT}/registerconsultation`, {
-        method: 'POST',
+    const response = await axios.post(`http://localhost:${PORT}/registerconsultation`, data, {
         headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            'Content-Type': 'application/json'
+        }
     });
-    return response.json();
+    return response.data;
 };
 
 const eventsPatient = async (data) => {
-    const response = await fetch(`http://localhost:${PORT}/eventspatient`, {
-        method: 'GET',
+    const response = await axios.get(`http://localhost:${PORT}/eventspatient`, data, {
         headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+            'Content-Type': 'application/json'
+        }
     });
-    return response.json();
+    return response.data;
 };
 
 export { loginUser, registerUser, registerDoctor, registerConsultation, eventsPatient };
