@@ -2,11 +2,13 @@
   "name": "projeto-1-react",
   "private": true,
   "version": "1.0.0",
+  "main": "./server/server.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "start": "node --watch server/server.js",
     "deploy": "vercel --prod",
     "preview": "vite preview"
   },
