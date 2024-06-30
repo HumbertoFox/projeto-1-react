@@ -20,6 +20,6 @@ module.exports = {
             'process.env': {
                 PORT: JSON.stringify(process.env.PORT)
             }
-        }),
+        })
     ]
 };
