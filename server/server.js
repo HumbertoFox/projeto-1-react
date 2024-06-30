@@ -225,7 +225,7 @@ app.post('/registerconsultation', async (req, res) => {
     };
 });
 
-app.post('/login', async (req, res) => {
+app.post('/loginuser', async (req, res) => {
     const { cpf, password } = req.body;
 
     try {

@@ -1,19 +1,15 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
 const loginUser = async (data) => {
-    const response = await axios.post(`http://localhost:${PORT}/login`, data, {
+    const response = await axios.post(`http://localhost:${PORT}/loginuser`, data, {
         headers: {
             'Content-Type': 'application/json'
         }
     });
     return response.data;
 };
-console.log(loginUser);
 
 const registerUser = async (data) => {
     const response = await axios.post(`http://localhost:${PORT}/registeruser`, data, {
