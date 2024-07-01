@@ -46,7 +46,7 @@ const registerConsultation = async (data) => {
 
 const eventsPatient = async (data) => {
     const response = await fetch(`http://localhost:${PORT}/eventspatient`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },

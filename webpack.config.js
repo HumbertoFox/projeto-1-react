@@ -1,10 +1,10 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+import path from 'path';
+import webpack from 'webpack';
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 
-const path = require('path');
-const webpack = require('webpack');
-
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+dotenv.config();
 
 module.exports = {
     mode: 'development',
