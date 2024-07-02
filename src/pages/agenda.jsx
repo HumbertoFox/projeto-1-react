@@ -31,7 +31,7 @@ export const AgendaPage = () => {
         try {
             const response = await eventsPatient();
             for (const key in response) {
-                response[key].color = response[key].desc == "5001" ? "#FF0075" :"#3C91E6";
+                response[key].color = response[key].desc == "5001" ? "#FF0075" : "#3C91E6";
                 response[key].tipo = "activity";
                 response[key].start = response[key].start.replace(/-/g, ',').replace(/T/g, ' ');
                 response[key].end = response[key].end.replace(/-/g, ',').replace(/T/g, ' ');
@@ -44,8 +44,8 @@ export const AgendaPage = () => {
                 end: new Date(event.end)
             }));
             setEvents(formattedEvents);
-        } catch (error) {
-            console.error("Error fetching events:", error);
+        } catch (Error) {
+            console.error("Error fetching events:", Error);
         };
     };
     useEffect(() => {
@@ -69,12 +69,7 @@ export const AgendaPage = () => {
                             toolbar: CustomToolbar,
                         }}
                     />
-                    {eventSelected && (
-                        <ActivityActive
-                            event={eventSelected}
-                            onClose={handleEventSelectClose}
-                        />
-                    )}
+                    {eventSelected && (<ActivityActive event={eventSelected} onClose={handleEventSelectClose} />)}
                 </DivHomeMain>
             </MainSecondary>
         </MainPrimary>

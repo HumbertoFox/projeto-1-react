@@ -1,9 +1,18 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
+const express = require('express');
+const { PrismaClient } = require('@prisma/client');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const path = require('path');
+
+// import express from 'express';
+// import { PrismaClient } from '@prisma/client';
+// import cors from 'cors';
+// import bodyParser from 'body-parser';
+// import bcrypt from 'bcrypt';
+// import dotenv from 'dotenv';
+// import path from 'path';
 
 dotenv.config();
 
@@ -13,6 +22,10 @@ const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.get('/*', (req, res) => {
+    res.send(path.join(__dirname, 'dist'));
+});
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
