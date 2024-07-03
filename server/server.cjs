@@ -322,11 +322,11 @@ app.post('/registerdoctor', async (req, res) => {
             });
         };
 
-        const existingCrm = prisma.crm.count({
+        const existingCrm = await prisma.crm.count({
             where: { crm: dados.crm }
         });
 
-        if (existingCrm === 0) {
+        if (!existingCrm) {
             await prisma.crm.create({
                 data: { crm: dados.crm }
             });
