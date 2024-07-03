@@ -242,11 +242,18 @@ app.post('/loginuser', async (req, res) => {
     const { cpf, password } = req.body;
 
     try {
+        if (cpf === undefined || password === undefined) {
+            return res.status(404).json({
+                Error: true,
+                message: 'CPF ou Senha Inválido!',
+            });
+        };
+        
         const cpfExists = await prisma.cpf_all.findFirst({
             where: { cpf }
         });
 
-        if (!cpfExists || " ") {
+        if (!cpfExists) {
             return res.status(404).json({
                 Error: true,
                 message: 'CPF ou Senha Inválido!',
