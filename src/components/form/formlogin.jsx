@@ -7,7 +7,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { loginUser } from "../../services/api/apis";
+import { apiDbPostgres } from "../../services/api/apis";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -26,7 +26,7 @@ export const FormLogin = () => {
     };
     const onSubmit = async (data) => {
         try {
-            const response = await loginUser(data);
+            const response = await apiDbPostgres(data, 'loginuser');
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -52,7 +52,7 @@ export const FormLogin = () => {
         } catch (error) {
             setEventAlert({
                 type: "Error",
-                message: "Erro ao fazer login, Tente novamente!"
+                message: "Erro ao conectar com o BD!"
             });
             setTimeout(() => {
                 navigate("/");

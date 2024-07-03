@@ -18,8 +18,8 @@ export const ReportDoctorxPage = () => {
             let consultArray = Object.values(responseJson);
             consultArray.sort((a, b) => b.consultation_id - a.consultation_id);
             setConsult(consultArray);
-        } catch (error) {
-            console.error("Error fetching events:", error);
+        } catch (Error) {
+            console.error("Error fetching events:", Error);
         };
     };
     useEffect(() => {

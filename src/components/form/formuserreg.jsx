@@ -8,7 +8,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { registerUser } from "../../services/api/apis";
+import { apiDbPostgres } from "../../services/api/apis";
 export const FormUserRegister = () => {
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
@@ -121,7 +121,7 @@ export const FormUserRegister = () => {
             return;
         };
         try {
-            const response = await registerUser(data);
+            const response = await apiDbPostgres(data, 'registeruser');
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -136,10 +136,10 @@ export const FormUserRegister = () => {
                     navigate("/");
                 }, 3000);
             };
-        } catch (error) {
+        } catch (Error) {
             setEventAlert({
                 type: "Error",
-                message: response.message
+                message: "Erro ao conectar com o BD!"
             });
         };
     };

@@ -9,7 +9,7 @@ import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { registerDoctor } from "../../services/api/apis";
+import { apiDbPostgres } from "../../services/api/apis";
 export const FormDoctorsRegister = () => {
     const userSystem = useAuth().user;
     const navigate = useNavigate();
@@ -123,7 +123,7 @@ export const FormDoctorsRegister = () => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await registerDoctor(data);
+            const response = await apiDbPostgres(data, 'registerdoctor');
             if (response.error == true) {
                 setEventAlert({
                     type: "Error",
@@ -139,7 +139,7 @@ export const FormDoctorsRegister = () => {
         } catch (error) {
             setEventAlert({
                 type: "Error",
-                message: "Doutor não cadastrado, Erro com o Banco!"
+                message: "Erro ao conectar com o BD!"
             });
         };
     };

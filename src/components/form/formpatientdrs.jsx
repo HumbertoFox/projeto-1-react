@@ -6,7 +6,7 @@ import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticula
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { registerConsultation } from "../../services/api/apis";
+import { apiDbPostgres } from "../../services/api/apis";
 export const FormPatientDrs = ({ title, searchPatient }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
@@ -146,7 +146,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await registerConsultation(data);
+            const response = await apiDbPostgres(data, 'registerconsultation');
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -160,10 +160,10 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                     message: response.message
                 });
             };
-        } catch (error) {
+        } catch (Error) {
             setEventAlert({
                 type: "Error",
-                message: response.message
+                message: "Erro ao conectar com o BD!"
             });
         };
     };
