@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
-const path = require('path');
+// const path = require('path');
 
 // import express from 'express';
 // import { PrismaClient } from '@prisma/client';
@@ -23,9 +23,9 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/*', (req, res) => {
-    res.send(path.join(__dirname, 'dist'));
-});
+// app.get(['/', '/agenda', '/login'], (_, res) => {
+//     res.redirect(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
@@ -243,25 +243,25 @@ app.post('/loginuser', async (req, res) => {
 
     try {
         const cpfExists = await prisma.cpf_all.findFirst({
-            where: { cpf: cpf }
+            where: { cpf }
         });
 
-        if (!cpfExists) {
-            return res.status(401).json({
+        if (!cpfExists || " ") {
+            return res.status(404).json({
                 Error: true,
-                message: 'CPF ou Senha Inválidos!',
+                message: 'CPF ou Senha Inválido!',
             });
         };
 
         const user = await prisma.user_all.findFirst({
-            where: { cpf: cpf }
+            where: { cpf }
         });
 
         const passwordMatch = bcrypt.compareSync(password, user.password);
         if (!passwordMatch) {
-            return res.status(401).json({
+            return res.status(404).json({
                 Error: true,
-                message: 'CPF ou Senha Inválidos!'
+                message: 'CPF ou Senha Inválido!'
             });
         };
 
@@ -513,7 +513,7 @@ app.post('/registeruser', async (req, res) => {
     };
 });
 
-app.get('/eventspatient', async (req, res) => {
+app.get('/eventspatient', async (_, res) => {
     try {
         const consultations = await prisma.consultation_all.findMany({
             include: {
