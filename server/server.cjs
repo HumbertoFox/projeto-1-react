@@ -6,14 +6,6 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 // const path = require('path');
 
-// import express from 'express';
-// import { PrismaClient } from '@prisma/client';
-// import cors from 'cors';
-// import bodyParser from 'body-parser';
-// import bcrypt from 'bcrypt';
-// import dotenv from 'dotenv';
-// import path from 'path';
-
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -248,8 +240,8 @@ app.post('/loginuser', async (req, res) => {
                 message: 'CPF ou Senha Inválido!',
             });
         };
-        
-        const cpfExists = await prisma.cpf_all.findFirst({
+
+        const cpfExists = await prisma.cpf.findFirst({
             where: { cpf }
         });
 
@@ -260,7 +252,7 @@ app.post('/loginuser', async (req, res) => {
             });
         };
 
-        const user = await prisma.user_all.findFirst({
+        const user = await prisma.user.findFirst({
             where: { cpf }
         });
 
@@ -272,7 +264,7 @@ app.post('/loginuser', async (req, res) => {
             });
         };
 
-        const user_telephone = await prisma.telephone_all.findFirst({
+        const user_telephone = await prisma.telephone.findFirst({
             where: { telephone: user.telephone }
         });
 
@@ -308,7 +300,7 @@ app.post('/registerdoctor', async (req, res) => {
     };
 
     try {
-        const crmCount = await prisma.doctors_all.count({
+        const crmCount = await prisma.doctor.count({
             where: { crm: dados.crm }
         });
 
@@ -319,7 +311,7 @@ app.post('/registerdoctor', async (req, res) => {
             });
         };
 
-        const cpfCrmCount = await prisma.doctors_all.count({
+        const cpfCrmCount = await prisma.doctor.count({
             where: { cpf: dados.cpf }
         });
 
@@ -330,16 +322,22 @@ app.post('/registerdoctor', async (req, res) => {
             });
         };
 
-        await prisma.crm_all.create({
-            data: { crm: dados.crm }
+        const existingCrm = prisma.crm.count({
+            where: { crm: dados.crm }
         });
 
-        const cpfCount = await prisma.cpf_all.count({
+        if (existingCrm === 0) {
+            await prisma.crm.create({
+                data: { crm: dados.crm }
+            });
+        };
+
+        const cpfCount = await prisma.cpf.count({
             where: { cpf: dados.cpf }
         });
 
         if (cpfCount === 0) {
-            await prisma.cpf_all.create({
+            await prisma.cpf.create({
                 data: {
                     cpf: dados.cpf,
                     name: dados.name,
@@ -348,12 +346,12 @@ app.post('/registerdoctor', async (req, res) => {
             });
         };
 
-        const telephoneCount = await prisma.telephone_all.count({
+        const telephoneCount = await prisma.telephone.count({
             where: { telephone: dados.telephone }
         });
 
         if (telephoneCount === 0) {
-            await prisma.telephone_all.create({
+            await prisma.telephone.create({
                 data: {
                     telephone: dados.telephone,
                     email: dados.email
@@ -361,12 +359,12 @@ app.post('/registerdoctor', async (req, res) => {
             });
         };
 
-        const zipcodeCount = await prisma.zipcode_all.count({
+        const zipcodeCount = await prisma.zipcode.count({
             where: { zipcode: dados.zipcode }
         });
 
         if (zipcodeCount === 0) {
-            await prisma.zipcode_all.create({
+            await prisma.zipcode.create({
                 data: {
                     zipcode: dados.zipcode,
                     street: dados.street,
@@ -376,7 +374,7 @@ app.post('/registerdoctor', async (req, res) => {
             });
         };
 
-        let addressId = await prisma.address_all.findFirst({
+        let addressId = await prisma.address.findFirst({
             where: {
                 zipcode: dados.zipcode,
                 residencenumber: dados.residencenumber,
@@ -390,7 +388,7 @@ app.post('/registerdoctor', async (req, res) => {
         });
 
         if (!addressId) {
-            const newAddress = await prisma.address_all.create({
+            const newAddress = await prisma.address.create({
                 data: {
                     zipcode: dados.zipcode,
                     residencenumber: dados.residencenumber,
@@ -402,12 +400,12 @@ app.post('/registerdoctor', async (req, res) => {
             addressId = newAddress;
         };
 
-        const doctor = await prisma.doctors_all.create({
+        const doctor = await prisma.doctor.create({
             data: {
                 crm: dados.crm,
                 cpf: dados.cpf,
                 telephone: dados.telephone,
-                address_id: addressId.address_id,
+                address_id: parseInt(addressId.address_id, 10),
                 user_id: parseInt(dados.user_id, 10)
             }
         });
@@ -423,11 +421,11 @@ app.post('/registerdoctor', async (req, res) => {
                 message: 'Doutor não cadastrado!'
             });
         };
-    } catch (error) {
-        console.error(error);
+    } catch (Error) {
+        console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro interno do servidor.'
+            message: 'Erro interno do BD.'
         });
     };
 });
@@ -438,31 +436,37 @@ app.post('/registeruser', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(dados.password, 10);
 
-        const existingCpf = await prisma.cpf_all.findFirst({
+        const existingUser = await prisma.user.findFirst({
             where: { cpf: dados.cpf }
         });
 
-        if (existingCpf) {
+        const existingCpf = await prisma.cpf.findFirst({
+            where: { cpf: dados.cpf }
+        });
+
+        if (existingUser) {
             return res.status(400).json({
                 Error: true,
-                message: 'CPF já cadastrado!'
+                message: 'Usuário já cadastrado!'
             });
         };
 
-        await prisma.cpf_all.create({
-            data: {
-                cpf: dados.cpf,
-                name: dados.name,
-                dateofbirth: dados.dateofbirth
-            }
-        });
+        if (!existingCpf) {
+            await prisma.cpf.create({
+                data: {
+                    cpf: dados.cpf,
+                    name: dados.name,
+                    dateofbirth: dados.dateofbirth
+                }
+            });
+        };
 
-        const existingTelephone = await prisma.telephone_all.findFirst({
+        const existingTelephone = await prisma.telephone.findFirst({
             where: { telephone: dados.telephone }
         });
 
         if (!existingTelephone) {
-            await prisma.telephone_all.create({
+            await prisma.telephone.create({
                 data: {
                     telephone: dados.telephone,
                     email: dados.email
@@ -470,12 +474,12 @@ app.post('/registeruser', async (req, res) => {
             });
         };
 
-        const existingZipcode = await prisma.zipcode_all.findFirst({
+        const existingZipcode = await prisma.zipcode.findUnique({
             where: { zipcode: dados.zipcode }
         });
 
         if (!existingZipcode) {
-            await prisma.zipcode_all.create({
+            await prisma.zipcode.create({
                 data: {
                     zipcode: dados.zipcode,
                     street: dados.street,
@@ -485,9 +489,9 @@ app.post('/registeruser', async (req, res) => {
             });
         };
 
-        const newAddress = await prisma.address_all.create({
+        const newAddress = await prisma.address.create({
             data: {
-                address_all_zipcode: {
+                address_zipcode: {
                     connect: { zipcode: dados.zipcode }
                 },
                 residencenumber: dados.residencenumber,
@@ -497,7 +501,7 @@ app.post('/registeruser', async (req, res) => {
             }
         });
 
-        await prisma.user_all.create({
+        await prisma.user.create({
             data: {
                 cpf: dados.cpf,
                 telephone: dados.telephone,
@@ -522,7 +526,7 @@ app.post('/registeruser', async (req, res) => {
 
 app.get('/eventspatient', async (_, res) => {
     try {
-        const consultations = await prisma.consultation_all.findMany({
+        const consultations = await prisma.consultation.findMany({
             include: {
                 consultation_cpf: true,
                 consultation_crm: true
@@ -530,7 +534,7 @@ app.get('/eventspatient', async (_, res) => {
         });
 
         const listConsults = await Promise.all(consultations.map(async (consultation) => {
-            const patient = await prisma.patients_all.findUnique({
+            const patient = await prisma.patient.findUnique({
                 where: { cpf: consultation.cpf }
             });
 

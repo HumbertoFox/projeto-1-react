@@ -8,105 +8,123 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model address_all {
-  address_id           Int            @id @default(autoincrement())
-  zipcode              String
-  residencenumber      String         @db.VarChar(50)
-  building             String         @db.VarChar(100)
-  buildingblock        String         @db.VarChar(50)
-  apartment            String         @db.VarChar(50)
-  registerdate         DateTime       @default(now()) @db.Timestamp(0)
-  address_all_zipcode  zipcode_all    @relation(fields: [zipcode], references: [zipcode])
-  address_all_doctors  doctors_all[]
-  address_all_patients patients_all[]
-  address_all_user     user_all[]
+model Address {
+  address_id      Int       @id @default(autoincrement())
+  zipcode         String
+  residencenumber String    @db.VarChar(50)
+  building        String    @db.VarChar(100)
+  buildingblock   String    @db.VarChar(50)
+  apartment       String    @db.VarChar(50)
+  registerdate    DateTime  @default(now()) @db.Timestamp(0)
+  address_zipcode Zipcode   @relation(fields: [zipcode], references: [zipcode])
+  address_doctor  Doctor[]
+  address_patient Patient[]
+  address_user    User[]
+
+  @@map("addresss")
 }
 
-model consultation_all {
-  consultation_id       Int      @id @default(autoincrement())
-  cpf                   String
-  crm                   String
-  plan                  String   @db.VarChar(50)
-  particular            String   @db.VarChar(50)
-  courtesy              String   @db.VarChar(20)
-  observation           String
-  consultdatestart      String
-  consultdateend        String
-  user_id               Int
-  registerdate          DateTime @default(now()) @db.Timestamp(0)
-  consultation_cpf      cpf_all  @relation(fields: [cpf], references: [cpf])
-  consultation_crm      crm_all  @relation(fields: [crm], references: [crm])
-  consultation_all_user user_all @relation(fields: [user_id], references: [user_id])
+model Consultation {
+  consultation_id   Int      @id @default(autoincrement())
+  cpf               String
+  crm               String
+  plan              String   @db.VarChar(50)
+  particular        String   @db.VarChar(50)
+  courtesy          String   @db.VarChar(20)
+  observation       String
+  consultdatestart  String
+  consultdateend    String
+  user_id           Int
+  registerdate      DateTime @default(now()) @db.Timestamp(0)
+  consultation_cpf  Cpf      @relation(fields: [cpf], references: [cpf])
+  consultation_crm  Crm      @relation(fields: [crm], references: [crm])
+  consultation_user User     @relation(fields: [user_id], references: [user_id])
+
+  @@map("consultations")
 }
 
-model cpf_all {
-  cpf                  String             @id @db.VarChar(11)
-  name                 String             @db.VarChar(100)
-  dateofbirth          String
-  cpf_all_consultation consultation_all[]
-  cpf_all_doctors      doctors_all[]
-  cpf_all_patients     patients_all[]
-  cpf_all_user         user_all[]
+model Cpf {
+  cpf              String         @id @db.VarChar(11)
+  name             String         @db.VarChar(100)
+  dateofbirth      String
+  cpf_consultation Consultation[]
+  cpf_doctor       Doctor[]
+  cpf_patient      Patient[]
+  cpf_user         User[]
+
+  @@map("cpfs")
 }
 
-model crm_all {
-  crm                  String             @id @db.VarChar(11)
-  crm_all_consultation consultation_all[]
-  crm_all_doctor       doctors_all[]
+model Crm {
+  crm              String         @id @db.VarChar(11)
+  crm_doctor       Doctor[]
+  crm_consultation Consultation[]
+
+  @@map("crms")
 }
 
-model doctors_all {
-  doctor_id             Int           @id @default(autoincrement())
-  crm                   String
-  cpf                   String
-  telephone             String
-  address_id            Int
-  user_id               Int
-  registerdate          DateTime      @default(now()) @db.Timestamp(0)
-  address_all           address_all   @relation(fields: [address_id], references: [address_id])
-  doctors_all_cpf       cpf_all       @relation(fields: [cpf], references: [cpf])
-  doctors_all_crm       crm_all       @relation(fields: [crm], references: [crm])
-  doctors_all_telephone telephone_all @relation(fields: [telephone], references: [telephone])
-  user                  user_all      @relation(fields: [user_id], references: [user_id])
+model Doctor {
+  doctor_id        Int       @id @default(autoincrement())
+  crm              String
+  cpf              String
+  telephone        String
+  address_id       Int
+  user_id          Int
+  registerdate     DateTime  @default(now()) @db.Timestamp(0)
+  doctor_address   Address   @relation(fields: [address_id], references: [address_id])
+  doctor_cpf       Cpf       @relation(fields: [cpf], references: [cpf])
+  doctor_crm       Crm       @relation(fields: [crm], references: [crm])
+  doctor_telephone Telephone @relation(fields: [telephone], references: [telephone])
+  doctor_user      User      @relation(fields: [user_id], references: [user_id])
+
+  @@map("doctors")
 }
 
-model patients_all {
-  patient_id               Int           @id @default(autoincrement())
-  cpf                      String
-  telephone                String
-  address_id               Int
-  registerdate             DateTime      @default(now()) @db.Timestamp(0)
-  parients_all_address_all address_all   @relation(fields: [address_id], references: [address_id])
-  patients_all_cpf         cpf_all       @relation(fields: [cpf], references: [cpf])
-  patients__all_telephone  telephone_all @relation(fields: [telephone], references: [telephone])
+model Patient {
+  patient_id        Int       @id @default(autoincrement())
+  cpf               String
+  telephone         String
+  address_id        Int
+  registerdate      DateTime  @default(now()) @db.Timestamp(0)
+  parient_address   Address   @relation(fields: [address_id], references: [address_id])
+  patient_cpf       Cpf       @relation(fields: [cpf], references: [cpf])
+  patient_telephone Telephone @relation(fields: [telephone], references: [telephone])
+
+  @@map("Patients")
 }
 
-model telephone_all {
-  telephone             String         @id @db.VarChar(11)
-  email                 String         @db.VarChar(150)
-  telephone_all_doctors doctors_all[]
-  telephone_patients    patients_all[]
-  telephone_user        user_all[]
+model Telephone {
+  telephone         String    @id @db.VarChar(11)
+  email             String    @db.VarChar(150)
+  telephone_doctor  Doctor[]
+  telephone_patient Patient[]
+  telephone_user    User[]
+
+  @@map("telephones")
 }
 
-model user_all {
-  user_id        Int                @id @default(autoincrement())
-  cpf            String
-  telephone      String
-  password       String             @db.VarChar(200)
-  address_id     Int
-  registerdate   DateTime           @default(now()) @db.Timestamp(0)
-  consultation   consultation_all[]
-  doctors        doctors_all[]
-  address_all    address_all        @relation(fields: [address_id], references: [address_id])
-  user_cpf       cpf_all            @relation(fields: [cpf], references: [cpf])
-  user_telephone telephone_all      @relation(fields: [telephone], references: [telephone])
+model User {
+  user_id           Int            @id @default(autoincrement())
+  cpf               String
+  telephone         String
+  password          String         @db.VarChar(200)
+  address_id        Int
+  registerdate      DateTime       @default(now()) @db.Timestamp(0)
+  user_address      Address        @relation(fields: [address_id], references: [address_id])
+  user_cpf          Cpf            @relation(fields: [cpf], references: [cpf])
+  user_telephone    Telephone      @relation(fields: [telephone], references: [telephone])
+  user_doctor       Doctor[]
+  user_consultation Consultation[]
+
+  @@map("users")
 }
 
-model zipcode_all {
-  zipcode             String        @id @db.VarChar(11)
-  street              String        @db.VarChar(100)
-  district            String        @db.VarChar(100)
-  city                String        @db.VarChar(100)
-  zipcode_address_all address_all[]
+model Zipcode {
+  zipcode         String    @id @db.VarChar(11)
+  street          String    @db.VarChar(100)
+  district        String    @db.VarChar(100)
+  city            String    @db.VarChar(100)
+  zipcode_address Address[]
+
+  @@map("zipcodes")
 }
