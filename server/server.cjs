@@ -210,7 +210,7 @@ app.post('/registerconsultation', async (req, res) => {
                 });
 
                 const patient = await prisma.patient.findUnique({
-                    select: {cpf: dados.cpf}
+                    select: { cpf: dados.cpf }
                 });
 
                 if (consultDateExists === 0) {
@@ -558,7 +558,7 @@ app.get('/eventspatient', async (_, res) => {
         });
 
         const listConsults = await Promise.all(consultations.map(async (consultation) => {
-            const patient = await prisma.patient.findUnique({
+            const patient = await prisma.patient.findFirst({
                 where: { cpf: consultation.cpf }
             });
 
@@ -664,7 +664,8 @@ app.post('/searchpatient', async (req, res) => {
                         address_zipcode: true
                     }
                 },
-                patient_telephone: true
+                patient_telephone: true,
+                patient_consultation: true
             }
         });
 
@@ -681,13 +682,14 @@ app.post('/searchpatient', async (req, res) => {
                     street: patient.parient_address.address_zipcode.street,
                     district: patient.parient_address.address_zipcode.district,
                     city: patient.parient_address.address_zipcode.city,
-                    plan: patient,
+                    plan: patient.patient_consultation[0].plan,
                     residencenumber: patient.parient_address.residencenumber,
                     building: patient.parient_address.building,
                     buildingblock: patient.parient_address.buildingblock,
                     apartment: patient.parient_address.apartment
                 }
             };
+            console.log(patient);
             res.status(200).json(list_patient);
         } else {
             res.status(404).json({
