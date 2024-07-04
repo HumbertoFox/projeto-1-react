@@ -23,12 +23,12 @@ app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
 
     try {
-        const cpfExists = await prisma.cpf_all.count({
+        const cpfExists = await prisma.cpf.count({
             where: { cpf: dados.cpf }
         });
 
         if (cpfExists === 0) {
-            await prisma.cpf_all.create({
+            await prisma.cpf.create({
                 data: {
                     cpf: dados.cpf,
                     name: dados.name,
@@ -36,12 +36,12 @@ app.post('/registerconsultation', async (req, res) => {
                 }
             });
 
-            const telephoneExists = await prisma.telephone_all.count({
+            const telephoneExists = await prisma.telephone.count({
                 where: { telephone: dados.telephone }
             });
 
             if (telephoneExists === 0) {
-                await prisma.telephone_all.create({
+                await prisma.telephone.create({
                     data: {
                         telephone: dados.telephone,
                         email: dados.email
@@ -49,12 +49,12 @@ app.post('/registerconsultation', async (req, res) => {
                 });
             };
 
-            const zipcodeExists = await prisma.zipcode_all.count({
+            const zipcodeExists = await prisma.zipcode.count({
                 where: { zipcode: dados.zipcode }
             });
 
             if (zipcodeExists === 0) {
-                await prisma.zipcode_all.create({
+                await prisma.zipcode.create({
                     data: {
                         zipcode: dados.zipcode,
                         street: dados.street,
@@ -64,7 +64,7 @@ app.post('/registerconsultation', async (req, res) => {
                 });
             };
 
-            let addressId = await prisma.address_all.findFirst({
+            let addressId = await prisma.address.findFirst({
                 where: {
                     zipcode: dados.zipcode,
                     residencenumber: dados.residencenumber,
@@ -78,7 +78,7 @@ app.post('/registerconsultation', async (req, res) => {
             });
 
             if (!addressId) {
-                const newAddress = await prisma.address_all.create({
+                const newAddress = await prisma.address.create({
                     data: {
                         zipcode: dados.zipcode,
                         residencenumber: dados.residencenumber,
@@ -90,7 +90,7 @@ app.post('/registerconsultation', async (req, res) => {
                 addressId = newAddress;
             };
 
-            await prisma.patients_all.create({
+            await prisma.patient.create({
                 data: {
                     cpf: dados.cpf,
                     telephone: dados.telephone,
@@ -98,16 +98,22 @@ app.post('/registerconsultation', async (req, res) => {
                 }
             });
 
-            const consultDateExists = await prisma.consultation_all.count({
+            const consultDateExists = await prisma.consultation.count({
                 where: {
                     crm: dados.crm,
-                    consultdatestart: dados.consultdatestart,
-                    consultdateend: dados.consultdateend
+                    OR: [{
+                        consultdatestart: {
+                            lte: dados.consultdatestart
+                        },
+                        consultdateend: {
+                            gte: dados.consultdateend
+                        }
+                    }]
                 }
             });
 
             if (consultDateExists === 0) {
-                await prisma.consultation_all.create({
+                await prisma.consultation.create({
                     data: {
                         cpf: dados.cpf,
                         crm: dados.crm,
@@ -132,12 +138,12 @@ app.post('/registerconsultation', async (req, res) => {
                 });
             };
         } else {
-            const patientExists = await prisma.patients_all.count({
+            const patientExists = await prisma.patient.count({
                 where: { cpf: dados.cpf }
             });
 
             if (patientExists === 0) {
-                let addressId = await prisma.address_all.findFirst({
+                let addressId = await prisma.address.findFirst({
                     where: {
                         zipcode: dados.zipcode,
                         residencenumber: dados.residencenumber,
@@ -151,7 +157,7 @@ app.post('/registerconsultation', async (req, res) => {
                 });
 
                 if (!addressId) {
-                    const newAddress = await prisma.address_all.create({
+                    const newAddress = await prisma.address.create({
                         data: {
                             zipcode: dados.zipcode,
                             residencenumber: dados.residencenumber,
@@ -163,7 +169,7 @@ app.post('/registerconsultation', async (req, res) => {
                     addressId = newAddress;
                 };
 
-                await prisma.patients_all.create({
+                await prisma.patient.create({
                     data: {
                         cpf: dados.cpf,
                         telephone: dados.telephone,
@@ -172,26 +178,38 @@ app.post('/registerconsultation', async (req, res) => {
                 });
             };
 
-            const consultExists = await prisma.consultation_all.count({
+            const consultExists = await prisma.consultation.count({
                 where: {
                     cpf: dados.cpf,
                     crm: dados.crm,
-                    consultdatestart: dados.consultdatestart,
-                    consultdateend: dados.consultdateend
+                    OR: [{
+                        consultdatestart: {
+                            lte: dados.consultdateend
+                        },
+                        consultdateend: {
+                            gte: dados.consultdatestart
+                        }
+                    }]
                 }
             });
 
             if (consultExists === 0) {
-                const consultDateExists = await prisma.consultation_all.count({
+                const consultDateExists = await prisma.consultation.count({
                     where: {
                         crm: dados.crm,
-                        consultdatestart: dados.consultdatestart,
-                        consultdateend: dados.consultdateend
+                        OR: [{
+                            consultdatestart: {
+                                lte: dados.consultdateend
+                            },
+                            consultdateend: {
+                                gte: dados.consultdatestart
+                            }
+                        }]
                     }
                 });
 
                 if (consultDateExists === 0) {
-                    await prisma.consultation_all.create({
+                    await prisma.consultation.create({
                         data: {
                             cpf: dados.cpf,
                             crm: dados.crm,
@@ -221,11 +239,11 @@ app.post('/registerconsultation', async (req, res) => {
                 });
             };
         };
-    } catch (error) {
-        console.error(error);
+    } catch (Error) {
+        console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro ao processar a requisição.'
+            message: 'Erro interno do BD!'
         });
     };
 });
@@ -284,7 +302,7 @@ app.post('/loginuser', async (req, res) => {
         console.error(error);
         res.status(500).json({
             Error: true,
-            message: 'Erro interno do servidor.'
+            message: 'Erro interno do BD!'
         });
     };
 });
@@ -425,7 +443,7 @@ app.post('/registerdoctor', async (req, res) => {
         console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro interno do BD.'
+            message: 'Erro interno do BD!'
         });
     };
 });
