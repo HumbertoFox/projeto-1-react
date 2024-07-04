@@ -11,8 +11,8 @@ const apiDbPostgres = async (data, rota) => {
     return response.json();
 };
 
-const eventsPatient = async (data) => {
-    const response = await fetch(`http://localhost:${PORT}/eventspatient`, {
+const eventsPatient = async (data, rota) => {
+    const response = await fetch(`http://localhost:${PORT}/${rota}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

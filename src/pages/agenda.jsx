@@ -27,9 +27,9 @@ export const AgendaPage = () => {
     const handleEventSelectClose = () => {
         setEventSelected(null);
     };
-    const eventAgendCalendar = async () => {
+    const eventAgendCalendar = async (data) => {
         try {
-            const response = await eventsPatient();
+            const response = await eventsPatient(data, 'eventspatient');
             for (const key in response) {
                 response[key].color = response[key].desc == "5001" ? "#FF0075" : "#3C91E6";
                 response[key].tipo = "activity";

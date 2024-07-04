@@ -570,13 +570,43 @@ app.get('/eventspatient', async (_, res) => {
         }));
 
         res.status(200).json(listConsults);
-    } catch (error) {
-        console.error(error);
+    } catch (Error) {
+        console.error(Error);
         res.status(500).json({
             Error: true,
             message: 'Erro ao buscar consulta.'
         });
     };
+});
+
+app.get('/eventsconsults', async (_, res) => {
+    try {
+        const consultations = await prisma.consultation.findMany({
+            include: {
+                consultation_cpf: true,
+                consultation_crm: true
+            }
+        });
+
+        const listConsults = await Promise.all(consultations.map((consultation) => {
+            return {
+                id: consultation.consultation_id,
+                crm: consultation.crm,
+                cpf: consultation.cpf,
+                name: consultation.consultation_cpf.name,
+                plan: consultation.plan,
+                start: consultation.consultdatestart
+            };
+        }));
+
+        res.status(200).json(listConsults);
+    } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro ao buscar consulta.'
+        });
+    }
 });
 
 app.listen(PORT, () => {
