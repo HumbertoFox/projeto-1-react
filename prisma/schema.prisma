@@ -25,20 +25,22 @@ model Address {
 }
 
 model Consultation {
-  consultation_id   Int      @id @default(autoincrement())
-  cpf               String
-  crm               String
-  plan              String   @db.VarChar(50)
-  particular        String   @db.VarChar(50)
-  courtesy          String   @db.VarChar(20)
-  observation       String
-  consultdatestart  String
-  consultdateend    String
-  user_id           Int
-  registerdate      DateTime @default(now()) @db.Timestamp(0)
-  consultation_cpf  Cpf      @relation(fields: [cpf], references: [cpf])
-  consultation_crm  Crm      @relation(fields: [crm], references: [crm])
-  consultation_user User     @relation(fields: [user_id], references: [user_id])
+  consultation_id      Int      @id @default(autoincrement())
+  cpf                  String
+  crm                  String
+  plan                 String   @db.VarChar(50)
+  particular           String   @db.VarChar(50)
+  courtesy             String   @db.VarChar(20)
+  observation          String
+  consultdatestart     String
+  consultdateend       String
+  patient_id           Int
+  user_id              Int
+  registerdate         DateTime @default(now()) @db.Timestamp(0)
+  consultation_cpf     Cpf      @relation(fields: [cpf], references: [cpf])
+  consultation_crm     Crm      @relation(fields: [crm], references: [crm])
+  consultation_user    User     @relation(fields: [user_id], references: [user_id])
+  consultation_patient Patient  @relation(fields: [patient_id], references: [patient_id])
 
   @@map("consultations")
 }
@@ -81,16 +83,17 @@ model Doctor {
 }
 
 model Patient {
-  patient_id        Int       @id @default(autoincrement())
-  cpf               String
-  telephone         String
-  address_id        Int
-  registerdate      DateTime  @default(now()) @db.Timestamp(0)
-  parient_address   Address   @relation(fields: [address_id], references: [address_id])
-  patient_cpf       Cpf       @relation(fields: [cpf], references: [cpf])
-  patient_telephone Telephone @relation(fields: [telephone], references: [telephone])
+  patient_id           Int            @id @default(autoincrement())
+  cpf                  String
+  telephone            String
+  address_id           Int
+  registerdate         DateTime       @default(now()) @db.Timestamp(0)
+  parient_address      Address        @relation(fields: [address_id], references: [address_id])
+  patient_cpf          Cpf            @relation(fields: [cpf], references: [cpf])
+  patient_telephone    Telephone      @relation(fields: [telephone], references: [telephone])
+  patient_consultation Consultation[]
 
-  @@map("Patients")
+  @@map("patients")
 }
 
 model Telephone {
