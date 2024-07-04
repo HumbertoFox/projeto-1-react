@@ -2,21 +2,20 @@ import React, { useEffect, useState } from "react";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { HeaderMenu } from "../components/header/menuheader";
 import { TableFormInfo, DivInforReport, DivReportMain, Thead, Tbody } from "../styles/reportstyle";
+import { eventsPatient } from "../services/api/apis";
 export const ReportDoctorxPage = () => {
     const [consult, setConsult] = useState({});
-    const getConsults = async () => {
+    const getConsults = async (data) => {
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/getconsultsx.php");
-            const responseJson = await response.json();
-            for (const key in responseJson) {
-                responseJson[key].cpf = responseJson[key].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-                let dateTimeParts = responseJson[key].consultdatestart.split(' ');
-                let dateParts = dateTimeParts[0].split('-');
-                let timePart = dateTimeParts[1].substring(0, 5);
-                responseJson[key].consultdatestart = `${timePart} ${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+            const response = await eventsPatient(data, "eventsconsultsx");
+            for (const key in response) {
+                response[key].cpf = response[key].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                let dateTimeParts = response[key].start.split('-');
+                let dateParts = dateTimeParts[2].split('T');
+                response[key].start = `${dateParts[1]} ${dateParts[0]}/${dateTimeParts[1]}/${dateTimeParts[0]}`;
             };
-            let consultArray = Object.values(responseJson);
-            consultArray.sort((a, b) => b.consultation_id - a.consultation_id);
+            let consultArray = Object.values(response);
+            consultArray.sort((a, b) => b.id - a.id);
             setConsult(consultArray);
         } catch (Error) {
             console.error("Error fetching events:", Error);
@@ -45,13 +44,13 @@ export const ReportDoctorxPage = () => {
                             </Thead>
                             <Tbody>
                                 {Object.values(consult).map(consul => (
-                                    <tr key={consul.consultation_id}>
-                                        <td>{consul.consultation_id}</td>
+                                    <tr key={consul.id}>
+                                        <td>{consul.id}</td>
                                         <td>{consul.crm}</td>
                                         <td>{consul.cpf}</td>
                                         <td>{consul.name}</td>
                                         <td>{consul.plan}</td>
-                                        <td>{consul.consultdatestart}</td>
+                                        <td>{consul.start}</td>
                                     </tr>
                                 ))}
                             </Tbody>
