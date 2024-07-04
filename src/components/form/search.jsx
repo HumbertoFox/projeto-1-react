@@ -48,7 +48,6 @@ export const Search = ({ searchPatient }) => {
         };
         try {
             const response = await apiDbPostgres(data, "searchpatient");
-            console.log(response);
             if (response && response.records) {
                 setPatientSearch(response.records);
                 setEventAlert({

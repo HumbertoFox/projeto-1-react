@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
-import { viaCepApi } from "../../services/viacep";
+import { viaCepApi } from "../../services/api/viacep";
 import { useForm } from "react-hook-form";
 import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { SubmitButton } from "../button/buttonsubmit";

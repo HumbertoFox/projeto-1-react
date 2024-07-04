@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { viaCepApi } from "../../services/viacep";
+import { viaCepApi } from "../../services/api/viacep";
 import { SubmitButton } from "../button/buttonsubmit";
 import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
