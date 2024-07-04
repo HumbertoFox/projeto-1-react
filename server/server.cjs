@@ -90,7 +90,7 @@ app.post('/registerconsultation', async (req, res) => {
                 addressId = newAddress;
             };
 
-            await prisma.patient.create({
+            const patient = await prisma.patient.create({
                 data: {
                     cpf: dados.cpf,
                     telephone: dados.telephone,
@@ -123,6 +123,7 @@ app.post('/registerconsultation', async (req, res) => {
                         observation: dados.observation,
                         consultdatestart: dados.consultdatestart,
                         consultdateend: dados.consultdateend,
+                        patient_id: parseInt(patient.patient_id, 10),
                         user_id: parseInt(dados.user_id, 10)
                     }
                 });
@@ -208,6 +209,10 @@ app.post('/registerconsultation', async (req, res) => {
                     }
                 });
 
+                const patient = await prisma.patient.findUnique({
+                    select: {cpf: dados.cpf}
+                });
+
                 if (consultDateExists === 0) {
                     await prisma.consultation.create({
                         data: {
@@ -219,6 +224,7 @@ app.post('/registerconsultation', async (req, res) => {
                             observation: dados.observation,
                             consultdatestart: dados.consultdatestart,
                             consultdateend: dados.consultdateend,
+                            patient_id: parseInt(patient.patient_id, 10),
                             user_id: parseInt(dados.user_id, 10)
                         }
                     });
