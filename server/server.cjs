@@ -645,6 +645,59 @@ app.get('/eventsconsultsx', async (_, res) => {
     }
 });
 
+app.post('/searchpatient', async (req, res) => {
+    const { searchpatient } = req.body;
+
+    try {
+        const patient = await prisma.patient.findFirst({
+            where: { cpf: searchpatient },
+            include: {
+                patient_cpf: true,
+                parient_address: {
+                    include: {
+                        address_zipcode: true
+                    }
+                },
+                patient_telephone: true
+            }
+        });
+
+        if (patient) {
+            const list_patient = {
+                records: {
+                    cpf: patient.cpf,
+                    name: patient.patient_cpf.name,
+                    dateofbirth: patient.patient_cpf.dateofbirth,
+                    telephone: patient.telephone,
+                    email: patient.patient_telephone.email,
+                    address_id: patient.address_id,
+                    zipcode: patient.parient_address.address_zipcode.zipcode,
+                    street: patient.parient_address.address_zipcode.street,
+                    district: patient.parient_address.address_zipcode.district,
+                    city: patient.parient_address.address_zipcode.city,
+                    plan: patient,
+                    residencenumber: patient.parient_address.residencenumber,
+                    building: patient.parient_address.building,
+                    buildingblock: patient.parient_address.buildingblock,
+                    apartment: patient.parient_address.apartment
+                }
+            };
+            res.status(200).json(list_patient);
+        } else {
+            res.status(404).json({
+                Error: true,
+                message: 'Patient not found'
+            });
+        }
+    } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Internal server error'
+        });
+    };
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

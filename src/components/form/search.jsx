@@ -4,6 +4,7 @@ import { FormSerach } from "../../styles/formsearch";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
+import { apiDbPostgres } from "../../services/api/apis";
 export const Search = ({ searchPatient }) => {
     const [patientSearch, setPatientSearch] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
@@ -46,17 +47,10 @@ export const Search = ({ searchPatient }) => {
             return;
         };
         try {
-            const response = await fetch("http://localhost/projeto-1-react/src/services/searchgetpatient.php", {
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-            const responseJson = await response.json();
-            if (responseJson && responseJson.records) {
-                setPatientSearch(responseJson.records);
+            const response = await apiDbPostgres(data, "searchpatient");
+            console.log(response);
+            if (response && response.records) {
+                setPatientSearch(response.records);
                 setEventAlert({
                     type: "Success",
                     message: "Paciente Encontrado"
@@ -64,13 +58,13 @@ export const Search = ({ searchPatient }) => {
             } else {
                 setEventAlert({
                     type: "Error",
-                    message: "Paciente não encontrado! Erro com o BD"
+                    message: "Paciente não encontrado!"
                 });
             }
-        } catch (error) {
+        } catch (Error) {
             setEventAlert({
                 type: "Error",
-                message: "Paciente não encontrado!"
+                message: "Paciente não encontrado! Erro com o BD"
             });
         };
     };
