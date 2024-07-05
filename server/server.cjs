@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
-// const path = require('path');
+const path = require('path');
 
 dotenv.config();
 
@@ -14,10 +14,19 @@ const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(bodyParser.json());
+const distPath = path.join(__dirname, '..', 'dist');
 
-// app.get(['/', '/agenda', '/login'], (_, res) => {
-//     res.redirect(path.join(__dirname, 'dist', 'index.html'));
-// });
+app.use(express.static(distPath));
+
+app.get('*', (_, res) => {
+    const indexPath = path.join(distPath, 'index.html');
+    res.sendFile(indexPath, (err) => {
+        if (err) {
+            console.error(`Erro ao enviar o arquivo: ${err}`);
+            res.status(err.status).end();
+        };
+    });
+});
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
