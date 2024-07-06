@@ -33,7 +33,8 @@ export const FormLogin = () => {
                     message: response.message
                 });
                 setTimeout(() => {
-                    navigate("/");
+                    window.location.reload();
+                    navigate("/login");
                 }, 3000);
             } else {
                 setEventAlert({
@@ -55,7 +56,8 @@ export const FormLogin = () => {
                 message: "Erro ao conectar com o BD!"
             });
             setTimeout(() => {
-                navigate("/");
+                window.location.reload();
+                navigate("/login");
             }, 3000);
         };
     };

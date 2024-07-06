@@ -18,23 +18,25 @@ app.use(bodyParser.json());
 
 app.use(express.static(distPath));
 
-app.post('/protected', async (req, _) => {
-    var dados = req.body;
+const checkedAuth = (req, res) => {
+    const dados = req.body;
+    console.log(dados.status);
+    if (dados.status === true) {
+        res.redirect('/');
+    } else if (dados.status === false) {
+        res.redirect('/login');
+    };
+};
+
+app.post('/protected', checkedAuth);
+
+app.get('/login', (_, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.get('*', (_, res) => {
-    res.redirect('/protected');
+app.get('/', (_, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
 });
-
-// app.get('*', (_, res) => {
-//     const indexPath = path.join(distPath, 'index.html');
-//     res.sendFile(indexPath, (err) => {
-//         if (err) {
-//             console.error(`Erro ao enviar o arquivo: ${err}`);
-//             res.status(err.status).end();
-//         };
-//     });
-// });
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
