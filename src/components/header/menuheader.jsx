@@ -47,7 +47,7 @@ export const HeaderMenu = () => {
                     className={selectMenuLi === "calendar" ? "active" : ""}
                     onClick={() => handleMenuLiClick("calendar")}
                 >
-                    <Link to={"/"}>
+                    <Link to={"/agenda"}>
                         <FontAwesomeIcon icon="fa-solid fa-book-open-reader" />
                         <span>Calendario</span>
                     </Link>

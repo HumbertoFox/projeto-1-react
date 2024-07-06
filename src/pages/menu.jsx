@@ -12,7 +12,7 @@ export const MenuRegistersPage = () => {
                 <h1>Página de Menus</h1>
                 <DivMenus>
                     <DivIconDoble>
-                        <Link to={"/"} title="Agenda">
+                        <Link to={"/agenda"} title="Agenda">
                             <FontAwesomeIcon icon="fa-solid fa-calendar-check" />
                         </Link>
                         <Link to={"/registerDoctors"} title="Cadastrar Doutores">
@@ -23,7 +23,7 @@ export const MenuRegistersPage = () => {
                         <Link to={"/registerUser"} title="Cadastrar Usuário">
                             <FontAwesomeIcon icon="fa-solid fa-user-plus" />
                         </Link>
-                        <Link to={"/"} title="Excluir Usuário">
+                        <Link to={"/agenda"} title="Excluir Usuário">
                             <FontAwesomeIcon icon="fa-solid fa-user-xmark" />
                         </Link>
                     </DivIconDoble>
