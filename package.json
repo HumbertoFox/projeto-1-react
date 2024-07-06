@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npx prisma migrate dev",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "start": "node --watch server/server.cjs",
-    "vercel-build": "npx prisma migrate deploy",
     "preview": "vite preview"
   },
   "dependencies": {
