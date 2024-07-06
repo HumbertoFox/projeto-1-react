@@ -47,7 +47,7 @@ export const AgendaPage = () => {
         } catch (Error) {
             console.error({
                 type: "Error",
-                message: response.message
+                message: "Erro interno do BD!"
             });
         };
     };

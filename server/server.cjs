@@ -22,7 +22,7 @@ app.get('*', (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.get('/login', (_, res) => {
+app.get(['/login', '/agenda'], (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
