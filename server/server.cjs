@@ -18,11 +18,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(distPath));
 
-app.get('*', (_, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-});
-
-app.get(['/login', '/agenda'], (_, res) => {
+app.get('/login', (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
@@ -710,6 +706,10 @@ app.get('/eventsconsultsx', async (_, res) => {
             message: 'Erro interno do BD!'
         });
     }
+});
+
+app.get('*', (_, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
 });
 
 app.listen(PORT, () => {

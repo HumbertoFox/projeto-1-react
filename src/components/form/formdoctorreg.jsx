@@ -266,7 +266,7 @@ export const FormDoctorsRegister = () => {
             />
             <DivButtons>
                 <SubmitButton title="Cadastrar" value="Cadastrar" />
-                <ButtonButton title="Iniciar" onClick={() => navigate("/")}>Iniciar</ButtonButton>
+                <ButtonButton title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</ButtonButton>
                 <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
             </DivButtons>
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
