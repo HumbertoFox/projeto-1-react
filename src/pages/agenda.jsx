@@ -11,7 +11,6 @@ import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { CustomToolbar } from "../components/toobar/tobarcalendar";
 import { ActivityActive } from "../components/modal/eventactivity";
 import { eventsPatient } from "../services/api/apis";
-import { error } from "console";
 const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 export const AgendaPage = () => {
@@ -50,8 +49,7 @@ export const AgendaPage = () => {
                 console.error({
                     type: "Error",
                     message: "Erro ao conectar com o BD!",
-                    error
-                })
+                }, Error.message)
             };
         };
     };
