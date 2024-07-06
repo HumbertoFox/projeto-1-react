@@ -18,22 +18,11 @@ app.use(bodyParser.json());
 
 app.use(express.static(distPath));
 
-const checkedAuth = (req, res) => {
-    const dados = req.body;
-    if (dados.status === true) {
-        res.redirect('/');
-    } else if (dados.status === false) {
-        res.redirect('/login');
-    };
-};
-
-app.post('/protected', checkedAuth);
-
-app.get('/login', (_, res) => {
+app.get('*', (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.get('/', (_, res) => {
+app.get('/login', (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 

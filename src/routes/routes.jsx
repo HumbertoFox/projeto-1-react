@@ -20,13 +20,13 @@ export const AppRouters = () => {
                     <Route path="/registerUser" element={<PrivateRoute><RegisterUserPage /></PrivateRoute>} />
                     <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
                     <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
-                    <Route path="/" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
+                    {/* <Route path="/" element={<PrivateRoute><AgendaPage /></PrivateRoute>} /> */}
                     <Route path="/agenda" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
                     <Route path="/consultationDRX" element={<PrivateRoute><ConsultationDrX /></PrivateRoute>} />
                     <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrY /></PrivateRoute>} />
                     <Route path="/reportDoctorX" element={<PrivateRoute><ReportDoctorxPage /></PrivateRoute>} />
                     <Route path="/reportDoctorY" element={<PrivateRoute><ReportDoctoryPage /></PrivateRoute>} />
-                    <Route path="*" element={<AgendaPage />} />
+                    <Route path="*" element={<LoginPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
