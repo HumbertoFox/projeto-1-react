@@ -45,7 +45,10 @@ export const AgendaPage = () => {
             }));
             setEvents(formattedEvents);
         } catch (Error) {
-            console.error("Error fetching events:", Error);
+            console.error({
+                type: "Error",
+                message: "Erro ao conectar com o BD!"
+            });
         };
     };
     useEffect(() => {
