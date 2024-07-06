@@ -44,7 +44,7 @@ export const FormLogin = () => {
                 login(response.user);
                 setTimeout(() => {
                     if (buttonType == "enter") {
-                        navigate("/");
+                        navigate("/agenda");
                     } else if (buttonType == "menu") {
                         navigate("/menuRegister");
                     };
