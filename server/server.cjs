@@ -20,7 +20,6 @@ app.use(express.static(distPath));
 
 const checkedAuth = (req, res) => {
     const dados = req.body;
-    console.log(dados.status);
     if (dados.status === true) {
         res.redirect('/');
     } else if (dados.status === false) {
