@@ -3,9 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "main": "/server/server.cjs",
   "scripts": {
     "dev": "vite",
-    "build": "npx prisma migrate dev",
+    "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "start": "node --watch server/server.cjs",
     "preview": "vite preview"
