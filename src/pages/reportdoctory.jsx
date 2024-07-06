@@ -20,7 +20,7 @@ export const ReportDoctoryPage = () => {
         } catch (Error) {
             console.error({
                 type: "Error",
-                message: "Erro ao conectar com o BD!"
+                message: response.message
             });
         };
     };

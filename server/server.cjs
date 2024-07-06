@@ -311,8 +311,8 @@ app.post('/loginuser', async (req, res) => {
             user: userData
         });
 
-    } catch (error) {
-        console.error(error);
+    } catch (Error) {
+        console.error(Error);
         res.status(500).json({
             Error: true,
             message: 'Erro interno do BD!'
@@ -325,7 +325,7 @@ app.post('/registerdoctor', async (req, res) => {
 
     if (!dados) {
         return res.status(400).json({
-            error: true,
+            Error: true,
             message: 'Dados do doutor não fornecidos!'
         });
     };
@@ -337,7 +337,7 @@ app.post('/registerdoctor', async (req, res) => {
 
         if (crmCount > 0) {
             return res.status(400).json({
-                error: true,
+                Error: true,
                 message: 'CRM já cadastrado!'
             });
         };
@@ -348,7 +348,7 @@ app.post('/registerdoctor', async (req, res) => {
 
         if (cpfCrmCount > 0) {
             return res.status(400).json({
-                error: true,
+                Error: true,
                 message: 'CPF já associado a outro CRM!'
             });
         };
@@ -546,11 +546,11 @@ app.post('/registeruser', async (req, res) => {
             message: 'Usuário Cadastrado com Sucesso!'
         });
 
-    } catch (error) {
-        console.error(error);
+    } catch (Error) {
+        console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro interno do servidor.'
+            message: 'Erro interno do BD!'
         });
     };
 });
@@ -593,19 +593,18 @@ app.post('/searchpatient', async (req, res) => {
                     apartment: patient.parient_address.apartment
                 }
             };
-            console.log(patient);
             res.status(200).json(list_patient);
         } else {
             res.status(404).json({
                 Error: true,
-                message: 'Patient not found'
+                message: 'Patient não encontrado!'
             });
         }
     } catch (Error) {
         console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Internal server error'
+            message: 'Erro interno do BD!'
         });
     };
 });
@@ -642,7 +641,7 @@ app.get('/eventspatient', async (_, res) => {
         console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro ao buscar consulta.'
+            message: 'Erro interno do BD!'
         });
     };
 });
@@ -675,7 +674,7 @@ app.get('/eventsconsultsy', async (_, res) => {
         console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro ao buscar consulta.'
+            message: 'Erro interno do BD!'
         });
     }
 });
@@ -708,7 +707,7 @@ app.get('/eventsconsultsx', async (_, res) => {
         console.error(Error);
         res.status(500).json({
             Error: true,
-            message: 'Erro ao buscar consulta.'
+            message: 'Erro interno do BD!'
         });
     }
 });
