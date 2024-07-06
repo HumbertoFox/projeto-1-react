@@ -5,10 +5,10 @@
   "type": "module",
   "main": "/server/server.cjs",
   "scripts": {
-    "dev": "node --watch server/server.cjs",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "start": "node --watch server/server.cjs",
+    "vercel-build": "node --watch server/server.cjs ",
     "preview": "vite preview"
   },
   "dependencies": {
