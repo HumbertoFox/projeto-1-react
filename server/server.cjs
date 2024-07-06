@@ -11,22 +11,44 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 const prisma = new PrismaClient();
+const distPath = path.join(__dirname, '..', 'dist');
 
 app.use(cors());
 app.use(bodyParser.json());
-const distPath = path.join(__dirname, '..', 'dist');
 
 app.use(express.static(distPath));
 
-app.get('*', (_, res) => {
-    const indexPath = path.join(distPath, 'index.html');
-    res.sendFile(indexPath, (err) => {
-        if (err) {
-            console.error(`Erro ao enviar o arquivo: ${err}`);
-            res.status(err.status).end();
-        };
-    });
+app.post('/protected', async (req, _) => {
+    var dados = req.body;
 });
+
+app.get('/protected', (req, res) => {
+    if (dados.status === true) {
+        res.status(203);
+        app.get('*', (_, res) => {
+            res.sendFile(path.join(distPath, 'index.html'));
+        })
+    } else if (dados.status === false) {
+        res.status(401);
+        app.get('*', (_, res) => {
+            res.redirect('/login');
+        });
+    };
+});
+
+app.get('*', (_, res) => {
+    res.redirect('/protected');
+});
+
+// app.get('*', (_, res) => {
+//     const indexPath = path.join(distPath, 'index.html');
+//     res.sendFile(indexPath, (err) => {
+//         if (err) {
+//             console.error(`Erro ao enviar o arquivo: ${err}`);
+//             res.status(err.status).end();
+//         };
+//     });
+// });
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
@@ -557,6 +579,61 @@ app.post('/registeruser', async (req, res) => {
     };
 });
 
+app.post('/searchpatient', async (req, res) => {
+    const { searchpatient } = req.body;
+
+    try {
+        const patient = await prisma.patient.findFirst({
+            where: { cpf: searchpatient },
+            include: {
+                patient_cpf: true,
+                parient_address: {
+                    include: {
+                        address_zipcode: true
+                    }
+                },
+                patient_telephone: true,
+                patient_consultation: true
+            }
+        });
+
+        if (patient) {
+            const list_patient = {
+                records: {
+                    cpf: patient.cpf,
+                    name: patient.patient_cpf.name,
+                    dateofbirth: patient.patient_cpf.dateofbirth,
+                    telephone: patient.telephone,
+                    email: patient.patient_telephone.email,
+                    address_id: patient.address_id,
+                    zipcode: patient.parient_address.address_zipcode.zipcode,
+                    street: patient.parient_address.address_zipcode.street,
+                    district: patient.parient_address.address_zipcode.district,
+                    city: patient.parient_address.address_zipcode.city,
+                    plan: patient.patient_consultation[0].plan,
+                    residencenumber: patient.parient_address.residencenumber,
+                    building: patient.parient_address.building,
+                    buildingblock: patient.parient_address.buildingblock,
+                    apartment: patient.parient_address.apartment
+                }
+            };
+            console.log(patient);
+            res.status(200).json(list_patient);
+        } else {
+            res.status(404).json({
+                Error: true,
+                message: 'Patient not found'
+            });
+        }
+    } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Internal server error'
+        });
+    };
+});
+
 app.get('/eventspatient', async (_, res) => {
     try {
         const consultations = await prisma.consultation.findMany({
@@ -658,61 +735,6 @@ app.get('/eventsconsultsx', async (_, res) => {
             message: 'Erro ao buscar consulta.'
         });
     }
-});
-
-app.post('/searchpatient', async (req, res) => {
-    const { searchpatient } = req.body;
-
-    try {
-        const patient = await prisma.patient.findFirst({
-            where: { cpf: searchpatient },
-            include: {
-                patient_cpf: true,
-                parient_address: {
-                    include: {
-                        address_zipcode: true
-                    }
-                },
-                patient_telephone: true,
-                patient_consultation: true
-            }
-        });
-
-        if (patient) {
-            const list_patient = {
-                records: {
-                    cpf: patient.cpf,
-                    name: patient.patient_cpf.name,
-                    dateofbirth: patient.patient_cpf.dateofbirth,
-                    telephone: patient.telephone,
-                    email: patient.patient_telephone.email,
-                    address_id: patient.address_id,
-                    zipcode: patient.parient_address.address_zipcode.zipcode,
-                    street: patient.parient_address.address_zipcode.street,
-                    district: patient.parient_address.address_zipcode.district,
-                    city: patient.parient_address.address_zipcode.city,
-                    plan: patient.patient_consultation[0].plan,
-                    residencenumber: patient.parient_address.residencenumber,
-                    building: patient.parient_address.building,
-                    buildingblock: patient.parient_address.buildingblock,
-                    apartment: patient.parient_address.apartment
-                }
-            };
-            console.log(patient);
-            res.status(200).json(list_patient);
-        } else {
-            res.status(404).json({
-                Error: true,
-                message: 'Patient not found'
-            });
-        }
-    } catch (Error) {
-        console.error(Error);
-        res.status(500).json({
-            Error: true,
-            message: 'Internal server error'
-        });
-    };
 });
 
 app.listen(PORT, () => {

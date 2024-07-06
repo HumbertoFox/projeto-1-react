@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "../contexts/authcontext";
-import { PrivateRoute } from "../components/privaterouts/privateroute";
 import { LoginPage } from "../pages/login";
 import { MenuRegistersPage } from "../pages/menu";
 import { AgendaPage } from "../pages/agenda";
@@ -17,15 +16,15 @@ export const AppRouters = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/registerUser" element={<PrivateRoute><RegisterUserPage /></PrivateRoute>} />
-                    <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
-                    <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
-                    <Route path="/" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
-                    <Route path="/agenda" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
-                    <Route path="/consultationDRX" element={<PrivateRoute><ConsultationDrX /></PrivateRoute>} />
-                    <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrY /></PrivateRoute>} />
-                    <Route path="/reportDoctorX" element={<PrivateRoute><ReportDoctorxPage /></PrivateRoute>} />
-                    <Route path="/reportDoctorY" element={<PrivateRoute><ReportDoctoryPage /></PrivateRoute>} />
+                    <Route path="/registerUser" element={<RegisterUserPage />} />
+                    <Route path="/registerDoctors" element={<RegisterDoctorsPage />} />
+                    <Route path="/menuRegister" element={<MenuRegistersPage />} />
+                    <Route path="/" element={<AgendaPage />} />
+                    <Route path="/agenda" element={<AgendaPage />} />
+                    <Route path="/consultationDRX" element={<ConsultationDrX />} />
+                    <Route path="/consultationDRY" element={<ConsultationDrY />} />
+                    <Route path="/reportDoctorX" element={<ReportDoctorxPage />} />
+                    <Route path="/reportDoctorY" element={<ReportDoctoryPage />} />
                     <Route path="*" element={<AgendaPage />} />
                 </Routes>
             </BrowserRouter>
