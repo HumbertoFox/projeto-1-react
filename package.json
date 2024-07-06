@@ -5,8 +5,8 @@
   "type": "module",
   "main": "/server/server.cjs",
   "scripts": {
-    "dev": "vite",
-    "build": "react-scripts build",
+    "dev": "node --watch server/server.cjs",
+    "build": "next build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "start": "node --watch server/server.cjs",
     "preview": "vite preview"
