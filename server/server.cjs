@@ -22,20 +22,6 @@ app.post('/protected', async (req, _) => {
     var dados = req.body;
 });
 
-app.get('/protected', (req, res) => {
-    if (dados.status === true) {
-        res.status(203);
-        app.get('*', (_, res) => {
-            res.sendFile(path.join(distPath, 'index.html'));
-        })
-    } else if (dados.status === false) {
-        res.status(401);
-        app.get('*', (_, res) => {
-            res.redirect('/login');
-        });
-    };
-});
-
 app.get('*', (_, res) => {
     res.redirect('/protected');
 });
