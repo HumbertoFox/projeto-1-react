@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "start": "node --watch server/server.cjs",
     "vercel-build": "npx prisma migrate dev",
     "preview": "vite preview"
   },
