@@ -8,7 +8,7 @@ const path = require('path');
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5432;
 const app = express();
 const prisma = new PrismaClient();
 const distPath = path.join(__dirname, '..', 'dist');

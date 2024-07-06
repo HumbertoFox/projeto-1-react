@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5432;
 
 const apiDbPostgres = async (data, rota) => {
     const response = await fetch(`http://localhost:${PORT}/${rota}`, {
