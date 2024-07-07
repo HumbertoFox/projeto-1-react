@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { HeaderMenu } from "../components/header/menuheader";
 import { TableFormInfo, DivInforReport, DivReportMain, Thead, Tbody } from "../styles/reportstyle";
-import { eventsPatient } from "../services/api/apis";
+import { apiDbPostgres } from "../services/api/apis";
 export const ReportDoctoryPage = () => {
     const [consult, setConsult] = useState({});
     const getConsults = async (data) => {
         try {
-            const response = await eventsPatient(data, "eventsconsultsy");
+            const response = await apiDbPostgres(data, "eventsconsultsy");
             for (const key in response) {
                 response[key].cpf = response[key].cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
                 let dateTimeParts = response[key].start.split('-');

@@ -123,7 +123,7 @@ export const FormDoctorsRegister = () => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await apiDbPostgres(data, 'registerdoctor');
+            const response = await apiDbPostgres(data, "registerdoctor");
             if (response.error == true) {
                 setEventAlert({
                     type: "Error",

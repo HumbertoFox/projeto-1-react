@@ -26,7 +26,7 @@ export const FormLogin = () => {
     };
     const onSubmit = async (data) => {
         try {
-            const response = await apiDbPostgres(data, 'loginuser');
+            const response = await apiDbPostgres(data, "loginuser");
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",

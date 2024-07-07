@@ -146,7 +146,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await apiDbPostgres(data, 'registerconsultation');
+            const response = await apiDbPostgres(data, "registerconsultation");
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",

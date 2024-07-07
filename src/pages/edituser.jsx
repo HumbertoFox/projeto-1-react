@@ -12,7 +12,7 @@ export const EditUserPage = () => {
                 <h1>Editar Usuário do Sistema</h1>
                 <DivLogin>
                     <FontAwesomeIcon icon="fa-solid fa-user-pen" />
-                    <FormUserRegister />
+                    <FormUserRegister rotas={"edituser"} />
                 </DivLogin>
             </SectionLogin>
         </MainLogin>

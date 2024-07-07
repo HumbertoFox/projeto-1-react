@@ -9,7 +9,7 @@ import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } fr
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
 import { apiDbPostgres } from "../../services/api/apis";
-export const FormUserRegister = () => {
+export const FormUserRegister = (rotas) => {
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("house");
@@ -21,6 +21,7 @@ export const FormUserRegister = () => {
         setFocus,
         setError,
         watch,
+        reset,
         formState: { errors }
     } = useForm();
     const password = watch('password');
@@ -121,7 +122,7 @@ export const FormUserRegister = () => {
             return;
         };
         try {
-            const response = await apiDbPostgres(data, 'registeruser');
+            const response = await apiDbPostgres(data, rotas.rotas);
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -133,7 +134,7 @@ export const FormUserRegister = () => {
                     message: response.message
                 });
                 setTimeout(function () {
-                    navigate("/");
+                    reset();
                 }, 3000);
             };
         } catch (Error) {

@@ -12,7 +12,7 @@ export const RegisterUserPage = () => {
                 <h1>Cadastrar Usuário no Sistema</h1>
                 <DivLogin>
                     <FontAwesomeIcon icon="fa-solid fa-user-plus" />
-                    <FormUserRegister />
+                    <FormUserRegister rotas={"registeruser"} />
                 </DivLogin>
             </SectionLogin>
         </MainLogin>

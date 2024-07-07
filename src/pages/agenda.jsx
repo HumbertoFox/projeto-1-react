@@ -10,7 +10,7 @@ import { DivHomeMain } from "../styles/homestyle";
 import { MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { CustomToolbar } from "../components/toobar/tobarcalendar";
 import { ActivityActive } from "../components/modal/eventactivity";
-import { eventsPatient } from "../services/api/apis";
+import { apiDbPostgres } from "../services/api/apis";
 const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 export const AgendaPage = () => {
@@ -29,7 +29,7 @@ export const AgendaPage = () => {
     };
     const eventAgendCalendar = async (data) => {
         try {
-            const response = await eventsPatient(data, 'eventspatient');
+            const response = await apiDbPostgres(data, 'eventspatient');
             for (const key in response) {
                 response[key].color = response[key].desc == "5001" ? "#FF0075" : "#3C91E6";
                 response[key].tipo = "activity";
