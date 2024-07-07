@@ -11,6 +11,7 @@ import { ReportDoctorxPage } from "../pages/reportdoctorx";
 import { ReportDoctoryPage } from "../pages/reportdoctory";
 import { RegisterUserPage } from "../pages/registeruser";
 import { RegisterDoctorsPage } from "../pages/registerdoctors";
+import { EditUserPage } from "../pages/edituser";
 export const AppRouters = () => {
     return (
         <AuthProvider>
@@ -18,9 +19,9 @@ export const AppRouters = () => {
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/registerUser" element={<PrivateRoute><RegisterUserPage /></PrivateRoute>} />
+                    <Route path="/editarUser" element={<PrivateRoute><EditUserPage /></PrivateRoute>} />
                     <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
                     <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
-                    {/* <Route path="/" element={<PrivateRoute><AgendaPage /></PrivateRoute>} /> */}
                     <Route path="/agenda" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
                     <Route path="/consultationDRX" element={<PrivateRoute><ConsultationDrX /></PrivateRoute>} />
                     <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrY /></PrivateRoute>} />

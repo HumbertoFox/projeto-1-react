@@ -15,13 +15,21 @@ export const MenuRegistersPage = () => {
                         <Link to={"/agenda"} title="Agenda">
                             <FontAwesomeIcon icon="fa-solid fa-calendar-check" />
                         </Link>
-                        <Link to={"/registerDoctors"} title="Cadastrar Doutores">
-                            <FontAwesomeIcon icon="fa-solid fa-user-doctor" />
+                        <Link to={"/agenda"} title="Editar Paciente">
+                            <FontAwesomeIcon icon="fa-solid fa-bed-pulse" />
                         </Link>
                     </DivIconDoble>
                     <DivIconDoble>
+                        <Link to={"/registerDoctors"} title="Cadastrar Doutores">
+                            <FontAwesomeIcon icon="fa-solid fa-user-doctor" />
+                        </Link>
                         <Link to={"/registerUser"} title="Cadastrar Usuário">
                             <FontAwesomeIcon icon="fa-solid fa-user-plus" />
+                        </Link>
+                    </DivIconDoble>
+                    <DivIconDoble>
+                        <Link to={"/editarUser"} title="Editar Usuário">
+                            <FontAwesomeIcon icon="fa-solid fa-user-pen" />
                         </Link>
                         <Link to={"/agenda"} title="Excluir Usuário">
                             <FontAwesomeIcon icon="fa-solid fa-user-xmark" />
