@@ -5,8 +5,8 @@ import { PrivateRoute } from "../components/privaterouts/privateroute";
 import { LoginPage } from "../pages/login";
 import { MenuRegistersPage } from "../pages/menu";
 import { AgendaPage } from "../pages/agenda";
-import { ConsultationDrX } from "../pages/consultationdrx";
-import { ConsultationDrY } from "../pages/consultationdry";
+import { ConsultationDrXPage } from "../pages/consultationdrx";
+import { ConsultationDrYPage } from "../pages/consultationdry";
 import { ReportDoctorxPage } from "../pages/reportdoctorx";
 import { ReportDoctoryPage } from "../pages/reportdoctory";
 import { RegisterUserPage } from "../pages/registeruser";
@@ -25,8 +25,8 @@ export const AppRouters = () => {
                     <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
                     <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
                     <Route path="/agenda" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />
-                    <Route path="/consultationDRX" element={<PrivateRoute><ConsultationDrX /></PrivateRoute>} />
-                    <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrY /></PrivateRoute>} />
+                    <Route path="/consultationDRX" element={<PrivateRoute><ConsultationDrXPage /></PrivateRoute>} />
+                    <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrYPage /></PrivateRoute>} />
                     <Route path="/reportDoctorX" element={<PrivateRoute><ReportDoctorxPage /></PrivateRoute>} />
                     <Route path="/reportDoctorY" element={<PrivateRoute><ReportDoctoryPage /></PrivateRoute>} />
                     <Route path="*" element={<LoginPage />} />

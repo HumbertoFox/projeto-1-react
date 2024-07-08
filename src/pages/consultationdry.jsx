@@ -3,7 +3,7 @@ import { HeaderMenu } from "../components/header/menuheader";
 import { Search } from "../components/form/search";
 import { DivForms, MainPrimary, MainSecondary } from "../styles/mainpagestyle";
 import { FormPatientDrs } from "../components/form/formpatientdrs";
-export const ConsultationDrY = () => {
+export const ConsultationDrYPage = () => {
     const [searchCpf, setSearchCpf] = useState(null);
     function cpfPatient(cpf) {
         setSearchCpf(cpf);
