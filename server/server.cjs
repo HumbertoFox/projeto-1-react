@@ -604,6 +604,57 @@ app.post('/searchpatient', async (req, res) => {
     };
 });
 
+app.post('/searchuser', async (req, res) => {
+    const { searchpatient } = req.body;
+
+    try {
+        const user = await prisma.user.findFirst({
+            where: { cpf: searchpatient },
+            include: {
+                user_cpf: true,
+                user_address: {
+                    include: {
+                        address_zipcode: true
+                    }
+                },
+                user_telephone: true,
+            }
+        });
+
+        if (user) {
+            const list_user = {
+                records: {
+                    cpf: user.cpf,
+                    name: user.user_cpf.name,
+                    dateofbirth: user.user_cpf.dateofbirth,
+                    telephone: user.telephone,
+                    email: user.user_telephone.email,
+                    zipcode: user.user_address.zipcode,
+                    street: user.user_address.address_zipcode.street,
+                    district: user.user_address.address_zipcode.district,
+                    city: user.user_address.address_zipcode.city,
+                    residencenumber: user.user_address.residencenumber,
+                    building: user.user_address.building,
+                    buildingblock: user.user_address.buildingblock,
+                    apartment: user.user_address.apartment
+                }
+            };
+            res.status(200).json(list_user);
+        } else {
+            res.status(404).json({
+                Error: true,
+                message: 'Usuário não encontrado!'
+            });
+        }
+    } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro interno do BD!'
+        });
+    };
+});
+
 app.get('/eventspatient', async (_, res) => {
     try {
         const consultations = await prisma.consultation.findMany({

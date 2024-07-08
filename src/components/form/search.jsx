@@ -5,7 +5,7 @@ import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
 import { apiDbPostgres } from "../../services/api/apis";
-export const Search = ({ searchPatient }) => {
+export const Search = ({ searchPatient, rotas }) => {
     const [patientSearch, setPatientSearch] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
     const {
@@ -47,17 +47,22 @@ export const Search = ({ searchPatient }) => {
             return;
         };
         try {
-            const response = await apiDbPostgres(data, "searchpatient");
+            const response = await apiDbPostgres(data, rotas);
             if (response && response.records) {
                 setPatientSearch(response.records);
-                setEventAlert({
-                    type: "Success",
-                    message: "Paciente Encontrado"
-                });
+                rotas === "searchpatient" ?
+                    setEventAlert({
+                        type: "Success",
+                        message: "Paciente Encontrado"
+                    }) :
+                    setEventAlert({
+                        type: "Success",
+                        message: "Usuário Encontrado"
+                    });
             } else {
                 setEventAlert({
                     type: "Error",
-                    message: "Paciente não encontrado!"
+                    message: response.message
                 });
             }
         } catch (Error) {
@@ -72,7 +77,7 @@ export const Search = ({ searchPatient }) => {
     }, [patientSearch]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="searchpatient">Pesquisar Paciente por CPF</LabelText>
+            <LabelText htmlFor="searchpatient">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : "Pesquisar Usuário por CPF"}</LabelText>
             <input
                 type="search"
                 id="searchpatient"

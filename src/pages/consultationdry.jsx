@@ -13,7 +13,7 @@ export const ConsultationDrY = () => {
             <HeaderMenu />
             <MainSecondary>
                 <DivForms>
-                    <Search searchPatient={cpfPatient} />
+                    <Search searchPatient={cpfPatient} rotas={"searchpatient"} />
                     <FormPatientDrs searchPatient={searchCpf} title={"5000"} />
                 </DivForms>
             </MainSecondary>

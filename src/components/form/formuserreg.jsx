@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { viaCepApi } from "../../services/api/viacep";
@@ -9,7 +9,7 @@ import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } fr
 import { DivButtons } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
 import { apiDbPostgres } from "../../services/api/apis";
-export const FormUserRegister = (rotas) => {
+export const FormUserRegister = ({ rotas, searchPatient }) => {
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("house");
@@ -122,7 +122,7 @@ export const FormUserRegister = (rotas) => {
             return;
         };
         try {
-            const response = await apiDbPostgres(data, rotas.rotas);
+            const response = await apiDbPostgres(data, rotas);
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -144,6 +144,23 @@ export const FormUserRegister = (rotas) => {
             });
         };
     };
+    useEffect(() => {
+        if (searchPatient !== null & rotas !== "registeruser") {
+            setValue("cpf", searchPatient.cpf);
+            setValue("name", searchPatient.name);
+            setValue("dateofbirth", searchPatient.dateofbirth);
+            setValue("telephone", searchPatient.telephone);
+            setValue("email", searchPatient.email);
+            setValue("zipcode", searchPatient.zipcode);
+            setValue("street", searchPatient.street);
+            setValue("district", searchPatient.district);
+            setValue("city", searchPatient.city);
+            setValue("residencenumber", searchPatient.residencenumber);
+            setValue("building", searchPatient.building);
+            setValue("buildingblock", searchPatient.buildingblock);
+            setValue("apartment", searchPatient.apartment);
+        };
+    }, [searchPatient]);
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF</LabelText>

@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || 3000;
 
 const apiDbPostgres = async (data, rota) => {
-    if (rota === 'registeruser' || rota === 'registerconsultation' || rota === 'loginuser' || rota === 'registerdoctor' || rota === 'searchpatient') {
+    if (rota === 'registeruser' || rota === 'registerconsultation' || rota === 'loginuser' || rota === 'registerdoctor' || rota === 'searchpatient' || rota === 'searchuser') {
         const response = await fetch(`http://localhost:${PORT}/${rota}`, {
             method: 'POST',
             headers: {
