@@ -1,51 +1,24 @@
-# React + Vite + Vercel
+# React + Vite + Vercel + PostgreSql Projeto App Exemplo para consultório medico simples!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Tela Inicial Para login
 
-Currently, two official plugins are available:
+### <img src="https://github.com/HumbertoFox/repository/assets/126817628/9813282f-ebef-4eb1-9e64-e7270f9d2712" width="250px"/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Tela de Agenda
 
-## Biblioteca para estilização.
+### <img src="https://github.com/HumbertoFox/repository/assets/126817628/2d8e1c37-29eb-4f93-b37b-718542485dc1" width="250px"/>
 
-npm install styled-components
+### Tela para agendamento de consulta
 
-npm install react-hook-form
+### <img src="https://github.com/HumbertoFox/repository/assets/126817628/acf8a26b-54a1-49cd-9dbc-02748abf6b27" width="250px"/>
 
-npm install axios
+### Tela Consultar agendamento
 
-npm install js-cookie
+### <img src="https://github.com/HumbertoFox/repository/assets/126817628/924ba3ae-15f9-4098-ad7e-904ccbe33e39" width="250px"/>
 
-npm install express
+### Tela Menu
 
-npm install bcrypt
-
-npm install prisma
-
-npm install -D react-router-dom
-
-npm install -D @fortawesome/fontawesome-svg-core
-
-npm install -D @fortawesome/free-solid-svg-icons
-
-npm install -D @fortawesome/react-fontawesome@latest
-
-npm install @vercel/postgres
-
-npm install prisma
-
-npm install @prisma/client
-
-npm install -D react-big-calendar
-
-npm install -D dotenv
-
-npm install -D dotenv-expand
-
-npm install -g express-generator@4
-
-npm install -g vercel@latest
+### <img src="https://github.com/HumbertoFox/repository/assets/126817628/2ddfab49-a46e-4bcc-98a4-6a1b921d37d3" width="250px"/>
 
 ##
 
