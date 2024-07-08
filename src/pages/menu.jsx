@@ -15,7 +15,7 @@ export const MenuRegistersPage = () => {
                         <Link to={"/agenda"} title="Agenda">
                             <FontAwesomeIcon icon="fa-solid fa-calendar-check" />
                         </Link>
-                        <Link to={"/agenda"} title="Editar Paciente">
+                        <Link to={"/editPatient"} title="Editar Paciente">
                             <FontAwesomeIcon icon="fa-solid fa-bed-pulse" />
                         </Link>
                     </DivIconDoble>

@@ -14,7 +14,7 @@ export const ConsultationDrX = () => {
             <MainSecondary>
                 <DivForms>
                     <Search searchPatient={cpfPatient} rotas={"searchpatient"} />
-                    <FormPatientDrs searchPatient={searchCpf} title={"5001"} />
+                    <FormPatientDrs searchPatient={searchCpf} title={"5001"} rotas={"registerconsultation"} />
                 </DivForms>
             </MainSecondary>
         </MainPrimary>

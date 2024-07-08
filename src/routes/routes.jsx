@@ -12,6 +12,7 @@ import { ReportDoctoryPage } from "../pages/reportdoctory";
 import { RegisterUserPage } from "../pages/registeruser";
 import { RegisterDoctorsPage } from "../pages/registerdoctors";
 import { EditUserPage } from "../pages/edituser";
+import { EditPatientPage } from "../pages/editpatient";
 export const AppRouters = () => {
     return (
         <AuthProvider>
@@ -20,6 +21,7 @@ export const AppRouters = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/registerUser" element={<PrivateRoute><RegisterUserPage /></PrivateRoute>} />
                     <Route path="/editarUser" element={<PrivateRoute><EditUserPage /></PrivateRoute>} />
+                    <Route path="/editPatient" element={<PrivateRoute><EditPatientPage /></PrivateRoute>} />
                     <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
                     <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
                     <Route path="/agenda" element={<PrivateRoute><AgendaPage /></PrivateRoute>} />

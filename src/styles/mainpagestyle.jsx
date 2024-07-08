@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 const MainPrimary = styled.main`
     width: 100%;
     min-height: 100vh;
@@ -25,6 +25,13 @@ const DivButtons = styled.div`
     display: flex;
     justify-content: space-evenly;
     padding-top: 5px;
+    ${({ $rota }) => {
+        if ($rota === "registerconsultation") {
+            return css`
+                display: none;
+            `;
+        };
+    }};
 `;
 const MainLogin = styled(MainPrimary)`
     justify-content: center;

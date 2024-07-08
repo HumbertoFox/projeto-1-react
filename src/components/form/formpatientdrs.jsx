@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
 import { viaCepApi } from "../../services/api/viacep";
 import { useForm } from "react-hook-form";
-import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { useNavigate } from "react-router-dom";
+import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivEditDisabled, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { ActivityClicked } from "../modal/eventsclick";
 import { apiDbPostgres } from "../../services/api/apis";
-export const FormPatientDrs = ({ title, searchPatient }) => {
+import { DivButtons } from "../../styles/mainpagestyle";
+import { ButtonButton } from "../button/buttonbutton";
+export const FormPatientDrs = ({ title, searchPatient, rotas }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
+    const navigate = useNavigate();
     const [radioSelect, setRadioSelect] = useState("house");
     const [selectRadio, setSelectRadio] = useState("planradio");
     const [eventAlert, setEventAlert] = useState(null);
@@ -146,7 +150,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await apiDbPostgres(data, "registerconsultation");
+            const response = await apiDbPostgres(data, rotas);
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -307,8 +311,10 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 className={`${errors.city ? "required" : ""}`}
                 {...register("city", { required: true })}
             />
-            <LabelText>CRM</LabelText>
-            <input type="number" id="crm" disabled={true} {...register("crm")} />
+            <DivEditDisabled $rota={rotas}>
+                <LabelText>CRM</LabelText>
+                <input type="number" id="crm" disabled={true} {...register("crm")} />
+            </DivEditDisabled>
             <DivRadio>
                 <LabelText htmlFor="planradio">
                     <input type="radio"
@@ -355,25 +361,32 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 <LabelText htmlFor="courtesy">Cortesia</LabelText>
                 <input type="text" id="courtesy" {...register("courtesy", { value: "Não" })} />
             </DivCourtesy>
-            <LabelText htmlFor="consultdatestart">Data da Consulta</LabelText>
-            <input
-                type="datetime-local"
-                id="consultdatestart"
-                min={formattedNow}
-                className={`${errors.consultdatestart ? "requireddate" : ""}`}
-                {...register("consultdatestart", { required: true, onBlur: (elementDate) => setEndDateStart(elementDate.target.value) })}
-            />
-            <LabelText htmlFor="consultdateend">Data da Consulta</LabelText>
-            <input
-                type="datetime-local"
-                id="consultdateend"
-                min={endDateStart == "" ? formattedNow : endDateStart}
-                className={`${errors.consultdateend ? "requireddate" : ""}`}
-                {...register("consultdateend", { required: true })}
-            />
+            <DivEditDisabled $rota={rotas}>
+                <LabelText htmlFor="consultdatestart">Data da Consulta Inicio</LabelText>
+                <input
+                    type="datetime-local"
+                    id="consultdatestart"
+                    min={formattedNow}
+                    className={`${errors.consultdatestart ? "requireddate" : ""}`}
+                    {...register("consultdatestart", { required: true, onBlur: (elementDate) => setEndDateStart(elementDate.target.value) })}
+                />
+                <LabelText htmlFor="consultdateend">Data da Consulta Termino</LabelText>
+                <input
+                    type="datetime-local"
+                    id="consultdateend"
+                    min={endDateStart == "" ? formattedNow : endDateStart}
+                    className={`${errors.consultdateend ? "requireddate" : ""}`}
+                    {...register("consultdateend", { required: true })}
+                />
+            </DivEditDisabled>
             <LabelText htmlFor="observation">Observações</LabelText>
             <textarea id="observation" {...register("observation", { value: "..." })} />
-            <SubmitButton value="Agendar" />
+            <SubmitButton value="Agendar" title="Agendar Paciente" $rota={rotas} />
+            <DivButtons $rota={rotas}>
+                <SubmitButton title="Editar Paciente" value="Editar" />
+                <ButtonButton title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</ButtonButton>
+                <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
+            </DivButtons>
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>
     );
