@@ -154,9 +154,7 @@ app.post('/registerconsultation', async (req, res) => {
                         buildingblock: dados.buildingblock,
                         apartment: dados.apartment
                     },
-                    select: {
-                        address_id: true
-                    }
+                    select: { address_id: true }
                 });
 
                 if (!addressId) {
@@ -211,8 +209,8 @@ app.post('/registerconsultation', async (req, res) => {
                     }
                 });
 
-                const patient = await prisma.patient.findUnique({
-                    select: { cpf: dados.cpf }
+                const patient = await prisma.patient.findFirst({
+                    where: { cpf: dados.cpf }
                 });
 
                 if (consultDateExists === 0) {
@@ -585,7 +583,8 @@ app.post('/searchpatient', async (req, res) => {
                     residencenumber: patient.parient_address.residencenumber,
                     building: patient.parient_address.building,
                     buildingblock: patient.parient_address.buildingblock,
-                    apartment: patient.parient_address.apartment
+                    apartment: patient.parient_address.apartment,
+                    observation: patient.patient_consultation[0].observation
                 }
             };
             res.status(200).json(list_patient);
@@ -756,6 +755,48 @@ app.get('/eventsconsultsx', async (_, res) => {
             message: 'Erro interno do BD!'
         });
     }
+});
+
+app.put('/editpatient', async (req, res) => {
+    const dados = req.body;
+
+    try {
+        const patient_update = await prisma.patient.findFirst({
+            where: { cpf: dados.cpf },
+            include: {
+                patient_cpf: true,
+                parient_address: {
+                    include: {
+                        address_zipcode: true
+                    }
+                },
+                patient_telephone: true,
+                patient_consultation: true
+            }
+        });
+
+        if (patient_update) {
+            await prisma.telephone.updateMany({
+                where: { telephone: patient_update.telephone },
+                data: {
+                    telephone: dados.telephone,
+                    email: dados.email
+                }
+            });
+
+            res.status(200).json({
+                Error: false,
+                message: 'Paciente Editado com Sucesso!'
+            });
+        };
+
+    } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro interno do BD!'
+        });
+    };
 });
 
 app.get('*', (_, res) => {

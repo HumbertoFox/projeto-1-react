@@ -49,12 +49,5 @@ const Input = styled.input.attrs({ type: 'submit' })`
         border: 1px solid hsla(120, 73.44%, 74.9%, .5);
         box-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
     }
-    ${({ $rota }) => {
-        if ($rota === "editpatient") {
-            return css`
-                display: none;
-            `;
-        };
-    }}
 `;
 export { Button, Input };

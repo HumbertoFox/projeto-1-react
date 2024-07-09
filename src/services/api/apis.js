@@ -10,7 +10,7 @@ const apiDbPostgres = async (data, rota) => {
             body: JSON.stringify(data)
         });
         return response.json();
-    } else if (rota === 'edituser') {
+    } else if (rota === 'edituser' || rota === 'editpatient') {
         const response = await fetch(`http://localhost:${PORT}/${rota}`, {
             method: 'PUT',
             headers: {

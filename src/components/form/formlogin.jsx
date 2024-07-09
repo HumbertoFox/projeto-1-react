@@ -50,7 +50,7 @@ export const FormLogin = () => {
                     };
                 }, 3000);
             };
-        } catch (error) {
+        } catch (Error) {
             setEventAlert({
                 type: "Error",
                 message: "Erro ao conectar com o BD!"

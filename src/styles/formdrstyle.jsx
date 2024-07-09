@@ -140,13 +140,4 @@ const DivDateAge = styled(DivDateBirth)`
         color: grey;
     }
 `;
-const DivEditDisabled = styled(DivDateBirth)`
-    ${({ $rota }) => {
-        if ($rota === "editpatient") {
-            return css`
-                display: none;
-            `;
-        };
-    }};
-`;
-export { FormDoctor, DivRadio, DivNameEd, DivPlan, DivParticular, DivDate, DivDateBirth, DivDateAge, DivCourtesy, DivEditDisabled };
+export { FormDoctor, DivRadio, DivNameEd, DivPlan, DivParticular, DivDate, DivDateBirth, DivDateAge, DivCourtesy };
