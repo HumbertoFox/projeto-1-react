@@ -759,37 +759,65 @@ app.get('/eventsconsultsx', async (_, res) => {
 
 app.put('/editpatient', async (req, res) => {
     const dados = req.body;
-
     try {
         const patient_update = await prisma.patient.findFirst({
-            where: { cpf: dados.cpf },
-            include: {
-                patient_cpf: true,
-                parient_address: {
-                    include: {
-                        address_zipcode: true
-                    }
-                },
-                patient_telephone: true,
-                patient_consultation: true
-            }
+            where: { cpf: dados.cpf }
         });
-
         if (patient_update) {
-            await prisma.telephone.updateMany({
-                where: { telephone: patient_update.telephone },
-                data: {
-                    telephone: dados.telephone,
-                    email: dados.email
-                }
+            const patientName = await prisma.cpf.findFirst({
+                where: { name: dados.name }
             });
-
+            if (!patientName) {
+                await prisma.cpf.update({
+                    where: { cpf: dados.cpf },
+                    data: { name: dados.name }
+                });
+            };
+            const patientAge = await prisma.cpf.findFirst({
+                where: { dateofbirth: dados.dateofbirth }
+            });
+            if (!patientAge) {
+                await prisma.cpf.update({
+                    where: { cpf: dados.cpf },
+                    data: { dateofbirth: dados.dateofbirth }
+                });
+            };
+            const telephoneExists = prisma.telephone.findFirst({
+                where: { telephone: dados.telephone }
+            });
+            if (!telephoneExists) {
+                await prisma.telephone.create({
+                    data: {
+                        telephone: dados.telephone,
+                        email: dados.email
+                    }
+                });
+                await prisma.patient.update({
+                    where: { cpf: dados.cpf },
+                    data: { telephone: dados.telephone }
+                });
+            } else {
+                const emailExists = await prisma.telephone.findFirst({
+                    where: { email: dados.email }
+                });
+                if (!emailExists) {
+                    await prisma.telephone.update({
+                        where: { telephone: dados.telephone },
+                        data: { email: dados.email }
+                    });
+                };
+            };
+            
             res.status(200).json({
                 Error: false,
                 message: 'Paciente Editado com Sucesso!'
             });
-        };
-
+        } else {
+            res.status(404).json({
+                Error: true,
+                message: 'Paciente não Encontrado!'
+            });
+        }
     } catch (Error) {
         console.error(Error);
         res.status(500).json({
