@@ -32,7 +32,7 @@ export const ReportDoctoryPage = () => {
             <HeaderMenu />
             <MainSecondary>
                 <DivReportMain>
-                    <h1>Lista de Pacientes Dr 5000</h1>
+                    <h1>Lista de Pacientes CRM 5000</h1>
                     <DivInforReport>
                         <TableFormInfo>
                             <Thead>
