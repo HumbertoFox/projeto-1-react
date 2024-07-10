@@ -807,7 +807,62 @@ app.put('/editpatient', async (req, res) => {
                     });
                 };
             };
-            
+            const zipcodeExists = await prisma.zipcode.findFirst({
+                where: { zipcode: dados.zipcode }
+            });
+            if (!zipcodeExists) {
+                await prisma.zipcode.create({
+                    data: {
+                        zipcode: dados.zipcode,
+                        street: dados.street,
+                        district: dados.district,
+                        city: dados.city
+                    }
+                });
+                const newAddress = await prisma.address.create({
+                    data: {
+                        zipcode: dados.zipcode,
+                        residencenumber: dados.residencenumber,
+                        building: dados.building,
+                        buildingblock: dados.buildingblock,
+                        apartment: dados.apartment
+                    }
+                });
+                await prisma.patient.update({
+                    where: { patient_id: patient_update.patient_id },
+                    data: { address_id: parseInt(newAddress.address_id, 10) }
+                });
+            } else {
+                let addressId = await prisma.address.findFirst({
+                    where: {
+                        zipcode: dados.zipcode,
+                        residencenumber: dados.residencenumber,
+                        building: dados.building,
+                        buildingblock: dados.buildingblock,
+                        apartment: dados.apartment
+                    },
+                    select: {
+                        address_id: true
+                    }
+                });
+
+                if (!addressId) {
+                    const newAddress = await prisma.address.create({
+                        data: {
+                            zipcode: dados.zipcode,
+                            residencenumber: dados.residencenumber,
+                            building: dados.building,
+                            buildingblock: dados.buildingblock,
+                            apartment: dados.apartment
+                        }
+                    });
+                    addressId = newAddress;
+                };
+                await prisma.patient.update({
+                    where: { patient_id: patient_update.patient_id },
+                    data: { address_id: parseInt(addressId.address_id, 10) }
+                });
+            };
             res.status(200).json({
                 Error: false,
                 message: 'Paciente Editado com Sucesso!'
