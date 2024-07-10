@@ -31,7 +31,7 @@ export const MenuRegistersPage = () => {
                         <Link to={"/editarUser"} title="Editar Usuário">
                             <FontAwesomeIcon icon="fa-solid fa-user-pen" />
                         </Link>
-                        <Link to={"/agenda"} title="Excluir Usuário">
+                        <Link to={"/removeUser"} title="Excluir Usuário">
                             <FontAwesomeIcon icon="fa-solid fa-user-xmark" />
                         </Link>
                     </DivIconDoble>
