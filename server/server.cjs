@@ -880,17 +880,18 @@ app.put('/editpatient', async (req, res) => {
     };
 });
 
-app.put('/adituser', async (req, res) => {
+app.put('/edituser', async (req, res) => {
     const dados = req.body;
     try {
+        const hashedPassword = await bcrypt.hash(dados.password, 10);
         const user_update = await prisma.user.findFirst({
             where: { cpf: dados.cpf }
         });
         if (user_update) {
-            const userName = prisma.user.findFirst({
+            const cpfName = await prisma.cpf.findFirst({
                 where: { name: dados.name }
             });
-            if (!userName) {
+            if (!cpfName) {
                 await prisma.cpf.update({
                     where: { cpf: dados.cpf },
                     data: { name: dados.name }
@@ -992,6 +993,22 @@ app.put('/adituser', async (req, res) => {
                     data: { address_id: parseInt(addressId.address_id, 10) }
                 });
             };
+            const userPasswordCheck = await prisma.user.findFirst({
+                where: {
+                    user_id: user_update.user_id,
+                    password: dados.password
+                }
+            });
+            if (!userPasswordCheck || userPasswordCheck !== "") {
+                await prisma.user.update({
+                    where: { user_id: user_update.user_id },
+                    data: { password: hashedPassword }
+                });
+            };
+            res.status(200).json({
+                Error: false,
+                message: 'Usuário Editado com Sucesso!'
+            });
         } else {
             res.status(404).json({
                 Error: true,
