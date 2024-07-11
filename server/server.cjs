@@ -806,6 +806,18 @@ app.put('/editpatient', async (req, res) => {
                         data: { email: dados.email }
                     });
                 };
+                const telephonePatientExists = await prisma.patient.findFirst({
+                    where: {
+                        patient_id: patient_update.patient_id,
+                        telephone: dados.telephone
+                    }
+                });
+                if (!telephonePatientExists) {
+                    await prisma.patient.update({
+                        where: { patient_id: patient_update.patient_id },
+                        data: { telephone: dados.telephone }
+                    });
+                };
             };
             const zipcodeExists = await prisma.zipcode.findFirst({
                 where: { zipcode: dados.zipcode }
@@ -819,6 +831,21 @@ app.put('/editpatient', async (req, res) => {
                         city: dados.city
                     }
                 });
+            };
+            let addressId = await prisma.address.findFirst({
+                where: {
+                    zipcode: dados.zipcode,
+                    residencenumber: dados.residencenumber,
+                    building: dados.building,
+                    buildingblock: dados.buildingblock,
+                    apartment: dados.apartment
+                },
+                select: {
+                    address_id: true
+                }
+            });
+
+            if (!addressId) {
                 const newAddress = await prisma.address.create({
                     data: {
                         zipcode: dados.zipcode,
@@ -828,41 +855,12 @@ app.put('/editpatient', async (req, res) => {
                         apartment: dados.apartment
                     }
                 });
-                await prisma.patient.update({
-                    where: { patient_id: patient_update.patient_id },
-                    data: { address_id: parseInt(newAddress.address_id, 10) }
-                });
-            } else {
-                let addressId = await prisma.address.findFirst({
-                    where: {
-                        zipcode: dados.zipcode,
-                        residencenumber: dados.residencenumber,
-                        building: dados.building,
-                        buildingblock: dados.buildingblock,
-                        apartment: dados.apartment
-                    },
-                    select: {
-                        address_id: true
-                    }
-                });
-
-                if (!addressId) {
-                    const newAddress = await prisma.address.create({
-                        data: {
-                            zipcode: dados.zipcode,
-                            residencenumber: dados.residencenumber,
-                            building: dados.building,
-                            buildingblock: dados.buildingblock,
-                            apartment: dados.apartment
-                        }
-                    });
-                    addressId = newAddress;
-                };
-                await prisma.patient.update({
-                    where: { patient_id: patient_update.patient_id },
-                    data: { address_id: parseInt(addressId.address_id, 10) }
-                });
+                addressId = newAddress;
             };
+            await prisma.patient.update({
+                where: { patient_id: patient_update.patient_id },
+                data: { address_id: parseInt(addressId.address_id, 10) }
+            });
             res.status(200).json({
                 Error: false,
                 message: 'Paciente Editado com Sucesso!'
@@ -917,6 +915,11 @@ app.put('/adituser', async (req, res) => {
                         email: dados.email
                     }
                 });
+                await prisma.user.update({
+                    where: { user_id: user_update.user_id },
+                    data: { telephone: dados.telephone }
+
+                });
             } else {
                 const telephoneEmail = await prisma.telephone.findFirst({
                     where: { email: dados.email }
@@ -926,7 +929,19 @@ app.put('/adituser', async (req, res) => {
                         where: { telephone: dados.telephone },
                         data: { email: dados.email }
                     });
-                }
+                };
+                const telephoneUserExists = await prisma.user.findFirst({
+                    where: {
+                        user_id: user_update.user_id,
+                        telephone: dados.telephone
+                    }
+                });
+                if (!telephoneUserExists) {
+                    await prisma.user.update({
+                        where: { user_id: user_update.user_id },
+                        data: { telephone: dados.telephone }
+                    });
+                };
             };
             const zipcodeExists = await prisma.zipcode.findFirst({
                 where: { zipcode: dados.zipcode }
@@ -939,6 +954,42 @@ app.put('/adituser', async (req, res) => {
                         district: dados.district,
                         city: dados.city
                     }
+                });
+            };
+            let addressId = await prisma.address.findFirst({
+                where: {
+                    zipcode: dados.zipcode,
+                    residencenumber: dados.residencenumber,
+                    building: dados.building,
+                    buildingblock: dados.buildingblock,
+                    apartment: dados.apartment
+                },
+                select: {
+                    address_id: true
+                }
+            });
+            if (!addressId) {
+                const newAddress = await prisma.address.create({
+                    data: {
+                        zipcode: dados.zipcode,
+                        residencenumber: dados.residencenumber,
+                        building: dados.building,
+                        buildingblock: dados.buildingblock,
+                        apartment: dados.apartment
+                    }
+                });
+                addressId = newAddress;
+            };
+            const userAddressExists = await prisma.user.findFirst({
+                where: {
+                    user_id: user_update.user_id,
+                    address_id: addressId.address_id
+                }
+            });
+            if (!userAddressExists) {
+                await prisma.user.update({
+                    where: { user_id: user_update.user_id },
+                    data: { address_id: parseInt(addressId.address_id, 10) }
                 });
             };
         } else {
