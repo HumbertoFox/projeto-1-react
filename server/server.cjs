@@ -882,6 +882,80 @@ app.put('/editpatient', async (req, res) => {
     };
 });
 
+app.put('/adituser', async (req, res) => {
+    const dados = req.body;
+    try {
+        const user_update = await prisma.user.findFirst({
+            where: { cpf: dados.cpf }
+        });
+        if (user_update) {
+            const userName = prisma.user.findFirst({
+                where: { name: dados.name }
+            });
+            if (!userName) {
+                await prisma.cpf.update({
+                    where: { cpf: dados.cpf },
+                    data: { name: dados.name }
+                });
+            };
+            const userAge = await prisma.cpf.findFirst({
+                where: { dateofbirth: dados.dateofbirth }
+            });
+            if (!userAge) {
+                await prisma.cpf.update({
+                    where: { cpf: dados.cpf },
+                    data: { dateofbirth: dados.dateofbirth }
+                });
+            };
+            const userTelephone = await prisma.telephone.findFirst({
+                where: { telephone: dados.telephone }
+            });
+            if (!userTelephone) {
+                await prisma.telephone.create({
+                    data: {
+                        telephone: dados.telephone,
+                        email: dados.email
+                    }
+                });
+            } else {
+                const telephoneEmail = await prisma.telephone.findFirst({
+                    where: { email: dados.email }
+                });
+                if (!telephoneEmail) {
+                    await prisma.telephone.update({
+                        where: { telephone: dados.telephone },
+                        data: { email: dados.email }
+                    });
+                }
+            };
+            const zipcodeExists = await prisma.zipcode.findFirst({
+                where: { zipcode: dados.zipcode }
+            });
+            if (!zipcodeExists) {
+                await prisma.zipcode.create({
+                    data: {
+                        zipcode: dados.zipcode,
+                        street: dados.street,
+                        district: dados.district,
+                        city: dados.city
+                    }
+                });
+            };
+        } else {
+            res.status(404).json({
+                Error: true,
+                message: 'Usuário não Encontrado!'
+            });
+        }
+    } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro interno do BD!'
+        });
+    };
+});
+
 app.get('*', (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
