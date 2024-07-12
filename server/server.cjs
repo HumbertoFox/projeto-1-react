@@ -593,7 +593,7 @@ app.post('/searchpatient', async (req, res) => {
                 Error: true,
                 message: 'Patient não encontrado!'
             });
-        }
+        };
     } catch (Error) {
         console.error(Error);
         res.status(500).json({
@@ -644,7 +644,7 @@ app.post('/searchuser', async (req, res) => {
                 Error: true,
                 message: 'Usuário não encontrado!'
             });
-        }
+        };
     } catch (Error) {
         console.error(Error);
         res.status(500).json({
@@ -721,7 +721,7 @@ app.get('/eventsconsultsy', async (_, res) => {
             Error: true,
             message: 'Erro interno do BD!'
         });
-    }
+    };
 });
 
 app.get('/eventsconsultsx', async (_, res) => {
@@ -754,7 +754,7 @@ app.get('/eventsconsultsx', async (_, res) => {
             Error: true,
             message: 'Erro interno do BD!'
         });
-    }
+    };
 });
 
 app.put('/editpatient', async (req, res) => {
@@ -870,7 +870,7 @@ app.put('/editpatient', async (req, res) => {
                 Error: true,
                 message: 'Paciente não Encontrado!'
             });
-        }
+        };
     } catch (Error) {
         console.error(Error);
         res.status(500).json({
@@ -1014,8 +1014,35 @@ app.put('/edituser', async (req, res) => {
                 Error: true,
                 message: 'Usuário não Encontrado!'
             });
-        }
+        };
     } catch (Error) {
+        console.error(Error);
+        res.status(500).json({
+            Error: true,
+            message: 'Erro interno do BD!'
+        });
+    };
+});
+
+app.delete('removeuser', async (req, res) => {
+    const dados = req.body;
+    try {
+        const hashedPassword = await bcrypt.hash(dados.password, 10);
+        const userExists = await prisma.user.findFirst({
+            where: {
+                cpf: dados.cpf,
+                password: hashedPassword
+            }
+        });
+        if (!userExists) {
+
+        } else {
+            res.status(404).json({
+                Error: true,
+                message: 'Senha Invalida!'
+            });
+        };
+    } catch (error) {
         console.error(Error);
         res.status(500).json({
             Error: true,
