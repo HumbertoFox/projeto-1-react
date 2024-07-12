@@ -28,6 +28,15 @@ const apiDbPostgres = async (data, rota) => {
             body: JSON.stringify(data)
         });
         return response.json();
+    } else if (rota === 'removeuser') {
+        const response = await fetch(`http://localhost:${PORT}/${rota}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        return response.json();
     };
 };
 

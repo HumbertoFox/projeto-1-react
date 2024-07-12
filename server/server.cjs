@@ -1024,18 +1024,21 @@ app.put('/edituser', async (req, res) => {
     };
 });
 
-app.delete('removeuser', async (req, res) => {
+app.delete('/removeuser', async (req, res) => {
     const dados = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(dados.password, 10);
         const userExists = await prisma.user.findFirst({
-            where: {
-                cpf: dados.cpf,
-                password: hashedPassword
-            }
+            where: { cpf: dados.cpf }
         });
-        if (!userExists) {
-
+        const passwordMatch = bcrypt.compareSync(dados.password, userExists.password);
+        if (passwordMatch) {
+            await prisma.user.delete({
+                where: { user_id: userExists.user_id }
+            });
+            res.status(200).json({
+                Error: false,
+                message: 'Usuário Removido com Sucesso!'
+            });
         } else {
             res.status(404).json({
                 Error: true,
