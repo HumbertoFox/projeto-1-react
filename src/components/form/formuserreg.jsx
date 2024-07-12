@@ -6,7 +6,7 @@ import { SubmitButton } from "../button/buttonsubmit";
 import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
 import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
-import { DivButtons } from "../../styles/mainpagestyle";
+import { DivButtons, Fieldset } from "../../styles/mainpagestyle";
 import { ActivityClicked } from "../modal/eventsclick";
 import { apiDbPostgres } from "../../services/api/apis";
 export const FormUserRegister = ({ rotas, searchPatient }) => {
@@ -163,115 +163,118 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
     }, [searchPatient]);
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="cpf">CPF</LabelText>
-            <input
-                type="text"
-                id="cpf"
-                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
-                className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
-            />
-            <LabelText htmlFor="name">Nome</LabelText>
-            <input
-                type="text"
-                id="name"
-                placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
-                className={`${errors.name ? "required" : ""}`}
-                {...register("name", { required: true, pattern: { value: /[A-Za-z]{5}/g } })}
-            />
-            <DivDate>
-                <DivDateBirth>
-                    <LabelText htmlFor="dateofbirth">Data de Nascimento</LabelText>
-                    <input
-                        type="date"
-                        id="dateofbirth"
-                        className={`${errors.dateofbirth ? "requireddate" : ""}`}
-                        {...register("dateofbirth", { required: true, onChange: handleDateChange })}
-                    />
-                </DivDateBirth>
-                <DivDateAge>
-                    <p>{age}</p>
-                    <p>anos</p>
-                </DivDateAge>
-            </DivDate>
-            <LabelText htmlFor="telephone">Telefone</LabelText>
-            <input
-                type="tel"
-                id="telephone"
-                placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
-                className={`${errors.telephone ? "required" : ""}`}
-                {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
-            />
-            <LabelText htmlFor="email">Email</LabelText>
-            <input
-                type="email"
-                id="email"
-                placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
-                className={`${errors.email ? "required" : ""}`}
-                {...register("email", { required: true })}
-            />
-            <LabelText htmlFor="zipcode">CEP</LabelText>
-            <input type="text" id="zipcode" {...register("zipcode", { onBlur: checkedZipCode })} />
-            <LabelText htmlFor="street">Logradouro Av/Travessa/Rua</LabelText>
-            <input
-                type="text"
-                id="street"
-                placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
-                className={`${errors.street ? "required" : ""}`}
-                {...register("street", { required: true })}
-            />
-            <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
-            <input
-                type="text"
-                id="residencenumber"
-                placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
-                className={`${errors.residencenumber ? "required" : ""}`}
-                {...register("residencenumber", { required: true })}
-            />
-            <DivRadio>
-                <LabelText htmlFor="house">
-                    <input type="radio"
-                        id="house"
-                        value="house"
-                        checked={radioSelect === "house" ? true : false}
-                        onChange={swapRadioSelect}
-                    />
-                    Casa
-                </LabelText>
-                <LabelText htmlFor="buildingradio">
-                    <input type="radio"
-                        id="buildingradio"
-                        value="buildingradio"
-                        checked={radioSelect === "buildingradio" ? true : false}
-                        onChange={swapRadioSelect}
-                    />
-                    Edifício
-                </LabelText>
-            </DivRadio>
-            <DivNameEd className={radioSelect}>
-                <LabelText htmlFor="building">Nome do Edifício</LabelText>
-                <input type="text" id="building" {...register("building", { value: "..." })} />
-                <LabelText htmlFor="buildingblock">Bloco</LabelText>
-                <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
-                <LabelText htmlFor="apartment">Apartamento</LabelText>
-                <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
-            </DivNameEd>
-            <LabelText htmlFor="district">Bairro/Distrito</LabelText>
-            <input
-                type="text"
-                id="district"
-                placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
-                className={`${errors.district ? "required" : ""}`}
-                {...register("district", { required: true })}
-            />
-            <LabelText htmlFor="city">Cidade</LabelText>
-            <input
-                type="text"
-                id="city"
-                placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
-                className={`${errors.city ? "required" : ""}`}
-                {...register("city", { required: true })}
-            />
+            <Fieldset disabled={rotas === "removeuser" ? true : false}>
+                <LabelText htmlFor="cpf">CPF</LabelText>
+                <input
+                    type="text"
+                    id="cpf"
+                    disabled={rotas === "edituser" ? true : false}
+                    placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.cpf ? "required" : ""}`}
+                    {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
+                />
+                <LabelText htmlFor="name">Nome</LabelText>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.name ? "required" : ""}`}
+                    {...register("name", { required: true, pattern: { value: /[A-Za-z]{5}/g } })}
+                />
+                <DivDate>
+                    <DivDateBirth>
+                        <LabelText htmlFor="dateofbirth">Data de Nascimento</LabelText>
+                        <input
+                            type="date"
+                            id="dateofbirth"
+                            className={`${errors.dateofbirth ? "requireddate" : ""}`}
+                            {...register("dateofbirth", { required: true, onChange: handleDateChange })}
+                        />
+                    </DivDateBirth>
+                    <DivDateAge>
+                        <p>{age}</p>
+                        <p>anos</p>
+                    </DivDateAge>
+                </DivDate>
+                <LabelText htmlFor="telephone">Telefone</LabelText>
+                <input
+                    type="tel"
+                    id="telephone"
+                    placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.telephone ? "required" : ""}`}
+                    {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
+                />
+                <LabelText htmlFor="email">Email</LabelText>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.email ? "required" : ""}`}
+                    {...register("email", { required: true })}
+                />
+                <LabelText htmlFor="zipcode">CEP</LabelText>
+                <input type="text" id="zipcode" {...register("zipcode", { onBlur: checkedZipCode })} />
+                <LabelText htmlFor="street">Logradouro Av/Travessa/Rua</LabelText>
+                <input
+                    type="text"
+                    id="street"
+                    placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.street ? "required" : ""}`}
+                    {...register("street", { required: true })}
+                />
+                <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
+                <input
+                    type="text"
+                    id="residencenumber"
+                    placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.residencenumber ? "required" : ""}`}
+                    {...register("residencenumber", { required: true })}
+                />
+                <DivRadio>
+                    <LabelText htmlFor="house">
+                        <input type="radio"
+                            id="house"
+                            value="house"
+                            checked={radioSelect === "house" ? true : false}
+                            onChange={swapRadioSelect}
+                        />
+                        Casa
+                    </LabelText>
+                    <LabelText htmlFor="buildingradio">
+                        <input type="radio"
+                            id="buildingradio"
+                            value="buildingradio"
+                            checked={radioSelect === "buildingradio" ? true : false}
+                            onChange={swapRadioSelect}
+                        />
+                        Edifício
+                    </LabelText>
+                </DivRadio>
+                <DivNameEd className={radioSelect}>
+                    <LabelText htmlFor="building">Nome do Edifício</LabelText>
+                    <input type="text" id="building" {...register("building", { value: "..." })} />
+                    <LabelText htmlFor="buildingblock">Bloco</LabelText>
+                    <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
+                    <LabelText htmlFor="apartment">Apartamento</LabelText>
+                    <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
+                </DivNameEd>
+                <LabelText htmlFor="district">Bairro/Distrito</LabelText>
+                <input
+                    type="text"
+                    id="district"
+                    placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.district ? "required" : ""}`}
+                    {...register("district", { required: true })}
+                />
+                <LabelText htmlFor="city">Cidade</LabelText>
+                <input
+                    type="text"
+                    id="city"
+                    placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.city ? "required" : ""}`}
+                    {...register("city", { required: true })}
+                />
+            </Fieldset>
             <LabelText htmlFor="password">Senha</LabelText>
             <input
                 type="password"
@@ -291,7 +294,7 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
                 {...register("passwordchecked", { required: true, validate: (value) => value === password })}
             />
             <DivButtons>
-                <SubmitButton title="Cadastrar" value="Cadastrar" />
+                {rotas === "removeuser" ? <SubmitButton title="Remover Usuário" value="Remover" /> : rotas === "edituser" ? <SubmitButton title="Editar Usuário" value="Editar" /> : <SubmitButton title="Cadastrar Usuário" value="Cadastrar" />}
                 <ButtonButton title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</ButtonButton>
                 <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
             </DivButtons>

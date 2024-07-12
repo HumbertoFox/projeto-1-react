@@ -85,7 +85,7 @@ export const Search = ({ searchPatient, rotas }) => {
                 className={`${errors.searchpatient ? "required" : ""}`}
                 {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
-            <SubmitButton value="Pesquisar" />
+            <SubmitButton title="Pesquisar" value="Pesquisar" />
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormSerach>
     );
