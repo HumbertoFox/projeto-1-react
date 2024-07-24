@@ -6,9 +6,9 @@
   "main": "server/server.cjs",
   "scripts": {
     "dev": "vite",
+    "start": "node --watch server/server.cjs",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "start": "node --watch server/server.cjs",
     "preview": "vite preview"
   },
   "dependencies": {
