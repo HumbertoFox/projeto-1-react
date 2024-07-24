@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "main": "server/server.cjs",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node --watch server/server.cjs",
     "dev": "vite",
