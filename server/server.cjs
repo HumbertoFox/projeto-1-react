@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(distPath));
 
-app.get(['/login', '/registerUser', '/registerDoctors', '/editarUser', '/editPatient', '/menuRegister', '/agenda', '/consultationDRX', '/consultationDRY', '/reportDoctorX', '/reportDoctorY', '/removeUser'], (_, res) => {
+app.get('/login', (_, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
