@@ -8,7 +8,8 @@ export default defineConfig(({ mode }) => {
   dotenvExpand.expand({ parsed: env });
 
   const envWithProcessPrefix = Object.keys(env).reduce((prev, curr) => {
-    prev[`process.env.${curr}`] = JSON.stringify(env[curr]);
+    const validKey = curr.replace(/[^\w]/g, '_');
+    prev[`process.env.${validKey}`] = JSON.stringify(env[curr]);
     return prev;
   }, {});
 
