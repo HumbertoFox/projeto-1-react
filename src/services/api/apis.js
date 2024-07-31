@@ -1,5 +1,5 @@
 const URL = process.env.URL_FETCH || "http://localhost";
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3236;
 
 const apiDbPostgres = async (data, rota) => {
     if (rota === 'registeruser' || rota === 'registerconsultation' || rota === 'loginuser' || rota === 'registerdoctor' || rota === 'searchpatient' || rota === 'searchuser') {
