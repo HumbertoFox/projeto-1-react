@@ -1,6 +1,6 @@
 import dotenvExpand from 'dotenv-expand';
 import { loadEnv, defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import vercel from 'vite-plugin-vercel';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
   }, {});
 
   return {
-    plugins: [react()],
+    plugins: [vercel()],
     define: envWithProcessPrefix,
     resolve: {
       extensions: ['.js', '.ts', '.jsx', '.tsx']
