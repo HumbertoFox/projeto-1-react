@@ -2,14 +2,14 @@
   "name": "projeto-1-react",
   "private": true,
   "version": "1.0.0",
-  "type": "commonjs",
-  "main": "server/server.js",
+  "type": "module",
+  "main": "server/server.cjs",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
-    "dev": "node --watch server/server.js",
-    "start": "node server/server.js",
+    "dev": "node --watch server/server.cjs",
+    "start": "node server/server.cjs",
     "build": "vite build",
     "lint": "eslint . --ext js,cjs,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
