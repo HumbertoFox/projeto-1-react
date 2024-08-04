@@ -1,4 +1,4 @@
-const URL = process.env.URL_FETCH || "http://localhost";
+const URL = process.env.URL || "http://localhost";
 const PORT = process.env.PORT || 3236;
 
 const apiDbPostgres = async (data, rota) => {
