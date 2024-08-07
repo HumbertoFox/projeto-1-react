@@ -1051,9 +1051,9 @@ app.delete('/removeuser', async (req, res) => {
     };
 });
 
-// app.get('*', (_, res) => {
-//     res.sendFile(path.join(distPath, 'index.html'));
-// });
+app.get('*', (_, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
