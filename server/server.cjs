@@ -14,9 +14,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(distPath));
 
-app.get('/login', (_, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-});
+// app.get('/login', (_, res) => {
+//     res.sendFile(path.join(distPath, 'index.html'));
+// });
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
@@ -1051,9 +1051,9 @@ app.delete('/removeuser', async (req, res) => {
     };
 });
 
-app.get('*', (_, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-});
+// app.get('*', (_, res) => {
+//     res.sendFile(path.join(distPath, 'index.html'));
+// });
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
