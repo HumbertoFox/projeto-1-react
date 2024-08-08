@@ -14,9 +14,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(distPath));
 
-// app.get('/login', (_, res) => {
-//     res.sendFile(path.join(distPath, 'index.html'));
-// });
+app.get('/login', (_, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+});
 
 app.post('/registerconsultation', async (req, res) => {
     const dados = req.body;
