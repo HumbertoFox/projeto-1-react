@@ -340,7 +340,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
                 </LabelText>
             </DivRadio>
             <DivPlan className={selectRadio}>
-                <LabelText htmlFor="plan">Plano</LabelText>
+                <LabelText htmlFor="plan">Covênio</LabelText>
                 <input
                     type="text"
                     id="plan"

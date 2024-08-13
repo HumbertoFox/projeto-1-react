@@ -41,7 +41,7 @@ export const ReportDoctoryPage = () => {
                                     <th>CRM</th>
                                     <th>CPF</th>
                                     <th>Nome</th>
-                                    <th>Plano</th>
+                                    <th>Covênio</th>
                                     <th>Horário e Data</th>
                                 </tr>
                             </Thead>
