@@ -15,7 +15,8 @@ model Address {
   building        String    @db.VarChar(100)
   buildingblock   String    @db.VarChar(50)
   apartment       String    @db.VarChar(50)
-  registerdate    DateTime  @default(now()) @db.Timestamp(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt()
   address_zipcode Zipcode   @relation(fields: [zipcode], references: [zipcode])
   address_doctor  Doctor[]
   address_patient Patient[]
@@ -36,7 +37,8 @@ model Consultation {
   consultdateend       String
   patient_id           Int
   user_id              Int
-  registerdate         DateTime @default(now()) @db.Timestamp(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt()
   consultation_cpf     Cpf      @relation(fields: [cpf], references: [cpf])
   consultation_crm     Crm      @relation(fields: [crm], references: [crm])
   consultation_user    User     @relation(fields: [user_id], references: [user_id])
@@ -72,7 +74,8 @@ model Doctor {
   telephone        String
   address_id       Int
   user_id          Int
-  registerdate     DateTime  @default(now()) @db.Timestamp(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt()
   doctor_address   Address   @relation(fields: [address_id], references: [address_id])
   doctor_cpf       Cpf       @relation(fields: [cpf], references: [cpf])
   doctor_crm       Crm       @relation(fields: [crm], references: [crm])
@@ -87,7 +90,8 @@ model Patient {
   cpf                  String
   telephone            String
   address_id           Int
-  registerdate         DateTime       @default(now()) @db.Timestamp(0)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt()
   parient_address      Address        @relation(fields: [address_id], references: [address_id])
   patient_cpf          Cpf            @relation(fields: [cpf], references: [cpf])
   patient_telephone    Telephone      @relation(fields: [telephone], references: [telephone])
@@ -112,7 +116,8 @@ model User {
   telephone         String
   password          String         @db.VarChar(200)
   address_id        Int
-  registerdate      DateTime       @default(now()) @db.Timestamp(0)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt()
   user_address      Address        @relation(fields: [address_id], references: [address_id])
   user_cpf          Cpf            @relation(fields: [cpf], references: [cpf])
   user_telephone    Telephone      @relation(fields: [telephone], references: [telephone])
