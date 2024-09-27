@@ -77,7 +77,7 @@ export const Search = ({ searchPatient, rotas }) => {
     }, [patientSearch]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="searchpatient">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : "Pesquisar Usuário por CPF"}</LabelText>
+            <LabelText htmlFor="searchpatient">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : rotas === "searchdoctor" ? "Pesquisar Doutor(a) por CPF" : "Pesquisar Usuário por CPF"}</LabelText>
             <input
                 type="search"
                 id="searchpatient"
@@ -86,7 +86,9 @@ export const Search = ({ searchPatient, rotas }) => {
                 {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
             <Input type="submit" title="Pesquisar" value="Pesquisar" />
-            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
+            {eventAlert && (
+                <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />
+            )}
         </FormSerach>
     );
 };

@@ -15,6 +15,7 @@ const DragAndDropCaledar = widthDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 export const AgendaPage = () => {
     const [events, setEvents] = useState("");
+    const [crmxEnv, setCrmxEnv] = useState(null);
     const [eventSelected, setEventSelected] = useState(null);
     const styleColor = (element) => ({
         style: {
@@ -31,7 +32,7 @@ export const AgendaPage = () => {
         try {
             const response = await apiDbPostgres(data, 'eventspatient');
             for (const key in response) {
-                response[key].color = response[key].desc == "5001" ? "#FF0075" : "#3C91E6";
+                response[key].color = response[key].desc == crmxEnv ? "#FF0075" : "#3C91E6";
                 response[key].tipo = "activity";
                 response[key].start = response[key].start.replace(/-/g, ',').replace(/T/g, ' ');
                 response[key].end = response[key].end.replace(/-/g, ',').replace(/T/g, ' ');
@@ -53,6 +54,7 @@ export const AgendaPage = () => {
     };
     useEffect(() => {
         eventAgendCalendar();
+        setCrmxEnv(process.env.DOCTORX_CRM);
     }, []);
     return (
         <MainPrimary>

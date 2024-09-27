@@ -15,15 +15,7 @@ export const FormDoctorsRegister = () => {
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("house");
     const [age, setAge] = useState(null);
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        setFocus,
-        setError,
-        reset,
-        formState: { errors }
-    } = useForm();
+    const { register, handleSubmit, setValue, setFocus, setError, reset, formState: { errors } } = useForm();
     const getCheckedCpf = (data) => {
         const isRepeatedCpf = (cpf) => {
             const firstDigit = cpf[0];

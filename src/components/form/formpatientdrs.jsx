@@ -16,16 +16,7 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
     const [eventAlert, setEventAlert] = useState(null);
     const [endDateStart, setEndDateStart] = useState(formattedNow);
     const [age, setAge] = useState(null);
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        setFocus,
-        setError,
-        reset,
-        watch,
-        formState: { errors }
-    } = useForm();
+    const { register, handleSubmit, setValue, setFocus, setError, reset, watch, formState: { errors } } = useForm();
     const value = watch("particular");
     const getCheckedCpf = (data) => {
         const isRepeatedCpf = (cpf) => {
@@ -57,9 +48,6 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
             style: "currency",
             currency: "BRL"
         });
-    };
-    const crmInputText = () => {
-        setValue("crm", title);
     };
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
@@ -172,8 +160,8 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
         setValue("particular", formatValue, { shouldValidate: true });
     }, [value, setValue]);
     useEffect(() => {
-        crmInputText();
-    }, []);
+        setValue("crm", title);
+    }, [title]);
     useEffect(() => {
         if (searchPatient !== null) {
             setValue("cpf", searchPatient.cpf);

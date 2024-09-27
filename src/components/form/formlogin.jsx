@@ -13,11 +13,7 @@ export const FormLogin = () => {
     const { login } = useAuth();
     const [eventAlert, setEventAlert] = useState(null);
     const [buttonType, setButtonType] = useState("");
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const handleButtonClicked = (type) => {
         setButtonType(type);
     };
