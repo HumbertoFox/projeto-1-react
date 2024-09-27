@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { Input } from "../../styles/buttonstyle";
 import { useAuth } from "../../contexts/authcontext";
 import { useForm } from "react-hook-form";
 import { viaCepApi } from "../../services/api/viacep";
-import { DivButtons } from "../../styles/mainpagestyle";
-import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
-import { Button, Input } from "../../styles/buttonstyle";
 import { ActivityClicked } from "../modal/eventsclick";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor, LabelText } from "../../styles/formstyle";
-export const FormEditPatient = ({ searchPatient, rotas }) => {
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor, LabelText, LabelTextRadios } from "../../styles/formstyle";
+export const FormFull = ({ title, searchPatient, page }) => {
+    const now = new Date();
+    const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
-    const navigate = useNavigate();
     const [radioSelect, setRadioSelect] = useState("house");
+    const [selectRadio, setSelectRadio] = useState("planradio");
     const [eventAlert, setEventAlert] = useState(null);
+    const [isReturn, setIsReturn] = useState(false);
+    const [endDateStart, setEndDateStart] = useState(formattedNow);
     const [age, setAge] = useState(null);
-    const { register, handleSubmit, setValue, setFocus, setError, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, setFocus, setError, reset, watch, formState: { errors } } = useForm();
+    const value = watch("particular");
     const getCheckedCpf = (data) => {
         const isRepeatedCpf = (cpf) => {
             const firstDigit = cpf[0];
@@ -38,12 +41,22 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
         let correctCpf = data.substring(0, 9) + primaryCheckDigit + secondaryCheckDigit;
         return data === correctCpf;
     };
+    const formatAsCurrency = (value) => {
+        if (!value) return "0";
+        const numericalValue = parseFloat(value.replace(/[^\d]/g, "")) / 100;
+        return numericalValue.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    };
     const swapRadioSelect = element => {
         const selectValue = element.target.value;
         setRadioSelect(selectValue);
-        setValue("building", selectValue !== "buildingradio" ? "..." : "");
-        setValue("buildingblock", selectValue !== "buildingradio" ? "..." : "");
-        setValue("apartment", selectValue !== "buildingradio" ? "..." : "");
+    };
+    const swapSelectedRadio = element => {
+        const selectedValue = element.target.value;
+        setSelectRadio(selectedValue);
+        setValue("courtesy", selectedValue !== "courtesyradio" ? "Não" : "Sim");
     };
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
@@ -117,7 +130,7 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
         };
         data.user_id = userSystem.id;
         try {
-            const response = await apiDbPostgres(data, rotas);
+            const response = await apiDbPostgres(data, "registerconsultation");
             if (response.Error == true) {
                 setEventAlert({
                     type: "Error",
@@ -125,6 +138,7 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
                 });
             } else {
                 reset();
+                crmInputText();
                 setEventAlert({
                     type: "Success",
                     message: response.message
@@ -138,6 +152,13 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
         };
     };
     useEffect(() => {
+        const formatValue = formatAsCurrency(value);
+        setValue("particular", formatValue, { shouldValidate: true });
+    }, [value, setValue]);
+    useEffect(() => {
+        setValue("crm", title);
+    }, [title]);
+    useEffect(() => {
         if (searchPatient !== null) {
             setValue("cpf", searchPatient.cpf);
             setValue("name", searchPatient.name);
@@ -148,21 +169,24 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
             setValue("street", searchPatient.street);
             setValue("district", searchPatient.district);
             setValue("city", searchPatient.city);
-            setValue("plan", searchPatient.plan);
+            setValue("covenant", searchPatient.covenant);
             setValue("residencenumber", searchPatient.residencenumber);
             setValue("building", searchPatient.building);
             setValue("buildingblock", searchPatient.buildingblock);
             setValue("apartment", searchPatient.apartment);
-            setValue("observation", searchPatient.observation)
+            setValue("observation", searchPatient.observation);
+            setIsReturn(searchPatient.isLastConsultationOld);
         };
     }, [searchPatient]);
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
+            <LabelText>CRM
+                <input type="number" id="crm" disabled {...register("crm")} />
+            </LabelText>
             <LabelText htmlFor="cpf">CPF
                 <input
                     type="number"
                     id="cpf"
-                    disabled={true}
                     placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
                     className={`${errors.cpf ? "required" : ""}`}
                     {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
@@ -237,36 +261,55 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
                 />
             </LabelText>
             <DivRadio>
-                <LabelText htmlFor="house">
+                <LabelTextRadios htmlFor="house">
                     <input type="radio"
                         id="house"
                         value="house"
-                        checked={radioSelect === "house" ? true : false}
-                        onChange={swapRadioSelect}
+                        defaultChecked
+                        {...register("typeresidence", { onChange: swapRadioSelect })}
                     />
                     Casa
-                </LabelText>
-                <LabelText htmlFor="buildingradio">
+                </LabelTextRadios>
+                <LabelTextRadios htmlFor="buildingradio">
                     <input type="radio"
                         id="buildingradio"
                         value="buildingradio"
-                        checked={radioSelect === "buildingradio" ? true : false}
-                        onChange={swapRadioSelect}
+                        {...register("typeresidence")}
                     />
                     Edifício
-                </LabelText>
+                </LabelTextRadios>
             </DivRadio>
-            <DivNameEd className={radioSelect}>
-                <LabelText htmlFor="building">Nome do Edifício
-                    <input type="text" id="building" {...register("building", { required: true, value: "..." })} />
-                </LabelText>
-                <LabelText htmlFor="buildingblock">Bloco
-                    <input type="text" id="buildingblock" {...register("buildingblock", { required: true, value: "..." })} />
-                </LabelText>
-                <LabelText htmlFor="apartment">Apartamento
-                    <input type="text" id="apartment" {...register("apartment", { required: true, value: "..." })} />
-                </LabelText>
-            </DivNameEd>
+            {radioSelect === "buildingradio" && (
+                <DivNameEd>
+                    <LabelText htmlFor="building">Nome do Edifício
+                        <input
+                            type="text"
+                            id="building"
+                            placeholder={`${errors.building ? "Campo Obrigatório" : ""}`}
+                            className={`${errors.building ? "required" : ""}`}
+                            {...register("building", { required: true })}
+                        />
+                    </LabelText>
+                    <LabelText htmlFor="buildingblock">Bloco
+                        <input
+                            type="text"
+                            id="buildingblock"
+                            placeholder={`${errors.buildingblock ? "Campo Obrigatório" : ""}`}
+                            className={`${errors.buildingblock ? "required" : ""}`}
+                            {...register("buildingblock", { required: true })}
+                        />
+                    </LabelText>
+                    <LabelText htmlFor="apartment">Apartamento
+                        <input
+                            type="text"
+                            id="apartment"
+                            placeholder={`${errors.apartment ? "Campo Obrigatório" : ""}`}
+                            className={`${errors.apartment ? "required" : ""}`}
+                            {...register("apartment", { required: true })}
+                        />
+                    </LabelText>
+                </DivNameEd>
+            )}
             <LabelText htmlFor="district">Bairro/Distrito
                 <input
                     type="text"
@@ -285,12 +328,104 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
                     {...register("city", { required: true })}
                 />
             </LabelText>
-            <DivButtons $rota={rotas}>
-                <Input type="submit" title="Editar Paciente" value="Editar" />
-                <Button title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</Button>
-                <Button title="Menu" onClick={() => navigate("/menuRegister")}>Menu</Button>
-            </DivButtons>
-            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
+            <DivRadio>
+                <LabelTextRadios htmlFor="planradio">
+                    <input type="radio"
+                        id="planradio"
+                        value="planradio"
+                        defaultChecked
+                        {...register("typeservice", { onChange: swapSelectedRadio })}
+                    />
+                    Plano
+                </LabelTextRadios>
+                <LabelTextRadios htmlFor="particularradio">
+                    <input type="radio"
+                        value="particularradio"
+                        id="particularradio"
+                        {...register("typeservice")}
+                    />
+                    Particular
+                </LabelTextRadios>
+                {page === "RegisterConsultDoctory" && (
+                    <LabelTextRadios htmlFor="courtesyradio">
+                        <input type="radio"
+                            value="courtesyradio"
+                            id="courtesyradio"
+                            {...register("typeservice")}
+                        />
+                        Cortesia
+                    </LabelTextRadios>
+                )}
+            </DivRadio>
+            <div>
+                {selectRadio === "planradio" && (
+                    <LabelText htmlFor="covenant">Covênio
+                        <input
+                            type="text"
+                            id="covenant"
+                            placeholder={`${errors.covenant ? "Campo Obrigatório" : ""}`}
+                            className={`${errors.covenant ? "required" : ""}`}
+                            {...register("covenant", { required: true })}
+                        />
+                    </LabelText>
+                )}
+                {selectRadio === "particularradio" && (
+                    <LabelText htmlFor="particular">Valor
+                        <input
+                            type="text"
+                            id="particular"
+                            {...register("particular", { value: "0" })} />
+                    </LabelText>
+                )}
+                {(page === "RegisterConsultDoctory" && selectRadio === "courtesyradio") && (
+                    <LabelText htmlFor="courtesy">Cortesia
+                        <input
+                            type="text"
+                            id="courtesy"
+                            disabled
+                            {...register("courtesy", { required: true, value: "Não" })}
+                        />
+                    </LabelText>
+                )}
+            </div>
+            {isReturn && (
+                <LabelText htmlFor="returnconsult">Volta/Retorno
+                    <select
+                        {...register("returnconsult")}>
+                        <option value="yes">Sim</option>
+                        <option value="no">Não</option>
+                    </select>
+                </LabelText>
+            )}
+            <LabelText htmlFor="consultdatestart">Data da Consulta Inicio
+                <input
+                    type="datetime-local"
+                    id="consultdatestart"
+                    min={formattedNow}
+                    className={`${errors.consultdatestart ? "requireddate" : ""}`}
+                    {...register("consultdatestart", { required: true, onBlur: (elementDate) => setEndDateStart(elementDate.target.value) })}
+                />
+            </LabelText>
+            <LabelText htmlFor="consultdateend">Data da Consulta Termino
+                <input
+                    type="datetime-local"
+                    id="consultdateend"
+                    min={endDateStart == "" ? formattedNow : endDateStart}
+                    className={`${errors.consultdateend ? "requireddate" : ""}`}
+                    {...register("consultdateend", { required: true })}
+                />
+            </LabelText>
+            <LabelText htmlFor="observation">Observações
+                <textarea
+                    id="observation"
+                    className={`${errors.observation ? "requireddate" : ""}`}
+                    {...register("observation", { required: true })}
+                />
+            </LabelText>
+            <Input type="submit" title="Agendar Paciente" value="Agendar" />
+            {eventAlert && (
+                <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />
+            )}
         </FormDoctor>
     );
 };

@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 const Button = styled.button.attrs({ type: 'button' })`
     font-size: .8rem;
-    font-weight: 400;
     color: black;
     background-color: #90EE90;
     padding: 5px 10px;
@@ -31,7 +30,6 @@ const Button = styled.button.attrs({ type: 'button' })`
 `;
 const Input = styled.input.attrs({ type: 'submit' })`
     font-size: .8rem;
-    font-weight: 400;
     color: black;
     background-color: #90EE90;
     padding: 5px 10px;

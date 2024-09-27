@@ -27,8 +27,25 @@ const DivButtons = styled.div`
     padding-top: 5px;
 `;
 const MainLogin = styled(MainPrimary)`
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: 1440px;
+    flex-direction: column;
+    gap: 30px;
+    h1 {
+        font-size: 1rem;
+        font-weight: bold;
+        color: hsl(205.46, 86.5%, 46.47%);
+        text-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
+    }
+    margin: 30px auto;
+    transition: .4s ease-in-out;
+    @media screen and (max-width: 480px),
+    screen and (max-height: 700px) {
+        width: 375px;
+    }
 `;
 const SectionLogin = styled(DivForms)`
     align-items: center;
@@ -52,6 +69,7 @@ const SectionLogin = styled(DivForms)`
 `;
 const DivLogin = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 30px;
     svg {
@@ -63,22 +81,6 @@ const DivLogin = styled.div`
     }
 `;
 const MainMenu = styled(MainLogin)`
-    width: 100%;
-    max-width: 1440px;
-    flex-direction: column;
-    gap: 30px;
-    h1 {
-        font-size: 1rem;
-        font-weight: bold;
-        color: hsl(205.46, 86.5%, 46.47%);
-        text-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
-    }
-    margin: 30px auto;
-    transition: .4s ease-in-out;
-    @media screen and (max-width: 480px),
-    screen and (max-height: 700px) {
-        width: 375px;
-    }
 `;
 const DivMenus = styled.div`
     display: flex;

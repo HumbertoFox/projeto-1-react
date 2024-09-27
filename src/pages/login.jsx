@@ -1,18 +1,18 @@
 import React from "react";
-import { MainLogin, SectionLogin, DivLogin } from "../styles/mainpagestyle";
-import { FormLogin } from "../components/form/formlogin";
-import LogoPrincipal from "../assets/simbolo-de-medicina.png";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FormLogin } from "../components/form/formlogin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { MainLogin, SectionLogin, DivLogin } from "../styles/mainpagestyle";
+import LogoPrincipal from "../assets/simbolo-de-medicina.png";
 library.add(fas);
 export const LoginPage = () => {
     return (
         <MainLogin>
-            <SectionLogin>
                 <h1>Usuário do Sistema</h1>
-                <img src={LogoPrincipal} alt="Logo Medicina" />
+            <SectionLogin>
                 <DivLogin>
+                <img src={LogoPrincipal} alt="Logo Medicina" />
                     <FontAwesomeIcon icon="fa-solid fa-user" />
                     <FormLogin />
                 </DivLogin>

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { viaCepApi } from "../../services/api/viacep";
-import { LabelText } from "../../styles/labelstyle";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../styles/buttonstyle";
 import { apiDbPostgres } from "../../services/api/apis";
 import { ActivityClicked } from "../modal/eventsclick";
 import { DivButtons, Fieldset } from "../../styles/mainpagestyle";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor, LabelText } from "../../styles/formstyle";
 export const FormUserRegister = ({ rotas, searchPatient }) => {
     const { register, handleSubmit, setValue, setFocus, setError, watch, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
@@ -150,72 +149,80 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
             <Fieldset disabled={rotas === "removeuser" ? true : false}>
-                <LabelText htmlFor="cpf">CPF</LabelText>
-                <input
-                    type="text"
-                    id="cpf"
-                    disabled={rotas === "edituser" ? true : false}
-                    placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.cpf ? "required" : ""}`}
-                    {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
-                />
-                <LabelText htmlFor="name">Nome</LabelText>
-                <input
-                    type="text"
-                    id="name"
-                    placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.name ? "required" : ""}`}
-                    {...register("name", { required: true, pattern: { value: /[A-Za-z]{5}/g } })}
-                />
+                <LabelText htmlFor="cpf">CPF
+                    <input
+                        type="text"
+                        id="cpf"
+                        disabled={rotas === "edituser" ? true : false}
+                        placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.cpf ? "required" : ""}`}
+                        {...register("cpf", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
+                    />
+                </LabelText>
+                <LabelText htmlFor="name">Nome
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder={`${errors.name ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.name ? "required" : ""}`}
+                        {...register("name", { required: true, pattern: { value: /[A-Za-z]{5}/g } })}
+                    />
+                </LabelText>
                 <DivDate>
                     <DivDateBirth>
-                        <LabelText htmlFor="dateofbirth">Data de Nascimento</LabelText>
-                        <input
-                            type="date"
-                            id="dateofbirth"
-                            className={`${errors.dateofbirth ? "requireddate" : ""}`}
-                            {...register("dateofbirth", { required: true, onChange: handleDateChange })}
-                        />
+                        <LabelText htmlFor="dateofbirth">Data de Nascimento
+                            <input
+                                type="date"
+                                id="dateofbirth"
+                                className={`${errors.dateofbirth ? "requireddate" : ""}`}
+                                {...register("dateofbirth", { required: true, onChange: handleDateChange })}
+                            />
+                        </LabelText>
                     </DivDateBirth>
                     <DivDateAge>
                         <p>{age}</p>
                         <p>anos</p>
                     </DivDateAge>
                 </DivDate>
-                <LabelText htmlFor="telephone">Telefone</LabelText>
-                <input
-                    type="tel"
-                    id="telephone"
-                    placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.telephone ? "required" : ""}`}
-                    {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
-                />
-                <LabelText htmlFor="email">Email</LabelText>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.email ? "required" : ""}`}
-                    {...register("email", { required: true })}
-                />
-                <LabelText htmlFor="zipcode">CEP</LabelText>
-                <input type="text" id="zipcode" {...register("zipcode", { onBlur: checkedZipCode })} />
-                <LabelText htmlFor="street">Logradouro Av/Travessa/Rua</LabelText>
-                <input
-                    type="text"
-                    id="street"
-                    placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.street ? "required" : ""}`}
-                    {...register("street", { required: true })}
-                />
-                <LabelText htmlFor="residencenumber">Número da Casa/Edifício</LabelText>
-                <input
-                    type="text"
-                    id="residencenumber"
-                    placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.residencenumber ? "required" : ""}`}
-                    {...register("residencenumber", { required: true })}
-                />
+                <LabelText htmlFor="telephone">Telefone
+                    <input
+                        type="tel"
+                        id="telephone"
+                        placeholder={`${errors.telephone ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.telephone ? "required" : ""}`}
+                        {...register("telephone", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
+                    />
+                </LabelText>
+                <LabelText htmlFor="email">Email
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder={`${errors.email ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.email ? "required" : ""}`}
+                        {...register("email", { required: true })}
+                    />
+                </LabelText>
+                <LabelText htmlFor="zipcode">CEP
+                    <input type="text" id="zipcode" {...register("zipcode", { onBlur: checkedZipCode })} />
+                </LabelText>
+                <LabelText htmlFor="street">Logradouro Av/Travessa/Rua
+                    <input
+                        type="text"
+                        id="street"
+                        placeholder={`${errors.street ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.street ? "required" : ""}`}
+                        {...register("street", { required: true })}
+                    />
+                </LabelText>
+                <LabelText htmlFor="residencenumber">Número da Casa/Edifício
+                    <input
+                        type="text"
+                        id="residencenumber"
+                        placeholder={`${errors.residencenumber ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.residencenumber ? "required" : ""}`}
+                        {...register("residencenumber", { required: true })}
+                    />
+                </LabelText>
                 <DivRadio>
                     <LabelText htmlFor="house">
                         <input type="radio"
@@ -237,48 +244,55 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
                     </LabelText>
                 </DivRadio>
                 <DivNameEd className={radioSelect}>
-                    <LabelText htmlFor="building">Nome do Edifício</LabelText>
-                    <input type="text" id="building" {...register("building", { value: "..." })} />
-                    <LabelText htmlFor="buildingblock">Bloco</LabelText>
-                    <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
-                    <LabelText htmlFor="apartment">Apartamento</LabelText>
-                    <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
+                    <LabelText htmlFor="building">Nome do Edifício
+                        <input type="text" id="building" {...register("building", { value: "..." })} />
+                    </LabelText>
+                    <LabelText htmlFor="buildingblock">Bloco
+                        <input type="text" id="buildingblock" {...register("buildingblock", { value: "..." })} />
+                    </LabelText>
+                    <LabelText htmlFor="apartment">Apartamento
+                        <input type="text" id="apartment" {...register("apartment", { value: "..." })} />
+                    </LabelText>
                 </DivNameEd>
-                <LabelText htmlFor="district">Bairro/Distrito</LabelText>
-                <input
-                    type="text"
-                    id="district"
-                    placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.district ? "required" : ""}`}
-                    {...register("district", { required: true })}
-                />
-                <LabelText htmlFor="city">Cidade</LabelText>
-                <input
-                    type="text"
-                    id="city"
-                    placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.city ? "required" : ""}`}
-                    {...register("city", { required: true })}
-                />
+                <LabelText htmlFor="district">Bairro/Distrito
+                    <input
+                        type="text"
+                        id="district"
+                        placeholder={`${errors.district ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.district ? "required" : ""}`}
+                        {...register("district", { required: true })}
+                    />
+                </LabelText>
+                <LabelText htmlFor="city">Cidade
+                    <input
+                        type="text"
+                        id="city"
+                        placeholder={`${errors.city ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.city ? "required" : ""}`}
+                        {...register("city", { required: true })}
+                    />
+                </LabelText>
             </Fieldset>
-            <LabelText htmlFor="password">Senha</LabelText>
-            <input
-                type="password"
-                id="password"
-                autoComplete="off"
-                placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
-                className={`${errors.password ? "required" : ""}`}
-                {...register("password", { required: true })}
-            />
-            <LabelText htmlFor="passwordchecked">Confirme Senha</LabelText>
-            <input
-                type="password"
-                id="passwordchecked"
-                autoComplete="off"
-                placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
-                className={`${errors.passwordchecked ? "required" : ""}`}
-                {...register("passwordchecked", { required: true, validate: (value) => value === password })}
-            />
+            <LabelText htmlFor="password">Senha
+                <input
+                    type="password"
+                    id="password"
+                    autoComplete="off"
+                    placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.password ? "required" : ""}`}
+                    {...register("password", { required: true })}
+                />
+            </LabelText>
+            <LabelText htmlFor="passwordchecked">Confirme Senha
+                <input
+                    type="password"
+                    id="passwordchecked"
+                    autoComplete="off"
+                    placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.passwordchecked ? "required" : ""}`}
+                    {...register("passwordchecked", { required: true, validate: (value) => value === password })}
+                />
+            </LabelText>
             <DivButtons>
                 {rotas === "removeuser" ?
                     <Input type="submit" title="Remover Usuário" value="Remover" /> :

@@ -1,18 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "../contexts/authcontext";
-import { PrivateRoute } from "../components/privaterouts/privateroute";
 import { LoginPage } from "../pages/login";
-import { MenuRegistersPage } from "../pages/menu";
 import { AgendaPage } from "../pages/agenda";
-import { ConsultationDrXPage } from "../pages/consultationdrx";
-import { ConsultationDrYPage } from "../pages/consultationdry";
-import { ReportDoctorxPage } from "../pages/reportdoctorx";
-import { ReportDoctoryPage } from "../pages/reportdoctory";
-import { RegisterUserPage } from "../pages/registeruser";
-import { RegisterDoctorsPage } from "../pages/registerdoctors";
+import { AuthProvider } from "../contexts/authcontext";
 import { EditUserPage } from "../pages/edituser";
+import { PrivateRoute } from "../components/privaterouts/privateroute";
 import { EditPatientPage } from "../pages/editpatient";
 import { BlockingUserPage } from "../pages/blockinguser";
+import { RegisterUserPage } from "../pages/registeruser";
+import { MenuRegistersPage } from "../pages/menu";
+import { ReportDoctorxPage } from "../pages/reportdoctorx";
+import { ReportDoctoryPage } from "../pages/reportdoctory";
+import { ConsultationDrXPage } from "../pages/consultationdrx";
+import { ConsultationDrYPage } from "../pages/consultationdry";
+import { RegisterDoctorsPage } from "../pages/registerdoctors";
 export const AppRouters = () => {
     return (
         <AuthProvider>

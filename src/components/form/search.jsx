@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "../../styles/buttonstyle";
 import { useForm } from "react-hook-form";
-import { LabelText } from "../../styles/labelstyle";
+import { LabelText } from "../../styles/formstyle";
 import { FormSerach } from "../../styles/formsearch";
 import { apiDbPostgres } from "../../services/api/apis";
 import { ActivityClicked } from "../modal/eventsclick";
@@ -77,14 +77,15 @@ export const Search = ({ searchPatient, rotas }) => {
     }, [patientSearch]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="searchpatient">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : rotas === "searchdoctor" ? "Pesquisar Doutor(a) por CPF" : "Pesquisar Usuário por CPF"}</LabelText>
-            <input
-                type="search"
-                id="searchpatient"
-                placeholder={`${errors.searchpatient ? "Campo Obrigatório" : ""}`}
-                className={`${errors.searchpatient ? "required" : ""}`}
-                {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
-            />
+            <LabelText htmlFor="searchpatient">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : rotas === "searchdoctor" ? "Pesquisar Doutor(a) por CPF" : "Pesquisar Usuário por CPF"}
+                <input
+                    type="search"
+                    id="searchpatient"
+                    placeholder={`${errors.searchpatient ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.searchpatient ? "required" : ""}`}
+                    {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
+                />
+            </LabelText>
             <Input type="submit" title="Pesquisar" value="Pesquisar" />
             {eventAlert && (
                 <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />

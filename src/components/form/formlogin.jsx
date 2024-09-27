@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Input } from "../../styles/buttonstyle";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../contexts/authcontext";
-import { LabelText } from "../../styles/labelstyle";
-import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
 import { ActivityClicked } from "../modal/eventsclick";
+import { FormDoctor, LabelText } from "../../styles/formstyle";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -59,24 +58,26 @@ export const FormLogin = () => {
     };
     return (
         <FormDoctor onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="cpf">CPF</LabelText>
-            <input
-                type="number"
-                id="cpf"
-                autoComplete="off"
-                placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
-                className={`${errors.cpf ? "required" : ""}`}
-                {...register("cpf", { required: true })}
-            />
-            <LabelText htmlFor="password">Senha</LabelText>
-            <input
-                type="password"
-                id="password"
-                autoComplete="off"
-                placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
-                className={`${errors.password ? "required" : ""}`}
-                {...register("password", { required: true })}
-            />
+            <LabelText htmlFor="cpf">CPF
+                <input
+                    type="number"
+                    id="cpf"
+                    autoComplete="off"
+                    placeholder={`${errors.cpf ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.cpf ? "required" : ""}`}
+                    {...register("cpf", { required: true })}
+                />
+            </LabelText>
+            <LabelText htmlFor="password">Senha
+                <input
+                    type="password"
+                    id="password"
+                    autoComplete="off"
+                    placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.password ? "required" : ""}`}
+                    {...register("password", { required: true })}
+                />
+            </LabelText>
             <DivButtons>
                 <Input type="submit" title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
                 <Input type="submit" title="Menu" value="Menu" onClick={() => handleButtonClicked("menu")} />

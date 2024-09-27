@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import IconError from "../assets/aviso.png";
 const FormDoctor = styled.form`
     width: 280px;
@@ -9,6 +9,10 @@ const FormDoctor = styled.form`
         -webkit-appearance: none;
         margin: 0;
     }
+    select {
+        width: 220px;
+        background: none;
+    }
     input[type=text],
     input[type=number],
     input[type=tel],
@@ -16,7 +20,8 @@ const FormDoctor = styled.form`
     input[type=date],
     input[type=datetime-local],
     input[type=password],
-    textarea {
+    textarea,
+    select {
         height: 30px;
         font-size: .9rem;
         border: 1px solid #D2D4DE;
@@ -33,7 +38,8 @@ const FormDoctor = styled.form`
     input[type=date]:focus,
     input[type=datetime-local]:focus,
     input[type=password]:focus,
-    textarea:focus {
+    textarea:focus,
+    select:focus {
         border: 1px solid hsla(205.46, 86.5%, 46.47%, .5);
         box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
     }
@@ -48,7 +54,8 @@ const FormDoctor = styled.form`
         padding: 5px;
     }
     input.required:focus,
-    input.requireddate:focus {
+    input.requireddate:focus,
+    textarea.requireddate:focus {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
         box-shadow: 0 0 5px hsla(332.47, 100%, 50%, .5);
     }
@@ -57,7 +64,8 @@ const FormDoctor = styled.form`
         background: url(${IconError}) no-repeat right 2% bottom 50%;
         background-size: 20px;
     }
-    input.requireddate {
+    input.requireddate,
+    textarea.requireddate {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
     }
     .required::placeholder {
@@ -83,47 +91,7 @@ const DivRadio = styled.div`
     }
 `;
 const DivNameEd = styled.div`
-    display: none;
-    flex-direction: column;
-${({ className }) => {
-        if (className === "buildingradio") {
-            return css`
-            display: flex;
-        `;
-        }
-    }};
-`;
-const DivPlan = styled.div`
-    display: none;
-    flex-direction: column;
-${({ className }) => {
-        if (className === "planradio") {
-            return css`
-            display: flex;
-        `;
-        }
-    }};
-`;
-const DivParticular = styled.div`
-    display: none;
-${({ className }) => {
-        if (className === "particularradio") {
-            return css`
-                display: flex;
-            `;
-        };
-    }};
-    flex-direction: column;
-`;
-const DivCourtesy = styled.div`
-    display: none;
-${({ className }) => {
-        if (className === "courtesyradio") {
-            return css`
-                display: flex;
-            `;
-        };
-    }};
+    display: flex;
     flex-direction: column;
 `;
 const DivDate = styled.div`
@@ -140,4 +108,16 @@ const DivDateAge = styled(DivDateBirth)`
         color: grey;
     }
 `;
-export { FormDoctor, DivRadio, DivNameEd, DivPlan, DivParticular, DivDate, DivDateBirth, DivDateAge, DivCourtesy };
+const LabelText = styled.label`
+    display: flex;
+    flex-direction: column;
+    font-size: .9rem;
+    color: gray;
+`;
+const LabelTextRadios = styled.label`
+    display: flex;
+    gap: 5px;
+    font-size: .9rem;
+    color: gray;
+`;
+export { FormDoctor, DivRadio, DivNameEd, DivDate, DivDateBirth, DivDateAge, LabelText, LabelTextRadios };
