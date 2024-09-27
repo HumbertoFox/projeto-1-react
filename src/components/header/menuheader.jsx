@@ -3,8 +3,8 @@ import { Header, ImgMedicina, LiLogout, UlHeader } from "../../styles/headerstyl
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authcontext";
 import LogoPrincipal from "../../assets/simbolo-de-medicina.png";
-import LogoDoutora from "../../assets/doutora.png";
-import LogoDoutor from "../../assets/doutor.png";
+import LogoDoctorX from "../../assets/doctorx.png";
+import LogoDoctorY from "../../assets/doctory.png";
 import { Link } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -53,8 +53,8 @@ export const HeaderMenu = () => {
                     </Link>
                 </li>
                 <li>
-                    <img src={LogoDoutora} alt="Icone doutora" />
-                    <span>Doutora teste</span>
+                    <img src={LogoDoctorX} title="Doutora Marta" alt="Icone doutora" />
+                    <span>Doutora Marta</span>
                 </li>
                 <li key={"Consultation DoctorX"}
                     title="Consulta Doutora"
@@ -72,13 +72,13 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("patientsdoctorx")}
                 >
                     <Link to={"/reportDoctorX"}>
-                        <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
+                        <FontAwesomeIcon icon="fa-solid fa-check" />
                         <span>Listar Pacientes</span>
                     </Link>
                 </li>
                 <li>
-                    <img src={LogoDoutor} alt="Icone doutor" />
-                    <span>Doutor teste</span>
+                    <img src={LogoDoctorY} title="Doutor Sérgio" alt="Icone doutor" />
+                    <span>Doutor Sérgio</span>
                 </li>
                 <li key={"Consultation DoctorY"}
                     title="Consulta Doutor"
@@ -96,7 +96,7 @@ export const HeaderMenu = () => {
                     onClick={() => handleMenuLiClick("patientsdoctory")}
                 >
                     <Link to={"/reportDoctorY"}>
-                        <FontAwesomeIcon icon="fa-regular fa-calendar-check" />
+                        <FontAwesomeIcon icon="fa-solid fa-check" />
                         <span>Listar Pacientes</span>
                     </Link>
                 </li>

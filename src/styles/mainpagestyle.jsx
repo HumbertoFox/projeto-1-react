@@ -62,26 +62,53 @@ const DivLogin = styled.div`
         flex-direction: column;
     }
 `;
+const MainMenu = styled(MainLogin)`
+    width: 100%;
+    max-width: 1440px;
+    flex-direction: column;
+    gap: 30px;
+    h1 {
+        font-size: 1rem;
+        font-weight: bold;
+        color: hsl(205.46, 86.5%, 46.47%);
+        text-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
+    }
+    margin: 30px auto;
+    transition: .4s ease-in-out;
+    @media screen and (max-width: 480px),
+    screen and (max-height: 700px) {
+        width: 375px;
+    }
+`;
 const DivMenus = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 30px;
+    padding: 30px;
+    border: 1px solid hsl(205.46, 86.5%, 46.47%);
+    border-radius: 15px;
+    box-shadow: 0 0 20px hsla(120, 73.44%, 74.9%, .5);
+    margin: 0 30px;
+`;
+const DivFormsMenu = styled(DivMenus)`
+    flex-direction: column;
     svg {
-        font-size: 82px;
+        font-size: 72px;
         color: hsl(205.46, 86.5%, 46.47%);
     }
 `;
 const DivIconDoble = styled.div`
-    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
     gap: 30px;
     a {
-        transition: .3s ease-in-out;
+        transition: .4s ease-in-out;
+    }
+    svg {
+        font-size: 72px;
+        color: hsl(205.46, 86.5%, 46.47%);
     }
     a:hover {
         transform: scale(1.1);
@@ -92,4 +119,4 @@ const Fieldset = styled.fieldset`
     display: flex;
     flex-direction: column;
 `;
-export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin, DivMenus, DivIconDoble, Fieldset };
+export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin, MainMenu, DivMenus, DivFormsMenu, DivIconDoble, Fieldset };

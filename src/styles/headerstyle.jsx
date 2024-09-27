@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 const Header = styled.header`
     width: 200px;
     height: 100vh;
@@ -10,30 +9,26 @@ const Header = styled.header`
     align-items: center;
     background-color: #90EE90;
     padding: 10px 0 10px 10px;
-    transition: .3s ease-in-out;
+    transition: .4s ease-in-out;
     overflow-x: hidden;
     @media (max-width: 820px) {
         width: 75px;
     }
 `;
-
 const ImgMedicina = styled.img`
     width: 150px;
-    margin: 15px 15px 15px 5px;
-    transition: .3s ease-in-out;
+    transition: .4s ease-in-out;
     @media screen and (max-width: 820px),
     screen and (max-height: 700px) {
         width: 60px;
     }
 `;
-
 const UlHeader = styled.ul`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     margin-top: 10px;
-    
     li {
         position: relative;
     }
@@ -60,7 +55,7 @@ const UlHeader = styled.ul`
         cursor: default;
     }
     svg {
-        font-size: 1.9rem;
+        font-size: 1.7rem;
     }
     a {
         display: flex;
@@ -68,10 +63,13 @@ const UlHeader = styled.ul`
         gap: 10px;
         background-color: #90EE90;
         padding: 10px;
-        transition: .3s ease-in-out;
+        transition: .4s ease-in-out;
     }
-    img {
+    li:nth-child(2) img {
         width: 40px;
+    }
+    li:nth-child(5) img {
+        width: 35px;
     }
     .active {
         background-color: #FFF;
@@ -104,7 +102,8 @@ const UlHeader = styled.ul`
         z-index: -1;
     }
     span {
-        font-size: .9rem;
+        font-size: .8rem;
+        font-weight: 400;
     }
     @media (max-width: 820px) {
         span {
@@ -119,13 +118,10 @@ const UlHeader = styled.ul`
         }
     }
 `;
-
 const LiLogout = styled.li`
     margin-top: 15px;
-
     svg {
         rotate: 180deg;
     }
 `;
-
 export { Header, ImgMedicina, UlHeader, LiLogout };

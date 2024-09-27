@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 const Button = styled.button.attrs({ type: 'button' })`
-    font-size: .9rem;
+    font-size: .8rem;
+    font-weight: 400;
     color: black;
     background-color: #90EE90;
     padding: 5px 10px;
@@ -8,7 +9,7 @@ const Button = styled.button.attrs({ type: 'button' })`
     border-radius: 5px;
     cursor: pointer;
     margin: 0 auto;
-    transition: .2s ease-in-out;
+    transition: .4s ease-in-out;
     &:hover {
         border: 1px solid hsla(205.46, 86.5%, 46.47%, .5);
         box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
@@ -29,7 +30,8 @@ const Button = styled.button.attrs({ type: 'button' })`
     }};
 `;
 const Input = styled.input.attrs({ type: 'submit' })`
-    font-size: .9rem;
+    font-size: .8rem;
+    font-weight: 400;
     color: black;
     background-color: #90EE90;
     padding: 5px 10px;
@@ -37,7 +39,7 @@ const Input = styled.input.attrs({ type: 'submit' })`
     border-radius: 5px;
     cursor: pointer;
     margin: 0 auto;
-    transition: .2s ease-in-out;
+    transition: .4s ease-in-out;
     &:hover {
         border: 1px solid hsla(205.46, 86.5%, 46.47%, .5);
         box-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);

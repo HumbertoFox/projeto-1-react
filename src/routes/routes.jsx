@@ -12,7 +12,7 @@ import { RegisterUserPage } from "../pages/registeruser";
 import { RegisterDoctorsPage } from "../pages/registerdoctors";
 import { EditUserPage } from "../pages/edituser";
 import { EditPatientPage } from "../pages/editpatient";
-import { RemoveUserPage } from "../pages/removeuser";
+import { BlockingUserPage } from "../pages/blockinguser";
 export const AppRouters = () => {
     return (
         <AuthProvider>
@@ -29,7 +29,7 @@ export const AppRouters = () => {
                     <Route path="/consultationDRY" element={<PrivateRoute><ConsultationDrYPage /></PrivateRoute>} />
                     <Route path="/reportDoctorX" element={<PrivateRoute><ReportDoctorxPage /></PrivateRoute>} />
                     <Route path="/reportDoctorY" element={<PrivateRoute><ReportDoctoryPage /></PrivateRoute>} />
-                    <Route path="/removeUser" element={<PrivateRoute><RemoveUserPage /></PrivateRoute>} />
+                    <Route path="/blockingUser" element={<PrivateRoute><BlockingUserPage /></PrivateRoute>} />
                     <Route path="*" element={<LoginPage />} />
                 </Routes>
             </BrowserRouter>
