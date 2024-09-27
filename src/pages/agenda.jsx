@@ -72,7 +72,9 @@ export const AgendaPage = () => {
                             toolbar: CustomToolbar,
                         }}
                     />
-                    {eventSelected && (<ActivityActive event={eventSelected} onClose={handleEventSelectClose} />)}
+                    {eventSelected && (
+                        <ActivityActive event={eventSelected} onClose={handleEventSelectClose} />
+                    )}
                 </DivHomeMain>
             </MainSecondary>
         </MainPrimary>

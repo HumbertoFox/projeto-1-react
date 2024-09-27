@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { Input } from "../../styles/buttonstyle";
 import { useForm } from "react-hook-form";
-import { FormSerach } from "../../styles/formsearch";
-import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
-import { ActivityClicked } from "../modal/eventsclick";
+import { FormSerach } from "../../styles/formsearch";
 import { apiDbPostgres } from "../../services/api/apis";
+import { ActivityClicked } from "../modal/eventsclick";
 export const Search = ({ searchPatient, rotas }) => {
     const [patientSearch, setPatientSearch] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
@@ -85,7 +85,7 @@ export const Search = ({ searchPatient, rotas }) => {
                 className={`${errors.searchpatient ? "required" : ""}`}
                 {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
             />
-            <SubmitButton title="Pesquisar" value="Pesquisar" />
+            <Input type="submit" title="Pesquisar" value="Pesquisar" />
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormSerach>
     );

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
-import { viaCepApi } from "../../services/api/viacep";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
-import { SubmitButton } from "../button/buttonsubmit";
+import { viaCepApi } from "../../services/api/viacep";
 import { LabelText } from "../../styles/labelstyle";
-import { ActivityClicked } from "../modal/eventsclick";
-import { apiDbPostgres } from "../../services/api/apis";
 import { DivButtons } from "../../styles/mainpagestyle";
-import { ButtonButton } from "../button/buttonbutton";
+import { useNavigate } from "react-router-dom";
+import { apiDbPostgres } from "../../services/api/apis";
+import { Button, Input } from "../../styles/buttonstyle";
+import { ActivityClicked } from "../modal/eventsclick";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 export const FormEditPatient = ({ searchPatient, rotas }) => {
     const userSystem = useAuth().user;
     const navigate = useNavigate();
@@ -283,9 +282,9 @@ export const FormEditPatient = ({ searchPatient, rotas }) => {
                 {...register("city", { required: true })}
             />
             <DivButtons $rota={rotas}>
-                <SubmitButton title="Editar Paciente" value="Editar" />
-                <ButtonButton title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</ButtonButton>
-                <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
+                <Input type="submit" title="Editar Paciente" value="Editar" />
+                <Button title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</Button>
+                <Button title="Menu" onClick={() => navigate("/menuRegister")}>Menu</Button>
             </DivButtons>
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>

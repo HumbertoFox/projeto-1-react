@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/authcontext";
-import { useNavigate } from "react-router-dom";
-import { viaCepApi } from "../../services/api/viacep";
 import { useForm } from "react-hook-form";
-import { SubmitButton } from "../button/buttonsubmit";
-import { ButtonButton } from "../button/buttonbutton";
+import { viaCepApi } from "../../services/api/viacep";
 import { LabelText } from "../../styles/labelstyle";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
-import { ActivityClicked } from "../modal/eventsclick";
+import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
+import { Button, Input } from "../../styles/buttonstyle";
+import { ActivityClicked } from "../modal/eventsclick";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 export const FormDoctorsRegister = () => {
     const userSystem = useAuth().user;
     const navigate = useNavigate();
@@ -265,9 +264,9 @@ export const FormDoctorsRegister = () => {
                 {...register("city", { required: true })}
             />
             <DivButtons>
-                <SubmitButton title="Cadastrar" value="Cadastrar" />
-                <ButtonButton title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</ButtonButton>
-                <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
+                <Input type="submit" title="Cadastrar" value="Cadastrar" />
+                <Button type="button" title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</Button>
+                <Button type="button" title="Menu" onClick={() => navigate("/menuRegister")}>Menu</Button>
             </DivButtons>
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>

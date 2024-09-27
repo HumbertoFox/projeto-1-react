@@ -10,11 +10,12 @@ datasource db {
 
 model Address {
   address_id      Int       @id @default(autoincrement())
-  zipcode         String
+  zipcode         String    @db.VarChar(50)
   residencenumber String    @db.VarChar(50)
-  building        String    @db.VarChar(100)
-  buildingblock   String    @db.VarChar(50)
-  apartment       String    @db.VarChar(50)
+  typeresidence   String    @db.VarChar(50)
+  building        String?   @db.VarChar(100)
+  buildingblock   String?   @db.VarChar(50)
+  apartment       String?   @db.VarChar(50)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt()
   address_zipcode Zipcode   @relation(fields: [zipcode], references: [zipcode])
@@ -26,23 +27,26 @@ model Address {
 }
 
 model Consultation {
-  consultation_id      Int      @id @default(autoincrement())
-  cpf                  String
-  crm                  String
-  plan                 String   @db.VarChar(50)
-  particular           String   @db.VarChar(50)
-  courtesy             String   @db.VarChar(20)
-  observation          String
+  consultation_id      Int                @id @default(autoincrement())
+  cpf                  String             @db.VarChar(50)
+  crm                  String             @db.VarChar(50)
+  typeservice          String             @db.VarChar(50)
+  returnconsult        String             @db.VarChar(50)
+  covenant             String?            @db.VarChar(50)
+  particular           String?            @db.VarChar(50)
+  courtesy             String?            @db.VarChar(20)
+  observation          String             @db.VarChar(250)
   consultdatestart     String
   consultdateend       String
+  status               Consultationstatus @default(Confirmar)
   patient_id           Int
   user_id              Int
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt()
-  consultation_cpf     Cpf      @relation(fields: [cpf], references: [cpf])
-  consultation_crm     Crm      @relation(fields: [crm], references: [crm])
-  consultation_user    User     @relation(fields: [user_id], references: [user_id])
-  consultation_patient Patient  @relation(fields: [patient_id], references: [patient_id])
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt()
+  consultation_cpf     Cpf                @relation(fields: [cpf], references: [cpf])
+  consultation_crm     Crm                @relation(fields: [crm], references: [crm])
+  consultation_user    User               @relation(fields: [user_id], references: [user_id])
+  consultation_patient Patient            @relation(fields: [patient_id], references: [patient_id])
 
   @@map("consultations")
 }
@@ -51,6 +55,8 @@ model Cpf {
   cpf              String         @id @db.VarChar(11)
   name             String         @db.VarChar(100)
   dateofbirth      String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt()
   cpf_consultation Consultation[]
   cpf_doctor       Doctor[]
   cpf_patient      Patient[]
@@ -70,7 +76,7 @@ model Crm {
 model Doctor {
   doctor_id        Int       @id @default(autoincrement())
   crm              String
-  cpf              String
+  cpf              String    @unique
   telephone        String
   address_id       Int
   user_id          Int
@@ -87,7 +93,7 @@ model Doctor {
 
 model Patient {
   patient_id           Int            @id @default(autoincrement())
-  cpf                  String
+  cpf                  String         @unique
   telephone            String
   address_id           Int
   createdAt            DateTime       @default(now())
@@ -112,10 +118,11 @@ model Telephone {
 
 model User {
   user_id           Int            @id @default(autoincrement())
-  cpf               String
+  cpf               String         @unique
   telephone         String
   password          String         @db.VarChar(200)
   address_id        Int
+  isblocked         Boolean        @default(false)
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt()
   user_address      Address        @relation(fields: [address_id], references: [address_id])
@@ -135,4 +142,11 @@ model Zipcode {
   zipcode_address Address[]
 
   @@map("zipcodes")
+}
+
+enum Consultationstatus {
+  Confirmar
+  Confirmada
+  Cancelada
+  Atendido
 }

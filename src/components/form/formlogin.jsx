@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { Input } from "../../styles/buttonstyle";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authcontext";
-import { SubmitButton } from "../button/buttonsubmit";
 import { LabelText } from "../../styles/labelstyle";
 import { FormDoctor } from "../../styles/formdrstyle";
 import { DivButtons } from "../../styles/mainpagestyle";
-import { ActivityClicked } from "../modal/eventsclick";
+import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
+import { ActivityClicked } from "../modal/eventsclick";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -82,8 +82,8 @@ export const FormLogin = () => {
                 {...register("password", { required: true })}
             />
             <DivButtons>
-                <SubmitButton title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
-                <SubmitButton title="Menu" value="Menu" onClick={() => handleButtonClicked("menu")} />
+                <Input type="submit" title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
+                <Input type="submit" title="Menu" value="Menu" onClick={() => handleButtonClicked("menu")} />
             </DivButtons>
             {eventAlert && <ActivityClicked title={"fechar login"} event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>

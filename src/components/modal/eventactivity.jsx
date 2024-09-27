@@ -1,6 +1,6 @@
 import React from "react";
+import { Button } from "../../styles/buttonstyle";
 import { DivEventsActive, DivMaimEvents } from "../../styles/eventactivitystyle";
-import { ButtonButton } from "../button/buttonbutton";
 export const ActivityActive = ({ event, onClose }) => {
     return (
         <DivMaimEvents>
@@ -13,7 +13,7 @@ export const ActivityActive = ({ event, onClose }) => {
                 <p>OBS: {event.observation}</p>
                 <p>Início do atendimento: {event.start.toLocaleString()}</p>
                 <p>Termino do atendimento: {event.end.toLocaleString()}</p>
-                <ButtonButton onClick={onClose}>Fechar</ButtonButton>
+                <Button type="button" onClick={onClose}>Fechar</Button>
             </DivEventsActive>
         </DivMaimEvents>
     );

@@ -1,5 +1,7 @@
 const apiDbPostgres = async (data, rota) => {
-    if (rota === 'registeruser' || rota === 'registerconsultation' || rota === 'loginuser' || rota === 'registerdoctor' || rota === 'searchpatient' || rota === 'searchuser') {
+    if (rota === 'registeruser' || rota === 'registerconsultation' ||
+        rota === 'loginuser' || rota === 'registerdoctor' ||
+        rota === 'searchpatient' || rota === 'searchuser') {
         const response = await fetch(`/${rota}`, {
             method: 'POST',
             headers: {

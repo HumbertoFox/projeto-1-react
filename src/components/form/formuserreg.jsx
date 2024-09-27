@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { viaCepApi } from "../../services/api/viacep";
-import { SubmitButton } from "../button/buttonsubmit";
-import { ButtonButton } from "../button/buttonbutton";
 import { LabelText } from "../../styles/labelstyle";
-import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
-import { DivButtons, Fieldset } from "../../styles/mainpagestyle";
-import { ActivityClicked } from "../modal/eventsclick";
+import { useNavigate } from "react-router-dom";
+import { Button, Input } from "../../styles/buttonstyle";
 import { apiDbPostgres } from "../../services/api/apis";
+import { ActivityClicked } from "../modal/eventsclick";
+import { DivButtons, Fieldset } from "../../styles/mainpagestyle";
+import { DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 export const FormUserRegister = ({ rotas, searchPatient }) => {
+    const { register, handleSubmit, setValue, setFocus, setError, watch, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [eventAlert, setEventAlert] = useState(null);
     const [radioSelect, setRadioSelect] = useState("house");
     const [age, setAge] = useState(null);
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        setFocus,
-        setError,
-        watch,
-        reset,
-        formState: { errors }
-    } = useForm();
     const password = watch('password');
     const getCheckedCpf = (data) => {
         const isRepeatedCpf = (cpf) => {
@@ -48,9 +38,7 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
         let correctCpf = data.substring(0, 9) + primaryCheckDigit + secondaryCheckDigit;
         return data === correctCpf;
     };
-    const swapRadioSelect = element => {
-        setRadioSelect(element.target.value);
-    };
+    const swapRadioSelect = element => setRadioSelect(element.target.value);
     const checkedZipCode = async (element) => {
         const clearZipCode = () => {
             setValue('zipcode', "");
@@ -93,9 +81,7 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
             return;
         }
     };
-    const handleEventAlertClose = () => {
-        setEventAlert(null);
-    };
+    const handleEventAlertClose = () => setEventAlert(null);
     const calculateAge = (data) => {
         const birthDate = new Date(data);
         const today = new Date();
@@ -294,9 +280,14 @@ export const FormUserRegister = ({ rotas, searchPatient }) => {
                 {...register("passwordchecked", { required: true, validate: (value) => value === password })}
             />
             <DivButtons>
-                {rotas === "removeuser" ? <SubmitButton title="Remover Usuário" value="Remover" /> : rotas === "edituser" ? <SubmitButton title="Editar Usuário" value="Editar" /> : <SubmitButton title="Cadastrar Usuário" value="Cadastrar" />}
-                <ButtonButton title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</ButtonButton>
-                <ButtonButton title="Menu" onClick={() => navigate("/menuRegister")}>Menu</ButtonButton>
+                {rotas === "removeuser" ?
+                    <Input type="submit" title="Remover Usuário" value="Remover" /> :
+                    rotas === "edituser" ?
+                        <Input type="submit" title="Editar Usuário" value="Editar" /> :
+                        <Input type="submit" title="Cadastrar Usuário" value="Cadastrar" />
+                }
+                <Button title="Iniciar" onClick={() => navigate("/agenda")}>Iniciar</Button>
+                <Button title="Menu" onClick={() => navigate("/menuRegister")}>Menu</Button>
             </DivButtons>
             {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
         </FormDoctor>

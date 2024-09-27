@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Input } from "../../styles/buttonstyle";
 import { useAuth } from "../../contexts/authcontext";
-import { viaCepApi } from "../../services/api/viacep";
 import { useForm } from "react-hook-form";
-import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
-import { SubmitButton } from "../button/buttonsubmit";
+import { viaCepApi } from "../../services/api/viacep";
 import { LabelText } from "../../styles/labelstyle";
-import { ActivityClicked } from "../modal/eventsclick";
 import { apiDbPostgres } from "../../services/api/apis";
+import { ActivityClicked } from "../modal/eventsclick";
+import { DivCourtesy, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivParticular, DivPlan, DivRadio, FormDoctor } from "../../styles/formdrstyle";
 export const FormPatientDrs = ({ title, searchPatient }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
@@ -374,8 +374,10 @@ export const FormPatientDrs = ({ title, searchPatient }) => {
             />
             <LabelText htmlFor="observation">Observações</LabelText>
             <textarea id="observation" {...register("observation", { value: "..." })} />
-            <SubmitButton title="Agendar Paciente" value="Agendar" />
-            {eventAlert && <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />}
+            <Input type="submit" title="Agendar Paciente" value="Agendar" />
+            {eventAlert && (
+                <ActivityClicked event={eventAlert} onClose={handleEventAlertClose} />
+            )}
         </FormDoctor>
     );
 };
