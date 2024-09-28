@@ -253,7 +253,6 @@ app.post('/registerconsultation', async (req, res) => {
 
 app.post('/loginuser', async (req, res) => {
     const { cpf, password } = req.body;
-
     try {
         if (cpf === undefined || password === undefined) {
             return res.status(404).json({
@@ -261,22 +260,18 @@ app.post('/loginuser', async (req, res) => {
                 message: 'CPF ou Senha Inválido!',
             });
         };
-
         const cpfExists = await prisma.cpf.findFirst({
             where: { cpf }
         });
-
         if (!cpfExists) {
             return res.status(404).json({
                 Error: true,
                 message: 'CPF ou Senha Inválido!',
             });
         };
-
         const user = await prisma.user.findFirst({
             where: { cpf }
         });
-
         const passwordMatch = bcrypt.compareSync(password, user.password);
         if (!passwordMatch) {
             return res.status(404).json({
@@ -284,23 +279,19 @@ app.post('/loginuser', async (req, res) => {
                 message: 'CPF ou Senha Inválido!'
             });
         };
-
         const user_telephone = await prisma.telephone.findFirst({
             where: { telephone: user.telephone }
         });
-
         const userData = {
             id: parseInt(user.user_id, 10),
             email: user_telephone.email,
             password: user.password
         };
-
         res.status(201).json({
             Error: false,
             message: 'Usuário logado com Sucesso! Redirecionando ...',
             user: userData
         });
-
     } catch (Error) {
         console.error(Error);
         res.status(500).json({

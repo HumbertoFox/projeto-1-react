@@ -171,6 +171,7 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
     useEffect(() => {
         if (searchs !== null) {
             setValue("cpf", searchs.cpf);
+            setValue("crm", searchs.crm);
             setValue("name", searchs.name);
             setValue("dateofbirth", searchs.dateofbirth);
             setValue("telephone", searchs.telephone);
@@ -185,6 +186,14 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
             setValue("buildingblock", searchs.buildingblock);
             setValue("apartment", searchs.apartment);
             setValue("observation", searchs.observation);
+            setValue("consultdatestart", searchs.consultdatestart);
+            setValue("consultdateend", searchs.consultdateend);
+            setValue("typeservice", searchs.typeservice);
+            setValue("covenant", searchs.covenant);
+            setValue("courtesy", searchs.courtesy);
+            setValue("particular", searchs.particular);
+            setRadioSelect(searchs.typeresidence);
+            setSelectRadio(searchs.typeservice);
             setIsReturn(searchs.isLastConsultationOld);
         };
     }, [searchs]);
