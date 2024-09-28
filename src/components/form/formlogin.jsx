@@ -69,7 +69,7 @@ export const FormLogin = () => {
             <DivBtnPassword>
                 <LabelText htmlFor="password">Senha
                     <input
-                        type="password"
+                        type={ispass ? 'text' : 'password'}
                         id="password"
                         autoComplete="off"
                         placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
