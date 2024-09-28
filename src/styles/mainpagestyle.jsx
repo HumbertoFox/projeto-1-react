@@ -40,7 +40,7 @@ const MainLogin = styled(MainPrimary)`
         color: hsl(205.46, 86.5%, 46.47%);
         text-shadow: 0 0 5px hsla(120, 73.44%, 74.9%, .5);
     }
-    margin: 30px auto;
+    margin: 0 auto;
     transition: .4s ease-in-out;
     @media screen and (max-width: 480px),
     screen and (max-height: 700px) {
