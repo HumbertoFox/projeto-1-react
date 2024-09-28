@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node --watch server/server.cjs",
     "server": "node server/server.cjs",
+    "start": "node server/server.cjs",
     "build": "vite build",
     "postinstall": "prisma generate",
     "lint": "eslint . --ext js,cjs,jsx --report-unused-disable-directives --max-warnings 0",
