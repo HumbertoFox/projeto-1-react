@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/authcontext";
@@ -11,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ActivityClicked } from "../modal/eventsclick";
 import { DivBtnPassword, DivButtons, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, Fieldset, FormsFull, LabelText, LabelTextRadios } from "../../styles/formstyle";
 library.add(fas);
+// eslint-disable-next-line react/prop-types
 export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
@@ -154,7 +156,8 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
                     message: response.message
                 });
             };
-        } catch (Error) {
+        } catch (error) {
+            console.error(error)
             setEventAlert({
                 type: "Error",
                 message: "Erro ao conectar com o BD!"
@@ -167,7 +170,7 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
     }, [value, setValue]);
     useEffect(() => {
         setValue("crm", crms);
-    }, [crms]);
+    }, [crms, setValue]);
     useEffect(() => {
         if (searchs !== null) {
             setValue("cpf", searchs.cpf);
@@ -196,7 +199,7 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
             setSelectRadio(searchs.typeservice);
             setIsReturn(searchs.isLastConsultationOld);
         };
-    }, [searchs]);
+    }, [searchs, setValue]);
     return (
         <FormsFull onSubmit={handleSubmit(onSubmit)}>
             <Fieldset disabled={rotas === "blockinguser" ? true : false}>

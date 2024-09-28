@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import { Input } from "../../styles/buttonstyle";
 import { useForm } from "react-hook-form";
@@ -5,15 +6,11 @@ import { LabelText } from "../../styles/formstyle";
 import { FormSerach } from "../../styles/formsearch";
 import { apiDbPostgres } from "../../services/api/apis";
 import { ActivityClicked } from "../modal/eventsclick";
+// eslint-disable-next-line react/prop-types
 export const Search = ({ searchs, rotas }) => {
     const [patientSearch, setPatientSearch] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
-    const {
-        register,
-        handleSubmit,
-        setError,
-        formState: { errors }
-    } = useForm();
+    const { register, handleSubmit, setError, formState: { errors } } = useForm();
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
@@ -65,7 +62,8 @@ export const Search = ({ searchs, rotas }) => {
                     message: response.message
                 });
             }
-        } catch (Error) {
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) {
             setEventAlert({
                 type: "Error",
                 message: "Paciente não encontrado! Erro com o BD"
@@ -74,7 +72,7 @@ export const Search = ({ searchs, rotas }) => {
     };
     useEffect(() => {
         searchs(patientSearch);
-    }, [patientSearch]);
+    }, [patientSearch, searchs]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="searchs">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : rotas === "searchdoctor" ? "Pesquisar Doutor(a) por CPF" : "Pesquisar Usuário por CPF"}
