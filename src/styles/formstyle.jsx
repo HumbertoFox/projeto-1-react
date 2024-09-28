@@ -55,7 +55,8 @@ const FormsFull = styled.form`
     }
     input.required:focus,
     input.requireddate:focus,
-    textarea.requireddate:focus {
+    textarea.requireddate:focus,
+    input.requiredpassword:focus {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
         box-shadow: 0 0 5px hsla(332.47, 100%, 50%, .5);
     }
@@ -64,11 +65,17 @@ const FormsFull = styled.form`
         background: url(${IconError}) no-repeat right 2% bottom 50%;
         background-size: 20px;
     }
+    input.requiredpassword {
+        border: 1px solid hsla(332.47, 100%, 50%, .5);
+        background: url(${IconError}) no-repeat right 9% bottom 50%;
+        background-size: 20px;
+    }
     input.requireddate,
     textarea.requireddate {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
     }
-    .required::placeholder {
+    .required::placeholder,
+    .requiredpassword::placeholder {
         font-style: italic;
         color: hsla(332.47, 100%, 50%, .5);
     }
@@ -122,4 +129,20 @@ const DivButtons = styled.div`
     justify-content: space-evenly;
     padding-top: 5px;
 `;
-export { FormsFull, Fieldset, DivRadio, DivNameEd, DivDate, DivDateBirth, DivDateAge, LabelText, LabelTextRadios, DivButtons };
+const DivBtnPassword = styled.div`
+    display: block;
+    label {
+        position: relative;
+    }
+    button {
+        position: absolute;
+        right: 3px;
+        bottom: 5px;
+        background: none;
+    }
+    svg {
+        font-size: 17px;
+        cursor: pointer;
+    }
+`;
+export { FormsFull, Fieldset, DivRadio, DivNameEd, DivDate, DivDateBirth, DivDateAge, LabelText, LabelTextRadios, DivButtons, DivBtnPassword };

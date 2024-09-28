@@ -1,23 +1,26 @@
 import React, { useState } from "react";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "../../styles/buttonstyle";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../contexts/authcontext";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { DivButtons } from "../../styles/mainpagestyle";
 import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ActivityClicked } from "../modal/eventsclick";
-import { FormsFull, LabelText } from "../../styles/formstyle";
+import { DivBtnPassword, FormsFull, LabelText } from "../../styles/formstyle";
+library.add(fas);
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const [eventAlert, setEventAlert] = useState(null);
+    const [ispass, setIspass] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const handleButtonClicked = (type) => {
-        setButtonType(type);
-    };
     const handleEventAlertClose = () => {
         setEventAlert(null);
     };
+    const handlePass = () => setIspass(!ispass);
     const onSubmit = async (data) => {
         try {
             const response = await apiDbPostgres(data, "loginuser");
@@ -63,20 +66,28 @@ export const FormLogin = () => {
                     {...register("cpf", { required: true })}
                 />
             </LabelText>
-            <LabelText htmlFor="password">Senha
-                <input
-                    type="password"
-                    id="password"
-                    autoComplete="off"
-                    placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.password ? "required" : ""}`}
-                    {...register("password", { required: true })}
-                />
-            </LabelText>
+            <DivBtnPassword>
+                <LabelText htmlFor="password">Senha
+                    <input
+                        type="password"
+                        id="password"
+                        autoComplete="off"
+                        placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
+                        className={`${errors.password ? "requiredpassword" : ""}`}
+                        {...register("password", { required: true })}
+                    />
+                    <button type='button' onClick={handlePass}>
+                        {!ispass && <FontAwesomeIcon icon="fa-solid fa-eye" />}
+                        {ispass && <FontAwesomeIcon icon="fa-solid fa-eye-slash" />}
+                    </button>
+                </LabelText>
+            </DivBtnPassword>
             <DivButtons>
-                <Input type="submit" title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
+                <Input type="submit" title="Entrar" value="Entrar" />
             </DivButtons>
-            {eventAlert && <ActivityClicked title={"fechar login"} event={eventAlert} onClose={handleEventAlertClose} />}
+            {eventAlert && (
+                <ActivityClicked title={"fechar login"} event={eventAlert} onClose={handleEventAlertClose} />
+            )}
         </FormsFull>
     );
 };

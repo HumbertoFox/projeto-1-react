@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input } from "../../styles/buttonstyle";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/authcontext";
 import { useForm } from "react-hook-form";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { viaCepApi } from "../../services/api/viacep";
 import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
+import { Button, Input } from "../../styles/buttonstyle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ActivityClicked } from "../modal/eventsclick";
-import { DivButtons, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, Fieldset, FormsFull, LabelText, LabelTextRadios } from "../../styles/formstyle";
+import { DivBtnPassword, DivButtons, DivDate, DivDateAge, DivDateBirth, DivNameEd, DivRadio, Fieldset, FormsFull, LabelText, LabelTextRadios } from "../../styles/formstyle";
+library.add(fas);
 export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
     const now = new Date();
     const formattedNow = now.toISOString().slice(0, 16);
     const userSystem = useAuth().user;
     const navigate = useNavigate();
+    const [ispass, setIspass] = useState(false);
+    const [ispasschecked, setIspasschecked] = useState(false);
     const [radioSelect, setRadioSelect] = useState("house");
     const [selectRadio, setSelectRadio] = useState("planradio");
     const [eventAlert, setEventAlert] = useState(null);
@@ -20,6 +26,9 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
     const [age, setAge] = useState(null);
     const { register, handleSubmit, setValue, setFocus, setError, reset, watch, formState: { errors } } = useForm();
     const value = watch("particular");
+    const password = watch("password");
+    const handlePass = () => setIspass(!ispass);
+    const handlePassChecked = () => setIspasschecked(!ispasschecked);
     const getCheckedCpf = (data) => {
         const isRepeatedCpf = (cpf) => {
             const firstDigit = cpf[0];
@@ -445,6 +454,38 @@ export const FormFull = ({ crms, searchs, page, rotas, title, values }) => {
                         </div>
                     )}
             </Fieldset>
+            {page === "RegisterUser" && (
+                <DivBtnPassword>
+                    <LabelText htmlFor="password">Senha
+                        <input
+                            type={ispass ? 'text' : 'password'}
+                            id="password"
+                            autoComplete="off"
+                            placeholder={`${errors.password ? "Campo Obrigatório" : ""}`}
+                            className={`${errors.password ? "requiredpassword" : ""}`}
+                            {...register("password", { required: true })}
+                        />
+                        <button type='button' onClick={handlePass}>
+                            {!ispass && <FontAwesomeIcon icon="fa-solid fa-eye" />}
+                            {ispass && <FontAwesomeIcon icon="fa-solid fa-eye-slash" />}
+                        </button>
+                    </LabelText>
+                    <LabelText htmlFor="passwordchecked">Confirme Senha
+                        <input
+                            type={ispasschecked ? 'text' : 'password'}
+                            id="passwordchecked"
+                            autoComplete="off"
+                            placeholder={`${errors.passwordchecked ? "Campo Obrigatório" : ""}`}
+                            className={`${errors.passwordchecked ? "requiredpassword" : ""}`}
+                            {...register("passwordchecked", { required: true, validate: (value) => value === password })}
+                        />
+                        <button type='button' onClick={handlePassChecked}>
+                            {!ispasschecked && <FontAwesomeIcon icon="fa-solid fa-eye" />}
+                            {ispasschecked && <FontAwesomeIcon icon="fa-solid fa-eye-slash" />}
+                        </button>
+                    </LabelText>
+                </DivBtnPassword>
+            )}
             <DivButtons>
                 <Input type="submit" title={title} value={values} />
                 {(page === "BlockingUser" ||

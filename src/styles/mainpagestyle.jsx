@@ -117,8 +117,4 @@ const DivIconDoble = styled.div`
         filter: drop-shadow(hsl(120, 73.44%, 74.9%) 0 0 5px);
     }
 `;
-const Fieldset = styled.fieldset`
-    display: flex;
-    flex-direction: column;
-`;
-export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin, MainMenu, DivMenus, DivFormsMenu, DivIconDoble, Fieldset };
+export { MainPrimary, MainSecondary, DivForms, DivButtons, MainLogin, SectionLogin, DivLogin, MainMenu, DivMenus, DivFormsMenu, DivIconDoble };

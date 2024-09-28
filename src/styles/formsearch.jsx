@@ -24,7 +24,7 @@ export const FormSerach = styled.form`
     }
     input.required {
         border: 1px solid hsla(332.47, 100%, 50%, .5);
-        background: url(${IconError}) right 9% bottom 50% no-repeat;
+        background: url(${IconError}) no-repeat right 9% bottom 50%;
         background-size: 20px;
     }
     .required::placeholder {
