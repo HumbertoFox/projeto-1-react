@@ -1,15 +1,10 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "server/server.cjs",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "server/server.cjs"
-      }
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/",
+            "use": "@vercel/node"
+        }
     ]
-  }
+}
