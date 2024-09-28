@@ -6,12 +6,11 @@ import { DivButtons } from "../../styles/mainpagestyle";
 import { useNavigate } from "react-router-dom";
 import { apiDbPostgres } from "../../services/api/apis";
 import { ActivityClicked } from "../modal/eventsclick";
-import { FormDoctor, LabelText } from "../../styles/formstyle";
+import { FormsFull, LabelText } from "../../styles/formstyle";
 export const FormLogin = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const [eventAlert, setEventAlert] = useState(null);
-    const [buttonType, setButtonType] = useState("");
     const { register, handleSubmit, formState: { errors } } = useForm();
     const handleButtonClicked = (type) => {
         setButtonType(type);
@@ -38,11 +37,7 @@ export const FormLogin = () => {
                 });
                 login(response.user);
                 setTimeout(() => {
-                    if (buttonType == "enter") {
-                        navigate("/agenda");
-                    } else if (buttonType == "menu") {
-                        navigate("/menuRegister");
-                    };
+                    navigate("/agenda");
                 }, 3000);
             };
         } catch (Error) {
@@ -57,7 +52,7 @@ export const FormLogin = () => {
         };
     };
     return (
-        <FormDoctor onSubmit={handleSubmit(onSubmit)}>
+        <FormsFull onSubmit={handleSubmit(onSubmit)}>
             <LabelText htmlFor="cpf">CPF
                 <input
                     type="number"
@@ -80,9 +75,8 @@ export const FormLogin = () => {
             </LabelText>
             <DivButtons>
                 <Input type="submit" title="Entrar" value="Entrar" onClick={() => handleButtonClicked("enter")} />
-                <Input type="submit" title="Menu" value="Menu" onClick={() => handleButtonClicked("menu")} />
             </DivButtons>
             {eventAlert && <ActivityClicked title={"fechar login"} event={eventAlert} onClose={handleEventAlertClose} />}
-        </FormDoctor>
+        </FormsFull>
     );
 };

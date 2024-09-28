@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import IconError from "../assets/aviso.png";
-const FormDoctor = styled.form`
+const FormsFull = styled.form`
     width: 280px;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
+    gap: 5px;
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -28,7 +29,6 @@ const FormDoctor = styled.form`
         border-radius: 5px;
         padding: 0 5px;
         outline: none;
-        margin-bottom: 5px;
         transition: .3s ease-in-out;
     }
     input[type=text]:focus,
@@ -73,22 +73,13 @@ const FormDoctor = styled.form`
         color: hsla(332.47, 100%, 50%, .5);
     }
 `;
+const Fieldset = styled.fieldset`
+    display: flex;
+    flex-direction: column;
+`;
 const DivRadio = styled.div`
     display: flex;
     justify-content: center;
-    margin-bottom: 5px;
-    label {
-        padding: 0 10px;
-        transition: .3s ease-in-out;
-    }
-    input[type=radio],
-    label {
-        cursor: pointer;
-    }
-    input[type=radio]:hover,
-    label:hover {
-        text-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
-    }
 `;
 const DivNameEd = styled.div`
     display: flex;
@@ -119,5 +110,16 @@ const LabelTextRadios = styled.label`
     gap: 5px;
     font-size: .9rem;
     color: gray;
+    padding: 0 10px;
+    transition: .4s ease-in-out;
+    cursor: pointer;
+    &:hover {
+        text-shadow: 0 0 5px hsla(205.46, 86.5%, 46.47%, .5);
+    }
 `;
-export { FormDoctor, DivRadio, DivNameEd, DivDate, DivDateBirth, DivDateAge, LabelText, LabelTextRadios };
+const DivButtons = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 5px;
+`;
+export { FormsFull, Fieldset, DivRadio, DivNameEd, DivDate, DivDateBirth, DivDateAge, LabelText, LabelTextRadios, DivButtons };

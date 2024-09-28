@@ -1,30 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { Search } from "../components/form/search";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FormFull } from "../components/form/forms";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DivForms, DivFormsMenu, MainMenu } from "../styles/mainpagestyle";
 library.add(fas);
-export const EditPatientPage = () => {
-    const [searchCpf, setSearchCpf] = useState(null);
-    function cpfPatient(cpf) {
-        setSearchCpf(cpf);
-    };
+export const RegisterPatientPage = () => {
     return (
         <MainMenu>
-            <h1>Editar Paciente</h1>
+            <h1>Cadastrar Paciente</h1>
             <DivFormsMenu>
                 <FontAwesomeIcon icon="fa-solid fa-bed-pulse" />
                 <DivForms>
-                    <Search searchs={cpfPatient} rotas={"searchpatient"} />
                     <FormFull
-                        searchs={searchCpf}
+                        searchs={null}
                         crms={null}
-                        page={"EditPatients"}
-                        rotas={"editpatient"}
-                        title={"Editar Paciente"}
-                        values={"Editar"}
+                        page={"RegisterPatients"}
+                        rotas={"registerpatient"}
+                        title={"Cadastrar Paciente"}
+                        values={"Cadastrar"}
                     />
                 </DivForms>
             </DivFormsMenu>

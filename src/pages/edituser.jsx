@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { DivForms, DivLogin, MainLogin, SectionLogin } from "../styles/mainpagestyle";
-import { FormUserRegister } from "../components/form/formuserreg";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { Search } from "../components/form/search";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FormFull } from "../components/form/forms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DivForms, DivFormsMenu, MainMenu } from "../styles/mainpagestyle";
 library.add(fas);
 export const EditUserPage = () => {
     const [searchCpf, setSearchCpf] = useState(null);
@@ -12,17 +12,22 @@ export const EditUserPage = () => {
         setSearchCpf(cpf);
     };
     return (
-        <MainLogin>
-            <SectionLogin>
-                <h1>Editar Usuário do Sistema</h1>
-                <DivLogin>
-                    <FontAwesomeIcon icon="fa-solid fa-user-pen" />
-                    <DivForms>
-                        <Search searchPatient={cpfPatient} rotas={"searchuser"} />
-                        <FormUserRegister searchPatient={searchCpf} rotas={"edituser"} />
-                    </DivForms>
-                </DivLogin>
-            </SectionLogin>
-        </MainLogin>
+        <MainMenu>
+            <h1>Editar Usuário</h1>
+            <DivFormsMenu>
+                <FontAwesomeIcon icon="fa-solid fa-user-pen" />
+                <DivForms>
+                    <Search searchs={cpfPatient} rotas={"searchuser"} />
+                    <FormFull
+                        searchs={searchCpf}
+                        crms={null}
+                        page={"EditUser"}
+                        rotas={"edituser"}
+                        title={"Editar Usuário"}
+                        values={"Editar"}
+                    />
+                </DivForms>
+            </DivFormsMenu>
+        </MainMenu>
     );
 };

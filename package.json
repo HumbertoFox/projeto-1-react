@@ -8,6 +8,7 @@
     "dev": "node --watch server/server.cjs",
     "start": "node server/server.cjs",
     "server": "node server/server.cjs",
+    "postinstall": "prisma generate",
     "build": "vite build",
     "lint": "eslint . --ext js,cjs,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

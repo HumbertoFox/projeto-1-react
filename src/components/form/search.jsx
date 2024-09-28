@@ -5,7 +5,7 @@ import { LabelText } from "../../styles/formstyle";
 import { FormSerach } from "../../styles/formsearch";
 import { apiDbPostgres } from "../../services/api/apis";
 import { ActivityClicked } from "../modal/eventsclick";
-export const Search = ({ searchPatient, rotas }) => {
+export const Search = ({ searchs, rotas }) => {
     const [patientSearch, setPatientSearch] = useState(null);
     const [eventAlert, setEventAlert] = useState(null);
     const {
@@ -41,16 +41,16 @@ export const Search = ({ searchPatient, rotas }) => {
         return data === correctCpf;
     };
     const onSubmit = async (data) => {
-        const cpf = data.searchpatient;
+        const cpf = data.searchs;
         if (!getCheckedCpf(cpf)) {
-            setError("searchpatient", { type: "focus" }, { shouldFocus: true });
+            setError("searchs", { type: "focus" }, { shouldFocus: true });
             return;
         };
         try {
             const response = await apiDbPostgres(data, rotas);
             if (response && response.records) {
                 setPatientSearch(response.records);
-                rotas === "searchpatient" ?
+                rotas === "searchpacient" ?
                     setEventAlert({
                         type: "Success",
                         message: "Paciente Encontrado"
@@ -73,17 +73,17 @@ export const Search = ({ searchPatient, rotas }) => {
         };
     };
     useEffect(() => {
-        searchPatient(patientSearch);
+        searchs(patientSearch);
     }, [patientSearch]);
     return (
         <FormSerach onSubmit={handleSubmit(onSubmit)}>
-            <LabelText htmlFor="searchpatient">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : rotas === "searchdoctor" ? "Pesquisar Doutor(a) por CPF" : "Pesquisar Usuário por CPF"}
+            <LabelText htmlFor="searchs">{rotas === "searchpatient" ? "Pesquisar Paciente por CPF" : rotas === "searchdoctor" ? "Pesquisar Doutor(a) por CPF" : "Pesquisar Usuário por CPF"}
                 <input
                     type="search"
-                    id="searchpatient"
-                    placeholder={`${errors.searchpatient ? "Campo Obrigatório" : ""}`}
-                    className={`${errors.searchpatient ? "required" : ""}`}
-                    {...register("searchpatient", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
+                    id="searchs"
+                    placeholder={`${errors.searchs ? "Campo Obrigatório" : ""}`}
+                    className={`${errors.searchs ? "required" : ""}`}
+                    {...register("searchs", { required: true, maxLength: 11, pattern: { value: /\d{11}/g } })}
                 />
             </LabelText>
             <Input type="submit" title="Pesquisar" value="Pesquisar" />

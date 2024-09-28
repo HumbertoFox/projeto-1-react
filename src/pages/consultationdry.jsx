@@ -17,8 +17,15 @@ export const ConsultationDrYPage = () => {
             <HeaderMenu />
             <MainSecondary>
                 <DivForms>
-                    <Search searchPatient={cpfPatient} rotas={"searchpatient"} />
-                    <FormFull searchPatient={searchCpf} title={crmyEnv} page={"RegisterConsultDoctory"} />
+                    <Search searchs={cpfPatient} rotas={"searchpatient"} />
+                    <FormFull
+                        searchs={searchCpf}
+                        crms={crmyEnv}
+                        page={"RegisterConsultDoctory"}
+                        rotas={"registerconsultation"}
+                        title={"Agendar Paciente"}
+                        values={"Agendar"}
+                    />
                 </DivForms>
             </MainSecondary>
         </MainPrimary>

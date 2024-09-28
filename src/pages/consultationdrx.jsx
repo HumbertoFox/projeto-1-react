@@ -17,8 +17,15 @@ export const ConsultationDrXPage = () => {
             <HeaderMenu />
             <MainSecondary>
                 <DivForms>
-                    <Search searchPatient={cpfPatient} rotas={"searchpatient"} />
-                    <FormFull searchPatient={searchCpf} title={crmxEnv} page={"RegisterConsultDoctorx"} />
+                    <Search searchs={cpfPatient} rotas={"searchpatient"} />
+                    <FormFull
+                        searchs={searchCpf}
+                        crms={crmxEnv}
+                        page={"RegisterConsultDoctorx"}
+                        rotas={"registerconsultation"}
+                        title={"Agendar Paciente"}
+                        values={"Agendar"}
+                    />
                 </DivForms>
             </MainSecondary>
         </MainPrimary>

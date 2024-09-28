@@ -1,20 +1,25 @@
 import React from "react";
-import { DivLogin, MainLogin, SectionLogin } from "../styles/mainpagestyle";
-import { FormUserRegister } from "../components/form/formuserreg";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FormFull } from "../components/form/forms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DivFormsMenu, MainMenu } from "../styles/mainpagestyle";
 library.add(fas);
 export const RegisterUserPage = () => {
     return (
-        <MainLogin>
-            <SectionLogin>
-                <h1>Cadastrar Usuário no Sistema</h1>
-                <DivLogin>
-                    <FontAwesomeIcon icon="fa-solid fa-user-plus" />
-                    <FormUserRegister rotas={"registeruser"} />
-                </DivLogin>
-            </SectionLogin>
-        </MainLogin>
+        <MainMenu>
+            <h1>Cadastrar Usuário</h1>
+            <DivFormsMenu>
+                <FontAwesomeIcon icon="fa-solid fa-user-plus" />
+                <FormFull
+                searchs={null}
+                crms={null}
+                page={"RegisterUser"}
+                rotas={"registeruser"}
+                title={"Cadastrar Usuário"}
+                values={"Cadastrar"}
+                />
+            </DivFormsMenu>
+        </MainMenu>
     );
 };

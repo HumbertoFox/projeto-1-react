@@ -4,6 +4,7 @@ import { AgendaPage } from "../pages/agenda";
 import { AuthProvider } from "../contexts/authcontext";
 import { EditUserPage } from "../pages/edituser";
 import { PrivateRoute } from "../components/privaterouts/privateroute";
+import { EditDoctorsPage } from "../pages/editdoctor";
 import { EditPatientPage } from "../pages/editpatient";
 import { BlockingUserPage } from "../pages/blockinguser";
 import { RegisterUserPage } from "../pages/registeruser";
@@ -13,6 +14,7 @@ import { ReportDoctoryPage } from "../pages/reportdoctory";
 import { ConsultationDrXPage } from "../pages/consultationdrx";
 import { ConsultationDrYPage } from "../pages/consultationdry";
 import { RegisterDoctorsPage } from "../pages/registerdoctors";
+import { RegisterPatientPage } from "../pages/registerpatient";
 export const AppRouters = () => {
     return (
         <AuthProvider>
@@ -21,6 +23,8 @@ export const AppRouters = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/registerUser" element={<PrivateRoute><RegisterUserPage /></PrivateRoute>} />
                     <Route path="/registerDoctors" element={<PrivateRoute><RegisterDoctorsPage /></PrivateRoute>} />
+                    <Route path="/registerPatient" element={<PrivateRoute><RegisterPatientPage /></PrivateRoute>} />
+                    <Route path="/editDoctors" element={<PrivateRoute><EditDoctorsPage /></PrivateRoute>} />
                     <Route path="/editarUser" element={<PrivateRoute><EditUserPage /></PrivateRoute>} />
                     <Route path="/editPatient" element={<PrivateRoute><EditPatientPage /></PrivateRoute>} />
                     <Route path="/menuRegister" element={<PrivateRoute><MenuRegistersPage /></PrivateRoute>} />
